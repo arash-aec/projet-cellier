@@ -3,14 +3,77 @@
  ********/
 
 html, body {
-	height: 100%;
 	margin: 0;
+	height: auto;
 	background-color: #E5E5E5;
-	
-	font-family: 'Roboto', 'RobotoDraft', sans-serif;
+	font-family: 'Roboto', sans-serif;
 	font-size: 95%;
-	
 }
+
+body {
+	padding : 0;
+	margin-bottom: 4vh;
+}
+
+header {
+	padding: 2vh 4vh;
+}
+
+
+/*--------------------------------- Font size */
+h1 {
+	font-size: 2.5rem;
+}
+
+h2 {
+	font-size: 2rem;
+}
+
+h3,
+strong {
+	font-size: 1.5rem;
+}
+
+p {
+	font-size: .9rem;
+}
+
+small {
+	font-size: 0.7em;
+}
+
+a,
+button {
+	font-size: 1rem;
+}
+
+@import url('https://fonts.googleapis.com/css2?family=Roboto+Condensed&family=Roboto+Flex:wght@500&family=Roboto+Slab:wght@600&family=Roboto:wght@300;400;700&display=swap');
+
+/*
+font-family: 'Roboto', sans-serif;
+font-family: 'Roboto Condensed', sans-serif;
+font-family: 'Roboto Flex', sans-serif;
+font-family: 'Roboto Slab', serif;
+*/
+
+/*--------------------------------- Typographie */
+h1, h2 {
+	font-family: 'Roboto Slab', sans-serif;
+}
+
+h3,
+strong,
+a,
+button {
+	font-family: 'Roboto Flex', sans-serif;
+}
+
+p,
+small {
+	font-family: 'Roboto', sans-serif;
+}
+
+/*--------------------------------- Liste */
 .liste {
 	display: block;
 	border-top: 1px solid #ccc;
@@ -34,20 +97,65 @@ html, body {
 	background-color:#e85e30;
 	color:#FFFFFF;
 }
+
 .liste > div:hover {
 	color:#000000;
 	transition: color 200ms ease-in-out;
-	
 }
 
-@media all and (max-width:640px)
-{
-	footer
-	{
-		display:none;
-	}
-	
+
+/*--------------------------------- Cellier */
+.cellier {
+	background-color: #36383F;
+	padding: 6vh 4vh;
 }
+
+.cellier-titre {
+	text-transform: uppercase;
+	color: #f9f9f9;
+}
+
+.cellier-lien {
+	display: block;
+	max-width: max-content;
+	margin-left: auto;
+	color: #f9f9f9;
+	text-decoration: none;
+	border: 1px solid #f9f9f9;
+	padding: .8em 1em;
+	border-radius: 5px;
+}
+
+.cellier-liste {
+	display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 30px;
+	margin-top: 4vh;
+}
+
+.bouteille {
+	background-color: #f9f9f9;
+	padding: 2vh;
+	border-radius: 5px;
+	box-shadow: 0px 0px 5px #fff;
+
+	display: flex;
+	flex-direction: column;
+	justify-content: space-around;
+	text-align: center;
+}
+
+.bouteille .description .details-bouteille {
+	display: flex;
+	justify-content: space-between;
+	text-align: left;
+}
+
+.quantite-chiffre {
+	padding: 0 1vh ;
+}
+
+/*--------------------------------- footer */
 
 footer
 {
