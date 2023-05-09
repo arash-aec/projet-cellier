@@ -47,6 +47,7 @@ class SAQ extends Modele {
         curl_setopt_array($s,array(
             CURLOPT_URL => $url,
             CURLOPT_RETURNTRANSFER => true,
+			CURLOPT_CAINFO => 'C:\Users\Nazar\cacert.pem',
             CURLOPT_USERAGENT=>'Mozilla/5.0 (Windows NT 6.1; Win64; x64; rv:60.0) Gecko/20100101 Firefox/60.0',
             CURLOPT_ENCODING=>'gzip, deflate',
             CURLOPT_HTTPHEADER=>array(
