@@ -1,29 +1,42 @@
 
 <div class="cellier">
-  <?php foreach ($data as $cle => $bouteille) { ?>
+    <h1 class="cellier-titre">Mon cellier :</h1>
+    <a href="?requete=ajouterNouvelleBouteilleCellier" class="cellier-lien">Ajouter une bouteille</a>
+    <div class="cellier-liste">
     
-    <div class="bouteille" data-quantite="">
-        <img src="https:<?php echo $bouteille['image'] ?>">
-      <div class="description">
-      <form method="POST" action="?requete=modifierBouteilleCellier&id_bouteille_cellier=<?php echo $bouteille['id_bouteille_cellier'] ?>">
-        <h3 class="nom">Nom: <?php echo $bouteille['nom'] ?></h3>
-        <p class="quantite">Quantité : <?php echo $bouteille['quantite'] ?></p>
-        <p class="quantite">Prix : <?php echo $bouteille['prix'] ?></p>
-        <p class="pays">Pays : <?php echo $bouteille['pays'] ?></p>
-        <p class="pays">Garde : <?php echo $bouteille['garde_jusqua'] ?></p>
-        <p class="pays">Notes : <?php echo $bouteille['notes'] ?></p>
-        <p class="type">Type : <?php echo $bouteille['type'] ?></p>
-        <p class="millesime">Millesime : <?php echo $bouteille['millesime'] ?></p>
-        <p><a href="<?php echo $bouteille['url_saq'] ?>">Voir SAQ</a></p>
-      </div>
-      <div class="options" data-id="<?php echo $bouteille['id_bouteille_cellier'] ?>">
-      <button class='btnModifier' type="submit">Modifier</button>
-        <button class='btnAjouter'>Ajouter</button>
-        <button class='btnBoire'>Boire</button>
-        <input type="hidden" name="id_bouteille_cellier" value="<?php echo $bouteille['id_bouteille_cellier'] ?>">
-        </form>
-      </div>
+        <?php foreach ($data as $cle => $bouteille) { ?>
+        
+        <div class="bouteille" data-quantite="">
+            <div class="img">
+                <img src="<?php echo $bouteille['image'] ?>">
+            </div>
+        <div class="description">
+        <form method="POST" action="?requete=modifierBouteilleCellier&id_bouteille_cellier=<?php echo $bouteille['id_bouteille_cellier'] ?>">
+            <h3 class="nom"><?php echo $bouteille['nom'] ?></h3>
+            <div class="details-bouteille"> 
+                <div>
+                    <p class="millesime">Millesime : <?php echo $bouteille['millesime'] ?></p>
+                    <p class="pays">Pays : <?php echo $bouteille['pays'] ?></p>
+                    <p class="garde">Garde : <?php echo $bouteille['garde_jusqua'] ?></p>
+                    <p class="type">Type : <?php echo $bouteille['type'] ?></p>
+                </div>
+                <div>
+                    <p class="note">Notes : <?php echo $bouteille['notes'] ?></p>
+                    <p class="quantite">Prix : <?php echo $bouteille['prix'] ?></p>
+                    <p class="quantite">Quantité : <strong class="quantite-chiffre"><?php echo $bouteille['quantite'] ?></strong></p>
+                </div>
+            </div>
+            <p><a href="<?php echo $bouteille['url_saq'] ?>">Voir SAQ</a></p>
+        </div>
+        <div class="options" data-id="<?php echo $bouteille['id_bouteille_cellier'] ?>">
+            <button class='btnModifier' type="submit">Modifier</button>
+            <button class='btnAjouter'>Ajouter</button>
+            <button class='btnBoire'>Boire</button>
+            <input type="hidden" name="id_bouteille_cellier" value="<?php echo $bouteille['id_bouteille_cellier'] ?>">
+            </form>
+        </div>
+        </div>
+        <?php } ?>	
     </div>
-  <?php } ?>	
 </div>
 
