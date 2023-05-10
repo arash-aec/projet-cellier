@@ -1,6 +1,6 @@
 
-
 <?php
+// Récupération de la bouteille à modifier à partir des données passées en paramètre
 $bouteille = mysqli_fetch_assoc($donnees["bouteille"]);
 ?>
 

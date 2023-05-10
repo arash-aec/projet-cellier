@@ -224,6 +224,7 @@ class Bouteille extends Modele {
 	}
 
 	
+	// Mettre à jour la bouteille en cellier 
 
 	public function updateBouteilleCellier($id_bouteille_cellier, $id_bouteille, $date_achat, $garde_jusqua, $notes, $prix, $quantite, $millesime)
 	{

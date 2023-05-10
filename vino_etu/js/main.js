@@ -11,9 +11,11 @@
 //const BaseURL = "https://jmartel.webdev.cmaisonneuve.qc.ca/n61/vino/";
 const BaseURL = document.baseURI;
 console.log(BaseURL);
+
+// Attendre que la page soit complètement chargée avant d'exécuter le script
 window.addEventListener('load', function() {
 
-    // Probleme du bouton boire :
+    // Gestion du bouton "Boire"
     document.querySelectorAll(".btnBoire").forEach(function(element){
         element.addEventListener("click", function(evt){
             let id = evt.target.parentElement.dataset.id;
@@ -40,7 +42,7 @@ window.addEventListener('load', function() {
     });
 
 
-    // Probleme ajout a rectifier
+    // Gestion du bouton "Ajouter"
     document.querySelectorAll(".btnAjouter").forEach(function(element){
 
         element.addEventListener("click", function(evt){
@@ -69,7 +71,7 @@ window.addEventListener('load', function() {
     });
    
 
-
+// Gestion de l'autocomplétion
     let inputNomBouteille = document.querySelector("[name='nom_bouteille']");
     console.log(inputNomBouteille);
     let liste = document.querySelector('.listeAutoComplete');
@@ -92,7 +94,7 @@ window.addEventListener('load', function() {
                 .then(response => {
                   console.log(response);
                   
-                 
+                  // Affichage des résultats de l'autocomplétion
                   response.forEach(function(element){
                     liste.innerHTML += "<li data-id='"+element.id +"'>"+element.nom+"</li>";
                   })
@@ -114,7 +116,7 @@ window.addEventListener('load', function() {
         notes : document.querySelector("[name='notes']"),
       };
 
-
+  // Récupération des données du formulaire
       liste.addEventListener("click", function(evt){
         console.dir(evt.target)
         if(evt.target.tagName == "LI"){

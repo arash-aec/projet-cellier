@@ -11,6 +11,7 @@
                 <img src="<?php echo $bouteille['image'] ?>">
             </div>
         <div class="description">
+        <!-- Formulaire de modification d'une bouteille dans le cellier -->   
         <form method="POST" action="?requete=modifierBouteilleCellier&id_bouteille_cellier=<?php echo $bouteille['id_bouteille_cellier'] ?>">
             <h3 class="nom"><?php echo $bouteille['nom'] ?></h3>
             <div class="details-bouteille"> 
