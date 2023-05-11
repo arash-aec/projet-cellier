@@ -179,7 +179,7 @@ class Controler
 			}
 
 			// Redirection vers la page d'accueil
-			header('Location: index.php?accueil');
+			header('Location: index.php?requete=afficheListeBouteille');
 		}
 		
 }
