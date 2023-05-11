@@ -25,6 +25,9 @@ class Controler
 				case 'listeBouteille':
 					$this->listeBouteille();
 					break;
+				case 'afficheListeBouteille':
+					$this->afficheListeBouteille();
+					break;
 				case 'autocompleteBouteille':
 					$this->autocompleteBouteille();
 					break;
@@ -51,6 +54,16 @@ class Controler
 
 		// Méthode qui affiche la page d'accueil avec la liste des bouteilles dans le cellier
 		private function accueil()
+		{
+			// On récupère la liste des bouteilles dans le cellier
+			include("vues/entete.php");
+			include("vues/accueil.php");
+			include("vues/pied.php");
+                  
+		}
+
+		// Méthode qui affiche la page d'accueil avec la liste des bouteilles dans le cellier
+		private function afficheListeBouteille()
 		{
 			// On récupère la liste des bouteilles dans le cellier
 			$bte = new Bouteille();
