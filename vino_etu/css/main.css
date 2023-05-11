@@ -15,7 +15,8 @@ body {
 	/* margin-bottom: 4vh; */
 }
 
-header {
+header,
+.cellier-gere {
 	padding: 2vh 4vh;
 }
 
@@ -167,8 +168,11 @@ small {
 	text-align: center;
 }
 
-.bouteille img {
+.bouteille .img {
+	display: block;
+	margin: auto;
 	max-width: 120px;
+	object-fit: cover;
 }
 
 /*--------------------------------- formulaire modifier */
