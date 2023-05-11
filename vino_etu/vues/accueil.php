@@ -7,8 +7,8 @@
         <h1>Vino</h1>
         <p>La meilleure application de gestion de cellier</p>
         <div class="header-image-btn">
-          <div><a class="header-image-button" href="#">CONNEXION</a></div>
-          <div><a id="open-modal-btn" class="header-image-button" href="#">INSCRIPTION</a></div>
+          <div><a  id="open-modal-connextion-btn" class="header-image-button" href="#">CONNEXION</a></div>
+          <div><a id="open-modal-inscription-btn" class="header-image-button" href="#">INSCRIPTION</a></div>
         </div>
         </div>
         
