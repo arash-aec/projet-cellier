@@ -12,7 +12,7 @@ html, body {
 
 body {
 	padding : 0;
-	margin-bottom: 4vh;
+	/* margin-bottom: 4vh; */
 }
 
 header {
@@ -188,7 +188,7 @@ small {
 /*--------------------------------- footer */
 footer
 {
-	position: fixed;;
+	/* position: fixed; */
 	bottom:0px;
 	width: 100%;
 	padding-top:3px;
