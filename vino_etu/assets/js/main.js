@@ -148,7 +148,6 @@ window.addEventListener('load', function() {
                 .then(response => {
                     if (response.status === 200) {
                       console.log("bouteille ajoutée")
-                      window.location.replace(BaseURL)
                       return response.json();
                     } else {
                       throw new Error('Erreur');
@@ -156,7 +155,7 @@ window.addEventListener('load', function() {
                   })
                   .then(response => {
                     console.log(response);
-                  
+                    window.location.href = "?requete=afficheListeBouteille";
                   }).catch(error => {
                     console.error(error);
                   });
