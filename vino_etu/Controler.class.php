@@ -59,6 +59,7 @@ class Controler
 			include("vues/entete.php");
 			include("vues/accueil.php");
 			include("vues/modale-inscription.php");
+			include("vues/modale-connexion.php");
 			include("vues/pied.php");
                   
 		}
