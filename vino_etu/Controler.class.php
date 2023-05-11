@@ -58,6 +58,7 @@ class Controler
 			// On récupère la liste des bouteilles dans le cellier
 			include("vues/entete.php");
 			include("vues/accueil.php");
+			include("vues/modale-inscription.php");
 			include("vues/pied.php");
                   
 		}
