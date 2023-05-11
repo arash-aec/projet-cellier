@@ -8,7 +8,8 @@
         <p>La meilleure application de gestion de cellier</p>
         <div class="header-image-btn">
           <div><a class="header-image-button" href="#">CONNEXION</a></div>
-          <div><a class="header-image-button" href="#">INSCRIPTION</a></div>
+          <div><a id="open-modal-btn" class="header-image-button" href="#">INSCRIPTION</a></div>
+        </div>
         </div>
         
       </div>
@@ -40,5 +41,6 @@
           <h1>VIN DE LA SAQ</h1>
         </article>
       </div>
+      
       
     </main>
