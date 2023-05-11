@@ -28,8 +28,8 @@
   /* Style for close button */
   .close-btn, .close-btn-connexion {
     position: absolute;
-    top: 10px;
-    right: 10px;
+    top: 2vh;
+    right: 2vh;
     font-size: 24px;
     cursor: pointer;
   }
@@ -42,27 +42,31 @@
     background-color: #f2f2f2;
     width: 100%;
   }
+  .ajouter .nouvelleBouteille .rechercheListeBouteille {
+    background-color: #7e003f36;
+  }
   
-  input[type="submit"] {
+  input[type="submit"],
+  .btn-ajouter {
     background-color:#7E003F;
     color: white;
-    padding: 10px 20px;
+    padding: 1em 1.5em;
     border-radius: 5px;
     border: none;
     cursor: pointer;
     font-size: 18px;
     display: block;
     margin: 0 auto;
-
+    margin-top: 4vh;
+    text-transform: uppercase;
   }
   
   input[type="submit"]:hover {
     background-color:#5c2231;
   }
-
   .modal h2, .modal-connexion h2{
     text-align: center;
-    padding: 20px;
+    padding: 2vh;
     padding-bottom: 40px;
   }
 
