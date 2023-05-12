@@ -12,12 +12,16 @@
  */
 class SAQ extends Modele {
 
+	// Constantes pour le retour de la fonction ajouteProduit()
 	const DUPLICATION = 'duplication';
 	const ERREURDB = 'erreurdb';
 	const INSERE = 'Nouvelle bouteille insérée';
 
+	// Variables pour conserver la page web récupérée et le code HTTP
 	private static $_webpage;
 	private static $_status;
+
+	// Préparation de la requête SQL pour insérer les produits
 	private $stmt;
 
 	public function __construct() {
@@ -33,17 +37,11 @@ class SAQ extends Modele {
 	 * @param int $debut
 	 */
 	public function getProduits($nombre = 24, $page = 1) {
+		// Initialisation de la session cURL
 		$s = curl_init();
 		$url = "https://www.saq.com/fr/produits/vin/vin-rouge?p=".$page."&product_list_limit=".$nombre."&product_list_order=name_asc";
-		//curl_setopt($s, CURLOPT_URL, "http://www.saq.com/webapp/wcs/stores/servlet/SearchDisplay?searchType=&orderBy=&categoryIdentifier=06&showOnly=product&langId=-2&beginIndex=".$debut."&tri=&metaData=YWRpX2YxOjA8TVRAU1A%2BYWRpX2Y5OjE%3D&pageSize=". $nombre ."&catalogId=50000&searchTerm=*&sensTri=&pageView=&facet=&categoryId=39919&storeId=20002");
-		//curl_setopt($s, CURLOPT_URL, "https://www.saq.com/webapp/wcs/stores/servlet/SearchDisplay?categoryIdentifier=06&showOnly=product&langId=-2&beginIndex=" . $debut . "&pageSize=" . $nombre . "&catalogId=50000&searchTerm=*&categoryId=39919&storeId=20002");
-		//curl_setopt($s, CURLOPT_URL, $url);
-		//curl_setopt($s, CURLOPT_RETURNTRANSFER, true);
-        //curl_setopt($s, CURLOPT_CUSTOMREQUEST, 'GET');
-        //curl_setopt($s, CURLOPT_NOBODY, false);
-		//curl_setopt($s, CURLOPT_FOLLOWLOCATION, 1);
-
-        // Se prendre pour un navigateur pour berner le serveur de la saq...
+	
+		// Configuration des options de cURL pour la requête GET
         curl_setopt_array($s,array(
             CURLOPT_URL => $url,
             CURLOPT_RETURNTRANSFER => true,
@@ -59,10 +57,14 @@ class SAQ extends Modele {
             ),
     ));
 
+		// Exécution de la requête GET
+		// Envoie une requête GET à la page web et récupère le code HTML de la page.
 		self::$_webpage = curl_exec($s);
 		self::$_status = curl_getinfo($s, CURLINFO_HTTP_CODE);
 		curl_close($s);
 
+		// Parsing du code HTML pour récupérer les informations des produits
+		// Utilise la classe DOMDocument pour parcourir le code HTML et extraire les informations sur les produits.
 		$doc = new DOMDocument();
 		$doc -> recover = true;
 		$doc -> strictErrorChecking = false;
@@ -70,15 +72,18 @@ class SAQ extends Modele {
 		$elements = $doc -> getElementsByTagName("li");
 		$i = 0;
 		foreach ($elements as $key => $noeud) {
-			//var_dump($noeud -> getAttribute('class')) ;
-			//if ("resultats_product" == str$noeud -> getAttribute('class')) {
+	
+		// Boucle à travers les éléments li de la page HTML
+    	// Vérifie si l'élément li contient la classe "product-item" et extrait les informations sur le produit en appelant la fonction "recupereInfo".
 			if (strpos($noeud -> getAttribute('class'), "product-item") !== false) {
 
-				//echo $this->get_inner_html($noeud);
+			
 				$info = self::recupereInfo($noeud);
 				echo "<p>".$info->nom;
 				$retour = $this -> ajouteProduit($info);
 				echo "<br>Code de retour : " . $retour -> raison . "<br>";
+		// Ajoute les informations sur le produit à la base de données et affiche le résultat de l'opération
+        // Appelle la fonction "ajouteProduit" pour ajouter les informations sur le produit à une base de données et affiche le résultat de l'opération.
 				if ($retour -> succes == false) {
 					echo "<pre>";
 					var_dump($info);
@@ -90,7 +95,8 @@ class SAQ extends Modele {
 				echo "</p>";
 			}
 		}
-
+	
+		// Retourne le nombre de produits qui ont été ajoutés avec succès à la base de données.
 		return $i;
 	}
 
@@ -105,22 +111,23 @@ class SAQ extends Modele {
 	}
 	private function nettoyerEspace($chaine)
 	{
+		// Fonction pour nettoyer les espaces dans une chaîne de caractères
 		return preg_replace('/\s+/', ' ',$chaine);
 	}
 	private function recupereInfo($noeud) {
-		
+
+		// Utilise la classe DOMDocument pour extraire les informations sur le produit à partir de l'élément li.
 		$info = new stdClass();
 		$info -> img = $noeud -> getElementsByTagName("img") -> item(0) -> getAttribute('src'); //TODO : Nettoyer le lien
 		;
 		$a_titre = $noeud -> getElementsByTagName("a") -> item(0);
 		$info -> url = $a_titre->getAttribute('href');
 		
-        //var_dump($noeud -> getElementsByTagName("a")->item(1)->textContent);
+      
         $nom = $noeud -> getElementsByTagName("a")->item(1)->textContent;
-        //var_dump($a_titre);
+    
 		$info -> nom = self::nettoyerEspace(trim($nom));
-		//var_dump($info -> nom);
-		// Type, format et pays
+	
 		$aElements = $noeud -> getElementsByTagName("strong");
 		foreach ($aElements as $node) {
 			if ($node -> getAttribute('class') == 'product product-item-identity-format') {
@@ -159,7 +166,6 @@ class SAQ extends Modele {
 				$info -> prix = trim($node -> textContent);
 			}
 		}
-		//var_dump($info);
 		return $info;
 	}
 
@@ -168,28 +174,23 @@ class SAQ extends Modele {
 		$retour -> succes = false;
 		$retour -> raison = '';
 
-		//var_dump($bte);
-		// Récupère le type
+		// Récupère l'id du type de bouteille correspondant
 		$rows = $this -> _db -> query("select id from vino__type where type = '" . $bte -> desc -> type . "'");
 		
 		if ($rows -> num_rows == 1) {
 			$type = $rows -> fetch_assoc();
-			//var_dump($type);
+			// Stocke l'id récupéré dans une variable
 			$type = $type['id'];
 
 			$rows = $this -> _db -> query("select id from vino__bouteille where code_saq = '" . $bte -> desc -> code_SAQ . "'");
 			if ($rows -> num_rows < 1) {
-
-				//$prix = number_format(floatval(str_replace(',', '.', $bte->prix)), 2, '.', '') ;//Ajout par saman pour foncitonner sur php7git 
-				//$this -> stmt -> bind_param("sissssisss", $bte -> nom, $type, $bte -> img, $bte -> desc -> code_SAQ, $bte -> desc -> pays, $bte -> desc -> texte, $bte -> prix, $bte -> url, $bte -> img, $bte -> desc -> format);
-
 				$prix = number_format(floatval(str_replace(',', '.', $bte->prix)), 2, '.', '');
 				$this -> stmt -> bind_param("sissssssss", $bte -> nom, $type, $bte -> img, $bte -> desc -> code_SAQ, $bte -> desc -> pays, $bte -> desc -> texte, $prix, $bte -> url, $bte -> img, $bte -> desc -> format);
-
 				$retour -> succes = $this -> stmt -> execute();
 				$retour -> raison = self::INSERE;
-				//var_dump($this->stmt);
+				
 			} else {
+				// Si la bouteille existe déjà, retourne une erreur de duplication
 				$retour -> succes = false;
 				$retour -> raison = self::DUPLICATION;
 			}
