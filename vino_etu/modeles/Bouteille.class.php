@@ -50,9 +50,9 @@ class Bouteille extends Modele {
 						b.pays, 
 						b.description,
 						t.type 
-						from vino__cellier c 
-						left JOIN vino__bouteille b ON c.id = b.id
-						left JOIN vino__type t ON t.id = b.type
+					from vino__cellier c 
+					INNER JOIN vino__bouteille b ON c.id_bouteille = b.id
+					INNER JOIN vino__type t ON t.id = b.type
 					'; 
 
 
