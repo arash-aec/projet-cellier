@@ -56,11 +56,11 @@ class Controler
 		private function accueil()
 		{
 			// On récupère la liste des bouteilles dans le cellier
-			include("vues/entete.php");
-			include("vues/accueil.php");
-			include("vues/modale-inscription.php");
-			include("vues/modale-connexion.php");
-			include("vues/pied.php");
+			include("./vues/entete.php");
+			include("./vues/accueil.php");
+			include("./vues/modale-inscription.php");
+			include("./vues/modale-connexion.php");
+			include("./vues/pied.php");
                   
 		}
 
@@ -70,9 +70,9 @@ class Controler
 			// On récupère la liste des bouteilles dans le cellier
 			$bte = new Bouteille();
             $data = $bte->getListeBouteilleCellier();
-			include("vues/entete.php");
-			include("vues/cellier.php");
-			include("vues/pied.php");
+			include("./vues/entete.php");
+			include("./vues/cellier.php");
+			include("./vues/pied.php");
                   
 		}
 		
@@ -111,9 +111,9 @@ class Controler
 				echo json_encode($resultat);
 			}
 			else{
-				include("vues/entete.php");
-				include("vues/ajouter.php");
-				include("vues/pied.php");
+				include("./vues/entete.php");
+				include("./vues/ajouter.php");
+				include("./vues/pied.php");
 			}    
 		}
 
@@ -147,9 +147,9 @@ class Controler
 				$bte = new Bouteille();
 				$donnees["bouteille"] = $bte->getBouteilleCellierParId($id_bouteille_cellier);
 				// Inclut les vues pour l'entête, la page de modification et le pied de page
-				include("vues/entete.php");
-				include("vues/modifier.php");
-				include("vues/pied.php");
+				include("./vues/entete.php");
+				include("./vues/modifier.php");
+				include("./vues/pied.php");
 			}
 			else {
 				// handle the case where id_bouteille_cellier is not set in the POST data
