@@ -19,7 +19,7 @@
                     <div>
                         <p class="millesime">Millesime : <?php echo $bouteille['millesime'] ?></p>
                         <p class="pays">Pays : <?php echo $bouteille['pays'] ?></p>
-                        <p class="garde">Garde : <?php echo $bouteille['notes'] ?></p>
+                        <p class="garde">notes : <?php echo $bouteille['notes'] ?></p>
                         <p class="type">Type : <?php echo $bouteille['type'] ?></p>
                     </div>
                     <div>

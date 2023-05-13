@@ -118,8 +118,20 @@ class SAQ extends Modele {
 
 		// Utilise la classe DOMDocument pour extraire les informations sur le produit à partir de l'élément li.
 		$info = new stdClass();
-		$info -> img = $noeud -> getElementsByTagName("img") -> item(0) -> getAttribute('src'); //TODO : Nettoyer le lien
-		;
+		
+		$imgTags = $noeud->getElementsByTagName("img");
+		foreach ($imgTags as $img) {
+			$src = $img->getAttribute('src');
+			if (strpos($src, 'wysiwyg/product_tags') !== false) {
+				continue; // Skip this image
+			}
+			$alt = $img->getAttribute('alt');
+			$width = $img->getAttribute('width');
+			$height = $img->getAttribute('height');
+			$info->img = $src;
+		}
+
+
 		$a_titre = $noeud -> getElementsByTagName("a") -> item(0);
 		$info -> url = $a_titre->getAttribute('href');
 		
