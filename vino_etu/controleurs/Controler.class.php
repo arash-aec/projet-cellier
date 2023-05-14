@@ -108,6 +108,7 @@ class Controler
 				// Si le corps n'est pas vide, créer une nouvelle instance de Bouteille et ajouter une nouvelle bouteille dans le cellier
 				$bte = new Bouteille();
 				$resultat = $bte->ajouterBouteilleCellier($body);
+				//var_dump($resultat);
 				echo json_encode($resultat);
 			}
 			else{

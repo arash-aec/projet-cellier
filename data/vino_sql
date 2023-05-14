@@ -14,6 +14,14 @@ SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,N
 -- -----------------------------------------------------
 CREATE SCHEMA IF NOT EXISTS `vino_db` DEFAULT CHARACTER SET utf8 ;
 
+-- -----------------------------------------------------
+-- Table `vino_db`.`vino__role`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `vino_db`.`vino__role` (
+  `id` INT(11) NOT NULL,
+  `role` VARCHAR(50) NOT NULL,
+  PRIMARY KEY (`id`))
+ENGINE = InnoDB;
 
 -- -----------------------------------------------------
 -- Table `vino_db`.`vino__usager`
@@ -24,9 +32,15 @@ CREATE TABLE IF NOT EXISTS `vino_db`.`vino__usager` (
   `prenom` VARCHAR(100) NOT NULL,
   `courriel` VARCHAR(255) NOT NULL,
   `mot_de_passe` VARCHAR(255) NOT NULL,
-  `role` INT(2) NOT NULL,
+  `vino__role_id` INT(11) NOT NULL,
   PRIMARY KEY (`id`),
-  UNIQUE INDEX `courriel_UNIQUE` (`courriel` ASC) )
+  UNIQUE INDEX `courriel_UNIQUE` (`courriel` ASC),
+  INDEX `fk_vino__usager_vino__role1_idx` (`vino__role_id` ASC),
+  CONSTRAINT `fk_vino__usager_vino__role1`
+    FOREIGN KEY (`vino__role_id`)
+    REFERENCES `vino_db`.`vino__role` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
 
@@ -39,6 +53,16 @@ CREATE TABLE IF NOT EXISTS `vino_db`.`vino__type` (
   PRIMARY KEY (`id`))
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = latin1;
+
+
+-- -----------------------------------------------------
+-- Table `vino_db`.`vino__pays`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `vino_db`.`vino__pays` (
+  `id` INT(11) NOT NULL,
+  `pays` VARCHAR(50) NOT NULL,
+  PRIMARY KEY (`id`))
+ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
@@ -66,6 +90,7 @@ CREATE TABLE IF NOT EXISTS `vino_db`.`vino__bouteille` (
 CREATE TABLE IF NOT EXISTS `vino_db`.`vino__liste_achat` (
   `vino__usager_id` INT(11) NOT NULL,
   `vino__bouteille_id` INT(11) NOT NULL,
+  `quantite` INT(11) NULL,
   INDEX `fk_vino__liste-achat_vino__usager_idx` (`vino__usager_id` ASC),
   INDEX `fk_vino__liste-achat_vino__bouteille1_idx` (`vino__bouteille_id` ASC),
   PRIMARY KEY (`vino__usager_id`, `vino__bouteille_id`),
