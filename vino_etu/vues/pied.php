@@ -12,7 +12,7 @@
         </section>
 
         <section class="footer-copyright">
-          <p><i class="fa fa-copyright"></i>Projet Web 2 - 2023</p>
+          <p><i class="fa fa-copyright"></i> Projet Web 2 - 2023</p>
           <p class="footer-copyright-nom">Vino</p>
           <p>Mentions légales - Politique de confidentialité</p>
         </section>
