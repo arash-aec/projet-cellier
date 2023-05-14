@@ -56,7 +56,7 @@ class Bouteille extends Modele {
 					'; 
 
 
-		if(($res = $this->_db->query($requete)) ==	 true)
+		if(($res = $this->_db->query($requete)) == true)
 		{
 			if($res->num_rows)
 			{
@@ -72,9 +72,6 @@ class Bouteille extends Modele {
 			throw new Exception("Erreur de requête sur la base de donnée", 1);
 			 //$this->_db->error;
 		}
-		
-		
-		
 		return $rows;
 	}
 	
@@ -133,7 +130,7 @@ class Bouteille extends Modele {
 	public function ajouterBouteilleCellier($data)
 	{
 		//TODO : Valider les données.
-		// var_dump($data);	
+		//var_dump($data);	
 		
 		$requete = "INSERT INTO vino__cellier(id_bouteille,date_achat,garde_jusqua,notes,prix,quantite,millesime) VALUES (".
 		"'".$data->id_bouteille."',".
@@ -160,11 +157,9 @@ class Bouteille extends Modele {
 	 */
 	public function modifierQuantiteBouteilleCellier($id, $nombre)
 	{
-		//TODO : Valider les données.
-			
-			
+		// TODO : Valider les données.
 		$requete = "UPDATE vino__cellier SET quantite = GREATEST(quantite + ". $nombre. ", 0) WHERE id = ". $id;
-		//echo $requete;
+		// echo $requete;
         $res = $this->_db->query($requete);
         
 		return $res;

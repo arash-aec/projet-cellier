@@ -1,15 +1,27 @@
-Possède, 0N USAGER, 11 CELLIER
+:
+:
+:
+PAYS : id, pays
+:
+:
+
+ROLE : id, role
+Sera, 11 USAGER, ON ROLE
+:
+Provient, 11 BOUTEILLE, ON PAYS
+:
+:
+
+:
 USAGER : id, nom, prenom, courriel, mot_de_passe
-Fait, 0N USAGER, 11 LISTE_ACHAT
-
-CELLIER : id, date_achat, garde_jusqua, notes, prix, quantite, millesime
-Contient, 0N CELLIER, 0N BOUTEILLE : id_cellier, id_bouteille
-LISTE_ACHAT : id, quantite, prix, date
-
-Est, 11 BOUTEILLE, 0N TYPE
+Liste_achat , 0N USAGER, 0N BOUTEILLE : id_liste, id_bouteille, quantite
 BOUTEILLE : id, nom, image, code_saq, pays, description, prix_saq, url_saq, url_img, format, type
-Comporte, 0N LISTE_ACHAT, 0N BOUTEILLE : id_liste, id_bouteille
-
+Est, 11 BOUTEILLE, 0N TYPE
 TYPE : id, type
+
+:
+Possède, 0N USAGER, 11 CELLIER
+CELLIER : id, date_achat, garde_jusqua, notes, prix, quantite, millesime
+Contient, 0N CELLIER, 0N BOUTEILLE : id_cellier, id_bouteille, quantite
 :
 :

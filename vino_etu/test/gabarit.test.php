@@ -48,12 +48,13 @@
 			?>
 			
 			<h2>Bouteille::autocomplete($nom, $nb_resultat=10)</h2>
-			<h3>$nom = "ch*teau", $nb_resultat = 10</h3>
+			<h3>$nom = "v*n", $nb_resultat = 10</h3>
 			<?php
 
 			$bout = new Bouteille();
+
 			try{
-				$nom = "ch*teau";
+				$nom = "v*n";
 				$nb_resultat = 10;
 				$listeBouteilleCellier = $bout -> autocomplete($nom, 10);
 				echo Utilitaires::afficheTable($listeBouteilleCellier);	
@@ -63,12 +64,12 @@
 				echo $e->getMessage();
 			}
 			?>
-			<h3>$nom = "chateau", $nb_resultat = 10</h3>
+			<h3>$nom = "vin", $nb_resultat = 10</h3>
 			<?php
 
 			$bout = new Bouteille();
 			try{
-				$nom = "chateau";
+				$nom = "vin";
 				$nb_resultat = 10;
 				$listeBouteilleCellier = $bout -> autocomplete($nom, 10);
 				echo Utilitaires::afficheTable($listeBouteilleCellier);	
@@ -81,7 +82,7 @@
 			?>
 			
 			
-			
+
 			<h2>Bouteille::getListeBouteilleCellier()</h2>
 			<h3></h3>
 			<?php
