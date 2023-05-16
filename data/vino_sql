@@ -27,9 +27,7 @@ CREATE TABLE IF NOT EXISTS `vino_db`.`vino__cellier` (
   `millesime` INT(11) NULL DEFAULT NULL,
   `usager_id` INT(11) NULL DEFAULT NULL,
   PRIMARY KEY (`id`))
-ENGINE = InnoDB
-AUTO_INCREMENT = 69
-DEFAULT CHARACTER SET = latin1;
+  ENGINE=InnoDB  DEFAULT CHARSET=latin1;
 
 
 -- -----------------------------------------------------
@@ -52,36 +50,34 @@ CREATE TABLE IF NOT EXISTS `vino_db`.`vino__bouteille_has_vino__cellier` (
     REFERENCES `vino_db`.`vino__cellier` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
-ENGINE = InnoDB
-DEFAULT CHARACTER SET = latin1;
+  ENGINE=InnoDB  DEFAULT CHARSET=latin1;
 
 
 -- -----------------------------------------------------
 -- Table `vino_db`.`vino__type`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `vino_db`.`vino__type` (
-  `id` INT(11) NOT NULL,
+  `id` INT(11) NOT NULL AUTO_INCREMENT,
   `type` VARCHAR(20) NOT NULL,
   PRIMARY KEY (`id`))
-ENGINE = InnoDB
-DEFAULT CHARACTER SET = latin1;
+  ENGINE=InnoDB  DEFAULT CHARSET=latin1;
 
 
 -- -----------------------------------------------------
 -- Table `vino_db`.`vino__role`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `vino_db`.`vino__role` (
-  `id` INT(11) NOT NULL,
+  `id` INT(11) NOT NULL AUTO_INCREMENT,
   `role` VARCHAR(45) NOT NULL,
   PRIMARY KEY (`id`))
-ENGINE = InnoDB;
+  ENGINE=InnoDB  DEFAULT CHARSET=latin1;
 
 
 -- -----------------------------------------------------
 -- Table `vino_db`.`vino__usager`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `vino_db`.`vino__usager` (
-  `id` INT(11) NOT NULL,
+  `id` INT(11) NOT NULL AUTO_INCREMENT,
   `nom` VARCHAR(100) NOT NULL,
   `prenom` VARCHAR(100) NOT NULL,
   `courriel` VARCHAR(255) NOT NULL,
@@ -95,34 +91,34 @@ CREATE TABLE IF NOT EXISTS `vino_db`.`vino__usager` (
     REFERENCES `vino_db`.`vino__role` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
-ENGINE = InnoDB;
+  ENGINE=InnoDB  DEFAULT CHARSET=latin1;
 
 
 -- -----------------------------------------------------
 -- Table `vino_db`.`vino__pays`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `vino_db`.`vino__pays` (
-  `id` INT(11) NOT NULL,
+  `id` INT(11) NOT NULL AUTO_INCREMENT,
   `pays` VARCHAR(50) NOT NULL,
   PRIMARY KEY (`id`))
-ENGINE = InnoDB;
+  ENGINE=InnoDB  DEFAULT CHARSET=latin1;
 
 
 -- -----------------------------------------------------
 -- Table `vino_db`.`vino__bouteille`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `vino_db`.`vino__bouteille` (
-  `id` INT(11) NOT NULL,
+  `id` INT(11) NOT NULL AUTO_INCREMENT,
   `nom` VARCHAR(200) NULL,
   `image` VARCHAR(255) NULL,
   `code_saq` VARCHAR(50) NULL,
-  `pays` INT(11) NOT NULL,
+  `pays` INT(11) NULL,
   `description` VARCHAR(200) NULL,
   `prix_saq` FLOAT NULL,
   `url_saq` VARCHAR(200) NULL,
   `url_img` VARCHAR(200) NULL,
   `format` VARCHAR(20) NULL,
-  `type` INT(11) NOT NULL,
+  `type` INT(11) NULL,
   PRIMARY KEY (`id`),
   INDEX `fk_vino__bouteille_vino__type1_idx` (`type` ASC),
   INDEX `fk_vino__bouteille_vino__pays1_idx` (`pays` ASC),
@@ -136,14 +132,14 @@ CREATE TABLE IF NOT EXISTS `vino_db`.`vino__bouteille` (
     REFERENCES `vino_db`.`vino__pays` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
-ENGINE = InnoDB;
+  ENGINE=InnoDB  DEFAULT CHARSET=latin1;
 
 
 -- -----------------------------------------------------
 -- Table `vino_db`.`vino__liste_achat`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `vino_db`.`vino__liste_achat` (
-  `vino__usager_id` INT(11) NOT NULL,
+  `vino__usager_id` INT(11) NOT NULL  AUTO_INCREMENT,
   `vino__bouteille_id` INT(11) NOT NULL,
   `quantite` INT(11) NULL,
   PRIMARY KEY (`vino__usager_id`, `vino__bouteille_id`),
@@ -159,7 +155,7 @@ CREATE TABLE IF NOT EXISTS `vino_db`.`vino__liste_achat` (
     REFERENCES `vino_db`.`vino__bouteille` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
-ENGINE = InnoDB;
+  ENGINE=InnoDB  DEFAULT CHARSET=latin1;
 
 
 SET SQL_MODE=@OLD_SQL_MODE;
@@ -178,6 +174,12 @@ INSERT INTO `vino__pays` VALUES(8, 'Chili');
 INSERT INTO `vino__pays` VALUES(9, 'Portugal');
 INSERT INTO `vino__pays` VALUES(10, 'Brezil');
 INSERT INTO `vino__pays` VALUES(11, 'Australie');
+INSERT INTO `vino__pays` VALUES(12, 'Argentine');
+INSERT INTO `vino__pays` VALUES(13, 'Allemagne');
+INSERT INTO `vino__pays` VALUES(14, 'Afrique du sud');
+INSERT INTO `vino__pays` VALUES(15, 'Nouvelle-Zélande');
+INSERT INTO `vino__pays` VALUES(16, 'Grèce');
+INSERT INTO `vino__pays` VALUES(17, "Arménie (République d')");
 
 INSERT INTO `vino__bouteille` VALUES(1, 'Borsao Seleccion', 'https://www.saq.com/media/catalog/product/1/0/10324623-1_1602104750.png?width=367&height=550&canvas=367,550&quality=80&fit=bounds', '10324623', 1, 'Vin rouge\r\n         \r\n      \r\n      \r\n      Espagne, 750 ml\r\n      \r\n      \r\n      Code SAQ : 10324623', 11, 'https://www.saq.com/page/fr/saqcom/vin-rouge/borsao-seleccion/10324623', 'https://www.saq.com/media/catalog/product/1/0/10324623-1_1602104750.png?width=367&height=550&canvas=367,550&quality=80&fit=bounds', ' 750 ml', 1);
 INSERT INTO `vino__bouteille` VALUES(2, 'Monasterio de Las Vinas Gran Reserva', 'https://www.saq.com/media/catalog/product/1/0/10359156-1_1580596511.png?width=367&height=550&canvas=367,550&quality=80&fit=bounds', '10359156', 1, 'Vin rouge\r\n         \r\n      \r\n      \r\n      Espagne, 750 ml\r\n      \r\n      \r\n      Code SAQ : 10359156', 19, 'https://www.saq.com/page/fr/saqcom/vin-rouge/monasterio-de-las-vinas-gran-reserva/10359156', 'https://www.saq.com/media/catalog/product/1/0/10359156-1_1580596511.png?width=367&height=550&canvas=367,550&quality=80&fit=bounds', ' 750 ml', 1);
@@ -192,13 +194,13 @@ INSERT INTO `vino__bouteille` VALUES(10, 'Tenuta Il Falchetto Bricco Paradiso -.
 
 INSERT INTO `vino__cellier` VALUES(1, 10, '2019-01-16', '', '', 0, 3, 0, null);
 INSERT INTO `vino__cellier` VALUES(2, 10, '2019-01-16', '', '', 0, 1, 0, null);
-INSERT INTO `vino__cellier` VALUES(3, 5, '2019-01-16', '2020', '2019-01-16', 22, 10, 1999, null);
+INSERT INTO `vino__cellier` VALUES(3, 5, '2019-01-16', '2020', '', 22, 10, 1999, null);
 INSERT INTO `vino__cellier` VALUES(4, 5, '2019-01-16', '', '', 0, 1, 0, null);
 INSERT INTO `vino__cellier` VALUES(5, 5, '2019-01-10', '', '', 0, 1, 0, null);
 INSERT INTO `vino__cellier` VALUES(6, 0, '2019-01-16', '', '', 0, 1, 0, null);
 INSERT INTO `vino__cellier` VALUES(7, 0, '2019-01-16', '', '', 0, 1, 0, null);
 INSERT INTO `vino__cellier` VALUES(8, 5, '2019-01-16', '', '', 0, 10, 2000, null);
-INSERT INTO `vino__cellier` VALUES(9, 3, '2019-01-26', 'non', '2019-01-26', 23.52, 1, 2015, null);
+INSERT INTO `vino__cellier` VALUES(9, 3, '2019-01-26', 'non', '', 23.52, 1, 2015, null);
 
 INSERT INTO `vino__type` VALUES(1, 'Vin rouge');
 INSERT INTO `vino__type` VALUES(2, 'Vin blanc');
