@@ -49,10 +49,12 @@ class Bouteille extends Modele {
 						b.url_saq, 
 						b.pays, 
 						b.description,
-						t.type 
+						t.type,
+						p.pays
 					from vino__cellier c 
 					INNER JOIN vino__bouteille b ON c.id_bouteille = b.id
 					INNER JOIN vino__type t ON t.id = b.type
+					INNER JOIN vino__pays p ON p.id = b.pays
 					'; 
 
 
@@ -188,10 +190,12 @@ class Bouteille extends Modele {
 					b.url_saq, 
 					b.pays, 
 					b.description,
-					t.type 
+					t.type,
+					p.pays
 					from vino__cellier c 
 					INNER JOIN vino__bouteille b ON c.id_bouteille = b.id
 					INNER JOIN vino__type t ON t.id = b.type
+					INNER JOIN vino__pays p ON p.id = b.pays
 					WHERE c.id = ?';
 	
 		// Préparer la requête SQL pour l'exécution en utilisant la variable de connexion à la base de données

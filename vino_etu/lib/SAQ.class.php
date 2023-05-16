@@ -44,7 +44,8 @@ class SAQ extends Modele {
         curl_setopt_array($s,array(
             CURLOPT_URL => $url,
             CURLOPT_RETURNTRANSFER => true,
-			CURLOPT_CAINFO => 'C:\Program Files\cacert.pem', //une certificat pour pouvoir obtenir des informations de la SAQ
+			// Pour PC : 
+			//CURLOPT_CAINFO => 'C:\Program Files\cacert.pem', //une certificat pour pouvoir obtenir des informations de la SAQ
             CURLOPT_USERAGENT=>'Mozilla/5.0 (Windows NT 6.1; Win64; x64; rv:60.0) Gecko/20100101 Firefox/60.0',
             CURLOPT_ENCODING=>'gzip, deflate',
             CURLOPT_HTTPHEADER=>array(
@@ -54,7 +55,7 @@ class SAQ extends Modele {
                     'Connection: keep-alive',
                     'Upgrade-Insecure-Requests: 1',
             ),
-    ));
+    	));
 
 		// Exécution de la requête GET
 		// Envoie une requête GET à la page web et récupère le code HTML de la page.
@@ -71,9 +72,9 @@ class SAQ extends Modele {
 		$elements = $doc -> getElementsByTagName("li");
 		$i = 0;
 		foreach ($elements as $key => $noeud) {
-	
-		// Boucle à travers les éléments li de la page HTML
-    	// Vérifie si l'élément li contient la classe "product-item" et extrait les informations sur le produit en appelant la fonction "recupereInfo".
+		
+			// Boucle à travers les éléments li de la page HTML
+			// Vérifie si l'élément li contient la classe "product-item" et extrait les informations sur le produit en appelant la fonction "recupereInfo".
 			if (strpos($noeud -> getAttribute('class'), "product-item") !== false) {
 
 			
@@ -81,8 +82,8 @@ class SAQ extends Modele {
 				echo "<p>".$info->nom;
 				$retour = $this -> ajouteProduit($info);
 				echo "<br>Code de retour : " . $retour -> raison . "<br>";
-		// Ajoute les informations sur le produit à la base de données et affiche le résultat de l'opération
-        // Appelle la fonction "ajouteProduit" pour ajouter les informations sur le produit à une base de données et affiche le résultat de l'opération.
+				// Ajoute les informations sur le produit à la base de données et affiche le résultat de l'opération
+				// Appelle la fonction "ajouteProduit" pour ajouter les informations sur le produit à une base de données et affiche le résultat de l'opération.
 				if ($retour -> succes == false) {
 					echo "<pre>";
 					var_dump($info);
@@ -165,9 +166,6 @@ class SAQ extends Modele {
 				{
 					$info -> desc -> code_SAQ = trim($aRes[0]);
 				}
-				
-				
-				
 			}
 		}
 
@@ -186,25 +184,40 @@ class SAQ extends Modele {
 		$retour -> raison = '';
 
 		// Récupère l'id du type de bouteille correspondant
-		$rows = $this -> _db -> query("select id from vino__type where type = '" . $bte -> desc -> type . "'");
+		$rowsType = $this -> _db -> query("select id from vino__type where type = '" . $bte -> desc -> type . "'");
 		
-		if ($rows -> num_rows == 1) {
-			$type = $rows -> fetch_assoc();
+		if ($rowsType -> num_rows == 1) {
+			$type = $rowsType -> fetch_assoc();
 			// Stocke l'id récupéré dans une variable
 			$type = $type['id'];
 
-			$rows = $this -> _db -> query("select id from vino__bouteille where code_saq = '" . $bte -> desc -> code_SAQ . "'");
-			if ($rows -> num_rows < 1) {
-				$prix = number_format(floatval(str_replace(',', '.', $bte->prix)), 2, '.', '');
-				$this -> stmt -> bind_param("sissssssss", $bte -> nom, $type, $bte -> img, $bte -> desc -> code_SAQ, $bte -> desc -> pays, $bte -> desc -> texte, $prix, $bte -> url, $bte -> img, $bte -> desc -> format);
-				$retour -> succes = $this -> stmt -> execute();
-				$retour -> raison = self::INSERE;
+			// Récupère l'id du pays correspondant
+			$rowsPays = $this -> _db -> query("select id from vino__pays where pays = '" . $bte -> desc -> pays . "'");
+
+			if($rowsPays ->num_rows == 1) {
+				$pays = $rowsPays -> fetch_assoc();
+				// Stocke l'id récupéré dans une variable
+				$pays = $pays['id'];
 				
-			} else {
-				// Si la bouteille existe déjà, retourne une erreur de duplication
-				$retour -> succes = false;
-				$retour -> raison = self::DUPLICATION;
+				// Récupère la bouteille SAQ
+				$rowsCodeSaq = $this -> _db -> query("select id from vino__bouteille where code_saq = '" . $bte -> desc -> code_SAQ . "'");
+				if ($rowsCodeSaq -> num_rows < 1) {
+					$prix = number_format(floatval(str_replace(',', '.', $bte->prix)), 2, '.', '');
+					$this -> stmt -> bind_param("sississsss", $bte -> nom, $type, $bte -> img, $bte -> desc -> code_SAQ, $pays, $bte -> desc -> texte, $prix, $bte -> url, $bte -> img, $bte -> desc -> format);
+					$retour -> succes = $this -> stmt -> execute();
+					$retour -> raison = self::INSERE;
+					
+				} else {
+					// Si la bouteille existe déjà, retourne une erreur de duplication
+					$retour -> succes = false;
+					$retour -> raison = self::DUPLICATION;
+				}
 			}
+			else {
+				$retour -> succes = false;
+				$retour -> raison = self::ERREURDB;
+	
+			}	
 		} else {
 			$retour -> succes = false;
 			$retour -> raison = self::ERREURDB;
