@@ -45,7 +45,8 @@ class SAQ extends Modele {
         curl_setopt_array($s,array(
             CURLOPT_URL => $url,
             CURLOPT_RETURNTRANSFER => true,
-			CURLOPT_CAINFO => 'C:\Program Files\cacert.pem', //une certificat pour pouvoir obtenir des informations de la SAQ
+			// Pour PC : 
+			//CURLOPT_CAINFO => 'C:\Program Files\cacert.pem', //une certificat pour pouvoir obtenir des informations de la SAQ
             CURLOPT_USERAGENT=>'Mozilla/5.0 (Windows NT 6.1; Win64; x64; rv:60.0) Gecko/20100101 Firefox/60.0',
             CURLOPT_ENCODING=>'gzip, deflate',
             CURLOPT_HTTPHEADER=>array(
@@ -187,25 +188,40 @@ class SAQ extends Modele {
 		$retour -> raison = '';
 
 		// Récupère l'id du type de bouteille correspondant
-		$rows = $this -> _db -> query("select id from vino__type where type = '" . $bte -> desc -> type . "'");
+		$rowsType = $this -> _db -> query("select id from vino__type where type = '" . $bte -> desc -> type . "'");
 		
-		if ($rows -> num_rows == 1) {
-			$type = $rows -> fetch_assoc();
+		if ($rowsType -> num_rows == 1) {
+			$type = $rowsType -> fetch_assoc();
 			// Stocke l'id récupéré dans une variable
 			$type = $type['id'];
 
-			$rows = $this -> _db -> query("select id from vino__bouteille where code_saq = '" . $bte -> desc -> code_SAQ . "'");
-			if ($rows -> num_rows < 1) {
-				$prix = number_format(floatval(str_replace(',', '.', $bte->prix)), 2, '.', '');
-				$this -> stmt -> bind_param("sissssssss", $bte -> nom, $type, $bte -> img, $bte -> desc -> code_SAQ, $bte -> desc -> pays, $bte -> desc -> texte, $prix, $bte -> url, $bte -> img, $bte -> desc -> format);
-				$retour -> succes = $this -> stmt -> execute();
-				$retour -> raison = self::INSERE;
+			// Récupère l'id du pays correspondant
+			$rowsPays = $this -> _db -> query("select id from vino__pays where pays = '" . $bte -> desc -> pays . "'");
+
+			if($rowsPays ->num_rows == 1) {
+				$pays = $rowsPays -> fetch_assoc();
+				// Stocke l'id récupéré dans une variable
+				$pays = $pays['id'];
 				
-			} else {
-				// Si la bouteille existe déjà, retourne une erreur de duplication
-				$retour -> succes = false;
-				$retour -> raison = self::DUPLICATION;
+				// Récupère la bouteille SAQ
+				$rowsCodeSaq = $this -> _db -> query("select id from vino__bouteille where code_saq = '" . $bte -> desc -> code_SAQ . "'");
+				if ($rowsCodeSaq -> num_rows < 1) {
+					$prix = number_format(floatval(str_replace(',', '.', $bte->prix)), 2, '.', '');
+					$this -> stmt -> bind_param("sissssssss", $bte -> nom, $type, $bte -> img, $bte -> desc -> code_SAQ, $bte -> desc -> pays, $bte -> desc -> texte, $prix, $bte -> url, $bte -> img, $bte -> desc -> format);
+					$retour -> succes = $this -> stmt -> execute();
+					$retour -> raison = self::INSERE;
+					
+				} else {
+					// Si la bouteille existe déjà, retourne une erreur de duplication
+					$retour -> succes = false;
+					$retour -> raison = self::DUPLICATION;
+				}
 			}
+			else {
+				$retour -> succes = false;
+				$retour -> raison = self::ERREURDB;
+	
+			}	
 		} else {
 			$retour -> succes = false;
 			$retour -> raison = self::ERREURDB;
