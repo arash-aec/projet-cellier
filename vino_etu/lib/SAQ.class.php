@@ -56,7 +56,7 @@ class SAQ extends Modele {
                     'Connection: keep-alive',
                     'Upgrade-Insecure-Requests: 1',
             ),
-    ));
+    	));
 
 		// Exécution de la requête GET
 		// Envoie une requête GET à la page web et récupère le code HTML de la page.
@@ -73,9 +73,9 @@ class SAQ extends Modele {
 		$elements = $doc -> getElementsByTagName("li");
 		$i = 0;
 		foreach ($elements as $key => $noeud) {
-	
-		// Boucle à travers les éléments li de la page HTML
-    	// Vérifie si l'élément li contient la classe "product-item" et extrait les informations sur le produit en appelant la fonction "recupereInfo".
+		
+			// Boucle à travers les éléments li de la page HTML
+			// Vérifie si l'élément li contient la classe "product-item" et extrait les informations sur le produit en appelant la fonction "recupereInfo".
 			if (strpos($noeud -> getAttribute('class'), "product-item") !== false) {
 
 			
@@ -83,8 +83,8 @@ class SAQ extends Modele {
 				echo "<p>".$info->nom;
 				$retour = $this -> ajouteProduit($info);
 				echo "<br>Code de retour : " . $retour -> raison . "<br>";
-		// Ajoute les informations sur le produit à la base de données et affiche le résultat de l'opération
-        // Appelle la fonction "ajouteProduit" pour ajouter les informations sur le produit à une base de données et affiche le résultat de l'opération.
+				// Ajoute les informations sur le produit à la base de données et affiche le résultat de l'opération
+				// Appelle la fonction "ajouteProduit" pour ajouter les informations sur le produit à une base de données et affiche le résultat de l'opération.
 				if ($retour -> succes == false) {
 					echo "<pre>";
 					var_dump($info);
@@ -167,9 +167,6 @@ class SAQ extends Modele {
 				{
 					$info -> desc -> code_SAQ = trim($aRes[0]);
 				}
-				
-				
-				
 			}
 		}
 
@@ -207,7 +204,7 @@ class SAQ extends Modele {
 				$rowsCodeSaq = $this -> _db -> query("select id from vino__bouteille where code_saq = '" . $bte -> desc -> code_SAQ . "'");
 				if ($rowsCodeSaq -> num_rows < 1) {
 					$prix = number_format(floatval(str_replace(',', '.', $bte->prix)), 2, '.', '');
-					$this -> stmt -> bind_param("sissssssss", $bte -> nom, $type, $bte -> img, $bte -> desc -> code_SAQ, $bte -> desc -> pays, $bte -> desc -> texte, $prix, $bte -> url, $bte -> img, $bte -> desc -> format);
+					$this -> stmt -> bind_param("sississsss", $bte -> nom, $type, $bte -> img, $bte -> desc -> code_SAQ, $pays, $bte -> desc -> texte, $prix, $bte -> url, $bte -> img, $bte -> desc -> format);
 					$retour -> succes = $this -> stmt -> execute();
 					$retour -> raison = self::INSERE;
 					
