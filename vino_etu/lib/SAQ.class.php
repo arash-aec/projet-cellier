@@ -46,7 +46,7 @@ class SAQ extends Modele {
             CURLOPT_URL => $url,
             CURLOPT_RETURNTRANSFER => true,
 			// Pour PC : 
-			//CURLOPT_CAINFO => 'C:\Program Files\cacert.pem', //une certificat pour pouvoir obtenir des informations de la SAQ
+			CURLOPT_CAINFO => 'C:\Program Files\cacert.pem', //une certificat pour pouvoir obtenir des informations de la SAQ
             CURLOPT_USERAGENT=>'Mozilla/5.0 (Windows NT 6.1; Win64; x64; rv:60.0) Gecko/20100101 Firefox/60.0',
             CURLOPT_ENCODING=>'gzip, deflate',
             CURLOPT_HTTPHEADER=>array(
