@@ -15,12 +15,10 @@ const AppRouter = () => {
     <Router>
       <Entete />
       <Routes>
-        <Route path="/" element={<Accueil />}  />
-        <Route path="/login" element={<Login />}  />
-        <Route path="/inscription" element={<Inscription />}  />
-        <Route path="/usager" element={<Usager />}  />
-        <Route path="/cellier" element={<Cellier />}  />
-        <Route path="*" element={<NonTrouve />}  />
+        <Route path="/" element={<Accueil />} />
+        <Route path="/usager" element={<Usager />} />
+        <Route path="/cellier" element={<Cellier />} />
+        <Route path="*" element={<NonTrouve />} />
       </Routes>
       <Footer />
     </Router>
