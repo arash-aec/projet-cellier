@@ -6,7 +6,7 @@ export default class ListeCellier extends React.Component {
     this.state = {
       error: null,
       isLoaded: false,
-      items: []
+      listeCellier: []
     };
   }
 
@@ -17,7 +17,7 @@ export default class ListeCellier extends React.Component {
         (result) => {
           this.setState({
             isLoaded: true,
-            items: result
+            listeCellier: result
           });
         },
         (error) => {
@@ -30,7 +30,7 @@ export default class ListeCellier extends React.Component {
   }
 
   render() {
-    const { error, isLoaded, items } = this.state;
+    const { error, isLoaded, listeCellier } = this.state;
     if (error) {
       return <div>Error: {error.message}</div>;
     } else if (!isLoaded) {
@@ -38,9 +38,9 @@ export default class ListeCellier extends React.Component {
     } else {
       return (
         <ul>
-          {items.map(item => (
+          {listeCellier.map(item => (
             <li key={item.id}>
-              {item.id_bouteille} {item.prix}
+              <strong>{item.id_bouteille}</strong> : {item.notes}
             </li>
           ))}
         </ul>
