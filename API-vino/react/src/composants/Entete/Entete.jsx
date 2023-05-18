@@ -1,6 +1,7 @@
 import React from "react";
 
 
+
 const Entete = () => {
   
   return (
@@ -15,7 +16,9 @@ const Entete = () => {
         <nav className="nav">
             <ul className="menu">
             <li><a href="/">Accueil</a></li>
-            <li><a href="/cellier">Cellier</a></li>
+            <li><a link="/cellier">Cellier</a></li>
+          
+
             </ul>
         </nav>
         </header>

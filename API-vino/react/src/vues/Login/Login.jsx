@@ -1,6 +1,9 @@
 import React from "react";
+import Input from "../../composants/UI/Input/Input";
 
-const Login = () => {
+const Login = (props) => {
+
+
   return (
     <>
       <div className="modal-overlay-connexion">
@@ -9,12 +12,11 @@ const Login = () => {
           <h2>Connexion</h2>
           <form>
             <label htmlFor="email">Votre courriel:</label>
-            <input type="email" id="email" name="email" required />
-        
+            <Input type="email" id="email" name="email" required />
             <label htmlFor="password">Votre mot de passe:</label>
-            <input type="current-password" id="password" name="password" required />
+            <Input type="current-password" id="password" name="password" required />
         
-            <input type="submit" value="Connexion" />
+            <Input type="submit" value="Connexion" />
           </form>
         </div>
       </div>
