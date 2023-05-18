@@ -1,17 +1,5 @@
 import React from "react";
-import Input from "../../composants/UI/Input/Input";
 
-const Login = (props) => {
-
-state = {
-  form : {
-    elementType: 'input',
-    elementConfig: {
-      type: 'text',
-      placeholder: ''
-    }
-  }
-}
 
 
 
