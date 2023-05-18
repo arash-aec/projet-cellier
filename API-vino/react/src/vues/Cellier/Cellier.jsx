@@ -1,4 +1,5 @@
 import React from "react";
+
 const Cellier = () => {
   
   return (
@@ -17,4 +18,3 @@ const Cellier = () => {
   )
 }
 export default Cellier
-
