@@ -1,0 +1,71 @@
+.modal-overlay, .modal-overlay-connexion {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: block;
+    z-index: 1;
+}
+
+/* Style for modal window */
+.modal, .modal-connexion {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: white;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+    width: 500px;
+    max-width: 100%;
+    z-index: 999;
+    display: block;
+}
+
+/* Style for close button */
+.close-btn, .close-btn-connexion {
+    position: absolute;
+    top: 2vh;
+    right: 2vh;
+    font-size: 24px;
+    cursor: pointer;
+}
+
+input[type="text"], input[type="current-password"], input[type="email"] {
+    padding: 10px;
+    margin-bottom: 20px;
+    border-radius: 5px;
+    border: none;
+    background-color: #f2f2f2;
+    width: 100%;
+}
+.ajouter .nouvelleBouteille .rechercheListeBouteille {
+    background-color: #7e003f36;
+}
+
+input[type="submit"],
+.btn-ajouter {
+    background-color:#7E003F;
+    color: white;
+    padding: 1em 1.5em;
+    border-radius: 5px;
+    border: none;
+    cursor: pointer;
+    font-size: 18px;
+    display: block;
+    margin: 0 auto;
+    margin-top: 4vh;
+    text-transform: uppercase;
+}
+
+input[type="submit"]:hover {
+    background-color:#5c2231;
+}
+.modal h2, .modal-connexion h2{
+    text-align: center;
+    padding: 2vh;
+    padding-bottom: 40px;
+}
