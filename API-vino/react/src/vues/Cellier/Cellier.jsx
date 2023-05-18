@@ -4,16 +4,19 @@ const Cellier = () => {
   
   return (
     <>
+      <div className="cellier">
         <section className="header-image">
-            <img src="../public/img/cellier.jpeg" alt="image d'un cellier"/>
-            <div>
+            <img src="../public/images/cellier.jpeg" alt="image d'un cellier"/>
+            <div className="header-contenu">
                 <h1>Cellier</h1>
-                <p><strong>Gère des celliers facilement</strong></p>
                 <div className="header-image-btn">
-                <div><a className="header-image-button" href="#">Ajoute un cellier</a></div>
+                  <div>
+                    <a className="header-image-button" href="#">Ajoute un cellier</a>
+                  </div>
                 </div>
             </div>
         </section>  
+      </div>
     </>
   )
 }

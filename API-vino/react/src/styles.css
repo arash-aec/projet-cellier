@@ -7,10 +7,18 @@
 /* ---------------------------------- General */
 @import "./assets/css/general.css";
 
+/* ---------------------------------- Formulaires */
+@import "./assets/css/formulaire.css";
+
 /* ---------------------------------- NonTrouve */
 @import "./vues/NonTrouve/NonTrouve.css";
+
+/* ---------------------------------- Entete */
+@import "./composants/Entete/Entete.css";
 
 /* ---------------------------------- Pages */
 @import "./vues/Accueil/Accueil.css";
 @import "./vues/Cellier/Cellier.css";
 
+/* ---------------------------------- Pied */
+@import "./composants/Pied/Pied.css";
