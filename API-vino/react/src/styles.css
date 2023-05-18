@@ -7,6 +7,9 @@
 /* ---------------------------------- General */
 @import "./assets/css/general.css";
 
+/* ---------------------------------- Formulaires */
+@import "./assets/css/formulaire.css";
+
 /* ---------------------------------- NonTrouve */
 @import "./vues/NonTrouve/NonTrouve.css";
 
