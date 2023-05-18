@@ -1,21 +1,20 @@
 import React from "react";
+import Input from "../../composants/UI/Input/Input";
 
-const Login = () => {
-  // const openModalConnexionBtn = document.getElementById("open-modal-connexion-btn");
-  // const modalOverlayConnexion = document.querySelector(".modal-overlay-connexion");
-  // const modalConnexion = document.querySelector(".modal-connexion");
-  // const closeBtnConnexion = document.querySelector(".close-btn-connexion");
-  
-  // openModalConnexionBtn.addEventListener("click", function() {
-  //   modalOverlayConnexion.style.display = "block";
-  //   modalConnexion.style.display = "block";
-  // });
-  
-  // closeBtnConnexion.addEventListener("click", function() {
-  //   modalOverlayConnexion.style.display = "none";
-  //   modalConnexion.style.display = "none";
-  // });
-  
+const Login = (props) => {
+
+state = {
+  form : {
+    elementType: 'input',
+    elementConfig: {
+      type: 'text',
+      placeholder: ''
+    }
+  }
+}
+
+
+
   return (
     <>
       <div className="modal-overlay-connexion">
@@ -24,12 +23,11 @@ const Login = () => {
           <h2>Connexion</h2>
           <form>
             <label htmlFor="email">Votre courriel:</label>
-            <input type="email" id="email" name="email" required />
-        
+            <Input type="email" id="email" name="email" required />
             <label htmlFor="password">Votre mot de passe:</label>
-            <input type="current-password" id="password" name="password" required />
+            <Input type="current-password" id="password" name="password" required />
         
-            <input type="submit" value="Connexion" />
+            <Input type="submit" value="Connexion" />
           </form>
         </div>
       </div>
