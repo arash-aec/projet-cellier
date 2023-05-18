@@ -7,8 +7,8 @@ const App = () => {
   return (
    <div className='root'>
 
-     <AppRouter />
-
+      <AppRouter />
+       
    </div>
   )
 }
