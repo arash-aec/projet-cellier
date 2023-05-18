@@ -18,4 +18,3 @@ const Cellier = () => {
   )
 }
 export default Cellier
-
