@@ -1,11 +1,14 @@
-import React from "react"
+import React from "react";
+import AppRouter from "./Router"
 
 
-function App() {
+const App = () => {
   
   return (
-   <div className='App'>
-      App
+   <div className='root'>
+
+     <AppRouter />
+
    </div>
   )
 }
