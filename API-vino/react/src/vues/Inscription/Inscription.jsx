@@ -1,4 +1,6 @@
 import React from "react";
+import Input from "../../composants/UI/Input/Input";
+
 
 const Inscription = () => {
   return (
@@ -9,21 +11,21 @@ const Inscription = () => {
           <h2>Inscription</h2>
           <form>
             <label htmlFor="nom">Votre nom:</label>
-            <input type="text" id="nom" name="nom" required />
+            <Input type="text" id="nom" name="nom" required />
 
             <label htmlFor="prenom">Votre prenom:</label>
-            <input type="text" id="prenom" name="prenom" required />
+            <Input type="text" id="prenom" name="prenom" required />
 
             <label htmlFor="email-inscrir">Votre courriel:</label>
-            <input type="email" id="email-inscrir" name="email" required />
+            <Input type="email" id="email-inscrir" name="email" required />
 
             <label htmlFor="password-inscrir">Mot de passe:</label>
-            <input type="current-password" id="password-inscrir" name="password-inscrir" required />
+            <Input type="current-password" id="password-inscrir" name="password-inscrir" required />
 
             <label htmlFor="confirmpass">Confirmez mot de passe:</label>
-            <input type="current-password" id="confirmpass" name="password" required />
+            <Input type="current-password" id="confirmpass" name="password" required />
 
-            <input type="submit" value="Enregistrer" />
+            <Input type="submit" value="Enregistrer" />
           </form>
         </div>
       </div>
