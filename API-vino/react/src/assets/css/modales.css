@@ -1,32 +1,36 @@
-.modal-overlay, .modal-overlay-connexion {
+/*-------------------------------------- Modales */
+.modal-overlay-inscription, 
+.modal-overlay-connexion {
     position: fixed;
     top: 0;
     left: 0;
     right: 0;
     bottom: 0;
     background-color: rgba(0, 0, 0, 0.5);
-    display: block;
+    display: none;
     z-index: 1;
 }
 
 /* Style for modal window */
-.modal, .modal-connexion {
+.modal-inscription, 
+.modal-connexion {
     position: absolute;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    background-color: white;
+    background-color: var(--white);
     padding: 20px;
     border-radius: 5px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
     width: 500px;
     max-width: 100%;
     z-index: 999;
-    display: block;
+    display: none;
 }
 
 /* Style for close button */
-.close-btn, .close-btn-connexion {
+.close-btn-inscription, 
+.close-btn-connexion {
     position: absolute;
     top: 2vh;
     right: 2vh;
@@ -34,7 +38,9 @@
     cursor: pointer;
 }
 
-input[type="text"], input[type="current-password"], input[type="email"] {
+input[type="text"], 
+input[type="current-password"], 
+input[type="email"] {
     padding: 10px;
     margin-bottom: 20px;
     border-radius: 5px;
@@ -48,8 +54,8 @@ input[type="text"], input[type="current-password"], input[type="email"] {
 
 input[type="submit"],
 .btn-ajouter {
-    background-color:#7E003F;
-    color: white;
+    background-color: var(--rouge-saq);
+    color: var(--white);
     padding: 1em 1.5em;
     border-radius: 5px;
     border: none;
@@ -62,10 +68,12 @@ input[type="submit"],
 }
 
 input[type="submit"]:hover {
-    background-color:#5c2231;
+    background-color: var(--rouge-violet);
 }
-.modal h2, .modal-connexion h2{
+.modal-inscription h2, 
+.modal-connexion h2 {
     text-align: center;
     padding: 2vh;
     padding-bottom: 40px;
+    text-transform: uppercase;
 }
