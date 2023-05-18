@@ -1,21 +1,6 @@
 import React from "react";
 
 const Login = () => {
-  // const openModalConnexionBtn = document.getElementById("open-modal-connexion-btn");
-  // const modalOverlayConnexion = document.querySelector(".modal-overlay-connexion");
-  // const modalConnexion = document.querySelector(".modal-connexion");
-  // const closeBtnConnexion = document.querySelector(".close-btn-connexion");
-  
-  // openModalConnexionBtn.addEventListener("click", function() {
-  //   modalOverlayConnexion.style.display = "block";
-  //   modalConnexion.style.display = "block";
-  // });
-  
-  // closeBtnConnexion.addEventListener("click", function() {
-  //   modalOverlayConnexion.style.display = "none";
-  //   modalConnexion.style.display = "none";
-  // });
-  
   return (
     <>
       <div className="modal-overlay-connexion">
