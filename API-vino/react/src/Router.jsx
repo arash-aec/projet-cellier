@@ -4,6 +4,7 @@ import Usager from './vues/Usager/Usager';
 import Inscription from './vues/Inscription/Inscription';
 import NonTrouve from "./vues/NonTrouve/NonTrouve";
 import Accueil from "./vues/Accueil/Accueil";
+import Cellier from "./vues/Cellier/Cellier";
 
 
 const AppRouter = () => {
