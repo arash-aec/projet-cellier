@@ -1,0 +1,15 @@
+/* ---------------------------------- Normalize */
+@import "./assets/css/normalize.css";
+
+/* ---------------------------------- Variables */
+@import "./assets/css/variable.css";
+
+/* ---------------------------------- General */
+@import "./assets/css/general.css";
+
+/* ---------------------------------- NonTrouve */
+@import "./vues/NonTrouve/NonTrouve.css";
+
+/* ---------------------------------- Pages */
+@import "./vues/Accueil/Accueil.css";
+
