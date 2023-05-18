@@ -3,7 +3,6 @@ import React from "react";
 const Cellier = () => {
   
   return (
-    <>
       <div className="cellier">
         <section className="header-image">
             <img src="../public/images/cellier.jpeg" alt="image d'un cellier"/>
@@ -11,13 +10,12 @@ const Cellier = () => {
                 <h1>Cellier</h1>
                 <div className="header-image-btn">
                   <div>
-                    <a className="header-image-button" href="#">Ajoute un cellier</a>
+                    <a className="bouton header-button" href="#">Ajoute un cellier</a>
                   </div>
                 </div>
             </div>
         </section>  
       </div>
-    </>
   )
 }
 export default Cellier

@@ -2,26 +2,6 @@
 footer {
 	padding: 0;
 }
-.footer-partage {
-	display: flex;
-	flex-direction: column;
-	gap: 4vh;
-	align-items: center;
-	justify-content: center;
-	padding: 6vh 0;
-	background-color: var(--black);
-	color: var(--white);
-}
-div.footer-partage-icone {
-	display: flex;
-	gap: 2vh;
-}
-.footer-partage-icone .fa{
-	font-size: 60px;
-}
-.footer-partage-icone .fa:hover{
-	color: var(--rouge-saq);
-}
 .footer-copyright {
 	display: flex;
 	flex-direction: column;
@@ -50,9 +30,6 @@ footer .footer-college p {
 
 /* Responsive */
 @media (min-width: 768px) {
-	.footer-partage {
-	  flex-direction: row;
-	}
 	.footer-copyright {
 	  flex-direction: row;
 	}

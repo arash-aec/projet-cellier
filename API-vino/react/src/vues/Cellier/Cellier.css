@@ -1,8 +1,8 @@
 .cellier .header-image {
-	min-height: 50vh;
+	min-height: 40vh;
 }
-.header-image img {
-	opacity: 0.8;
+.cellier .header-image>div {
+	background: linear-gradient(to right, var(--black), transparent);
 }
 .header-contenu {
 	display: flex;
