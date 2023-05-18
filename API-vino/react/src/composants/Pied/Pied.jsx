@@ -1,11 +1,8 @@
-import './Pied.css'
+import React from "react";
 
 const Footer = () => {
   
   return (
-  
-       
-    
     <div className="footer">
       <section className="footer-partage">
         <h2>PARTAGEZ-NOUS</h2>
@@ -22,11 +19,7 @@ const Footer = () => {
         <p className="footer-copyright-nom">Vino</p>
         <p>Mentions légales - Politique de confidentialité</p>
       </section>
-
-  
     </div>
-
-    
   )
 }
 export default Footer

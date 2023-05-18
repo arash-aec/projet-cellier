@@ -1,5 +1,7 @@
-.header-image {
+.cellier .header-image {
 	min-height: 50vh;
+}
+.header-image img {
 	opacity: 0.8;
 }
 .header-contenu {

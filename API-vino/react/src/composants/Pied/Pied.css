@@ -1,13 +1,3 @@
-:root{
-    --white: #f9f9f9;
-    --noire: #000;
-    --black: #36383F;
-    --gray: #85888C;
-    --rouge-saq: #7E003F;
-    --rouge: #cb3441;
-    --rouge-violet: #5c2231;
-  } 
-  
 /*-------------------------------------- Footer */
 footer {
 	padding: 0;
@@ -60,26 +50,6 @@ footer .footer-college p {
 
 /* Responsive */
 @media (min-width: 768px) {
-	.nav {
-	  max-height: none;
-	  top: 0;
-	  position: relative;
-	  width: fit-content;
-	  background-color: transparent;
-	}
-	.menu {
-	  flex-direction: row;  
-	}
-	.hamb {
-	  display: none;
-	}
-	.header-image-btn {
-	  flex-direction: row;
-	}
-	.presentation {
-	  flex-direction: row;
-	  gap: 2vh;
-	}
 	.footer-partage {
 	  flex-direction: row;
 	}
