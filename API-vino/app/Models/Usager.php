@@ -10,7 +10,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Usager extends Model
 {
-    protected $table = 'your_table_name';
+    protected $table = 'vino__usager';
     protected $primaryKey = 'id';
     public $timestamps = false;
 
