@@ -16,12 +16,13 @@
 /* ---------------------------------- NonTrouve */
 @import "./vues/NonTrouve/NonTrouve.css";
 
-/* ---------------------------------- Entete */
+/* ---------------------------------- Composants */
 @import "./composants/Entete/Entete.css";
+@import "./composants/Pied/Pied.css";
+@import "./composants/Bouteille/Bouteille.css";
 
-/* ---------------------------------- Pages */
+
+/* ---------------------------------- Vues */
 @import "./vues/Accueil/Accueil.css";
 @import "./vues/Cellier/Cellier.css";
-
-/* ---------------------------------- Pied */
-@import "./composants/Pied/Pied.css";
+@import "./vues/ListeBouteille/ListeBouteille.css";

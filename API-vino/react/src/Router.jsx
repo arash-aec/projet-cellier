@@ -5,7 +5,7 @@ import Entete from "./composants/Entete/Entete";
 import Usager from './vues/Usager/Usager';
 import NonTrouve from "./vues/NonTrouve/NonTrouve";
 import Accueil from "./vues/Accueil/Accueil";
-import ListeCellier from "./ListeCellier/ListeCellier";
+import ListeBouteille from "./vues/ListeBouteille/ListeBouteille";
 import Cellier from "./vues/Cellier/Cellier";
 
 
@@ -17,7 +17,7 @@ const AppRouter = () => {
       <Routes>
         <Route path="/" element={<Accueil />} />
         <Route path="/usager" element={<Usager />} />
-        <Route path="/listeCellier" element={<ListeCellier />} />
+        <Route path="/listeBouteille" element={<ListeBouteille />} />
         <Route path="/celliers" element={<Cellier />} />
         <Route path="*" element={<NonTrouve />} />
       </Routes>

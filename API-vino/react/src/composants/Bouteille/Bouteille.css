@@ -1,0 +1,51 @@
+.bouteille .img {
+	display: block;
+	margin: auto;
+	max-width: 120px;
+	object-fit: cover;
+}
+.bouteille .description .details-bouteille {
+	display: flex;
+	justify-content: space-between;
+	text-align: left;
+}
+.options {
+	display: flex;
+	justify-content: center;
+	flex-wrap: wrap;
+	gap: 5px;
+}
+.options button {
+	background-color: #f9f9f9;
+	border: 2px solid #36383F;
+	color: #36383F;
+	border-radius: 5px;
+	font-size: 16px;
+	padding: .8em 1em;
+	text-transform: uppercase;
+}
+.options button:hover {
+	background-color: #36383F;
+	border: 2px solid #f9f9f9;
+	color: #f9f9f9;
+}
+.quantite-chiffre {
+	padding: 0 1vh ;
+}
+.bouteille,
+.modifier,
+.ajouter {
+	background-color: #f9f9f9;
+	padding: 2vh;
+	border-radius: 5px;
+	box-shadow: 0px 0px 5px #fff;
+
+	display: flex;
+	flex-direction: column;
+	justify-content: space-around;
+	text-align: center;
+}
+.details-bouteille,
+.options {
+	margin: 2vh 0;
+}
