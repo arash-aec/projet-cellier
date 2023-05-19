@@ -32,6 +32,13 @@ Route::get('/cellier/{id}', function ($id) {
     $cellier = Cellier::find($id);
     return response()->json($cellier);
 });
+// Ajout d'un cellier
+Route::post('/celliers', function (Request $request) {
+    $cellier = new Cellier();
+    $cellier->nom = $request->input('nom');
+    $cellier->save();
+    return response()->json($cellier, 201);
+});
 // Modification d'un cellier
 Route::put('/cellier/{id}', function ($id, Request $request) {
     $cellier = Cellier::findOrFail($id);
