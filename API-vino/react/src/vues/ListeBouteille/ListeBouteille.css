@@ -1,0 +1,44 @@
+/*--------------------------------- Cellier */
+.cellier {
+	background-color: #f9f9f9;
+}
+.cellier-header {
+	padding: 6vh 4vh;
+}
+.cellier-titre {
+	color: #36383F;
+	text-align: center;
+	text-transform: uppercase;
+}
+.cellier-lien {
+	display: block;
+	max-width: max-content;
+	margin-left: auto;
+	margin-top: 2vh;
+	background-color: #7E003F;
+	color: #f9f9f9;
+	text-decoration: none;
+	padding: 1em 1.5em;
+	border-radius: 5px;
+	text-transform: uppercase;
+}
+.cellier-lien:hover {
+	background-color: #5c2231;
+}
+.cellier-liste {
+	display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+    gap: 30px;
+	background-color: #36383F;
+	padding: 4vh;
+}
+@media (min-width: 768px) {
+	.modifier form div,
+	.ajouter .nouvelleBouteille div,
+	.ajouter .nouvelleBouteille>input {
+		max-width: 400px;
+	}
+	.bouteille {
+		max-width: 380px;
+	}
+}
