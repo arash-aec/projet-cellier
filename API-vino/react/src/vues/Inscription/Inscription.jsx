@@ -50,7 +50,7 @@ const Inscription = () => {
   const handleSubmit = (event) => {
     event.preventDefault();
 
-    // Reset errors
+    // Réinitialiser les erreurs
     setErrors([]);
 
     // Perform validation
@@ -85,7 +85,7 @@ const Inscription = () => {
       return;
     }
 
-    // Submit the form if validation passes
+    // Soumettre le formulaire si la validation réussit
     // ...
   };
 
