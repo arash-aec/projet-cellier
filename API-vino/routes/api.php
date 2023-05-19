@@ -80,7 +80,7 @@ Route::put('/usager/{id}', function ($id, Request $request) {
     $usager->nom = $request->input('nom');
     $usager->prenom = $request->input('prenom');
     $usager->courriel = $request->input('courriel');
-    $usager->mot_de_pass = $request->input('mot_de_pass');
+    $usager->mot_de_passe = $request->input('mot_de_passe');
     $usager->role = $request->input('role');
     $usager->save();
     return response()->json($usager);
@@ -91,7 +91,7 @@ Route::post('/usager', function (Request $request) {
     $usager->nom = $request->input('nom');
     $usager->prenom = $request->input('prenom');
     $usager->courriel = $request->input('courriel');
-    $usager->mot_de_pass = $request->input('mot_de_pass');
+    $usager->mot_de_passe= $request->input('mot_de_passe');
     $usager->role = $request->input('role');
     // Ajoutez tous les autres champs que vous souhaitez définir lors de la création de l'Usager
 
