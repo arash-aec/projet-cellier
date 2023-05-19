@@ -56,6 +56,9 @@ Route::delete('/cellier/{id}', function ($id) {
 
 
 
+
+
+
 //Bouteille
 
 Route::get('/bouteilles', function () {
@@ -68,6 +71,28 @@ Route::get('/bouteille/{id}', function ($id) {
     return response()->json($bouteille);
 });
 
+// Modification d'un bouteille
+Route::put('/bouteille/{id}', function ($id, Request $request) {
+    $bouteille = Bouteille::findOrFail($id);
+    $bouteille->nom = $request->input('nom');
+    $bouteille->description = $request->input('description');
+    $bouteille->prix_saq = $request->input('prix_saq');
+    $bouteille->format = $request->input('format');
+    $bouteille->type = $request->input('type');
+    $bouteille->save();
+    return response()->json($bouteille);
+});
+
+// Suppression d'un bouteille
+Route::delete('/bouteille/{id}', function ($id) {
+    $bouteille = Bouteille::findOrFail($id);
+    $bouteille->delete();
+    return response()->json(['message' => 'bouteille supprimé avec succès']);
+});
+
+
+
+
 //Usager
 
 Route::get('/usagers', function () {
@@ -78,4 +103,36 @@ Route::get('/usagers', function () {
 Route::get('/usager/{id}', function ($id) {
     $usager = Usager::find($id);
     return response()->json($usager);
+});
+
+
+
+Route::put('/usager/{id}', function ($id, Request $request) {
+    $usager = Usager::findOrFail($id);
+    $usager->nom = $request->input('nom');
+    $usager->prenom = $request->input('prenom');
+    $usager->courriel = $request->input('courriel');
+    $usager->mot_de_passe = $request->input('mot_de_passe');
+    $usager->role = $request->input('role');
+    $usager->save();
+    return response()->json($usager);
+});
+
+Route::post('/usager', function (Request $request) {
+    $usager = new Usager;
+    $usager->nom = $request->input('nom');
+    $usager->prenom = $request->input('prenom');
+    $usager->courriel = $request->input('courriel');
+    $usager->mot_de_passe= $request->input('mot_de_passe');
+    $usager->role = $request->input('role');
+    // Ajoutez tous les autres champs que vous souhaitez définir lors de la création de l'Usager
+
+    $usager->save();
+    return response()->json($usager);
+});
+
+Route::delete('/usager/{id}', function ($id) {
+    $usager = Usager::findOrFail($id);
+    $usager->delete();
+    return response()->json(['message' => 'Usager supprimé avec succès']);
 });
