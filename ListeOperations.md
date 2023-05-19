@@ -1,7 +1,7 @@
 # Liste des opérations (modèle)
 
 #### Bouteille : 
-- getListeBouteilles()
+- getBouteilles()
 - getBouteille($id)
 - ajouterBouteille($data)
 - boireBouteille($id)
@@ -9,14 +9,14 @@
 - effacerBouteille($id)
 
 #### Cellier : 
-- getListeCellier()
+- getCelliers()
 - getCellier($id)
 - ajouterCellier($data)
 - modifierCellier($data)
 - effacerCellier($id)
 
 #### Usager : 
-- getListeUsager()
+- getUsagers()
 - getUsager($id)
 - ajouterUsager($data)
 - modifierUsager($data)
@@ -32,3 +32,11 @@
 #### Type : 
 - getType()
 - getTypeId($id)
+
+#### Role : 
+- getRole()
+- getRoleId($id)
+
+#### Pays : 
+- getPays()
+- getPaysId($id)

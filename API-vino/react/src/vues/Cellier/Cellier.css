@@ -1,0 +1,10 @@
+.cellier .header-image {
+	min-height: 40vh;
+}
+.cellier .header-image>div {
+	background: linear-gradient(to right, var(--black), transparent);
+}
+.header-contenu {
+	display: flex;
+	gap: 0;
+}
