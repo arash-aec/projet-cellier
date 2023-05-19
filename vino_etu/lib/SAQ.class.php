@@ -30,7 +30,6 @@ class SAQ extends Modele {
 			echo "Echec de la préparation : (" . $mysqli -> errno . ") " . $mysqli -> error;
 		}
 	}
-
 	/**
 	 * getProduits
 	 * @param int $nombre
