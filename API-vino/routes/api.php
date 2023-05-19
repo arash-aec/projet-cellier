@@ -73,10 +73,15 @@ Route::get('/usager/{id}', function ($id) {
     return response()->json($usager);
 });
 
+
+
 Route::put('/usager/{id}', function ($id, Request $request) {
     $usager = Usager::findOrFail($id);
     $usager->nom = $request->input('nom');
-    // Ajoutez tout autre champ que vous souhaitez modifier
+    $usager->prenom = $request->input('prenom');
+    $usager->courriel = $request->input('courriel');
+    $usager->mot_de_pass = $request->input('mot_de_pass');
+    $usager->role = $request->input('role');
     $usager->save();
     return response()->json($usager);
 });
@@ -84,7 +89,12 @@ Route::put('/usager/{id}', function ($id, Request $request) {
 Route::post('/usager', function (Request $request) {
     $usager = new Usager;
     $usager->nom = $request->input('nom');
+    $usager->prenom = $request->input('prenom');
+    $usager->courriel = $request->input('courriel');
+    $usager->mot_de_pass = $request->input('mot_de_pass');
+    $usager->role = $request->input('role');
     // Ajoutez tous les autres champs que vous souhaitez définir lors de la création de l'Usager
+
     $usager->save();
     return response()->json($usager);
 });
