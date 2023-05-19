@@ -1,6 +1,7 @@
 <?php
 
 use App\Models\ListeCellier;
+use App\Models\VinoBouteille;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -21,8 +22,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 
-Route::get('/listeCellier', function() {
-    $listeCellier = ListeCellier::get();
-    return response()->json($listeCellier);
+Route::get('/listeCellier', function () {
+    $listeCelliers = ListeCellier::with('bouteille')->get();
+    return response()->json($listeCelliers);
 });
-

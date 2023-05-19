@@ -16,7 +16,7 @@ const Entete = () => {
         <nav className="nav">
             <ul className="menu">
             <li><a href="/">Accueil</a></li>
-            <li><a href="/cellier">Cellier</a></li>
+            <li><a href="/listeCellier">Cellier</a></li>
           
 
             </ul>

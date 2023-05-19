@@ -1,50 +1,34 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
+import Produit from "../composants/Produit/Produit";
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 
-export default class ListeCellier extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      error: null,
-      isLoaded: false,
-      listeCellier: []
-    };
-  }
+const ListeCellier = (props) => {
+  let [miseAJour, setMiseAJour] = useState(false);
+  let [produits, setProduits] = useState([]);
 
-  componentDidMount() {
+  useEffect(() => {
+    getBouteilles();
+  }, [miseAJour]);
+
+  function getBouteilles() {
     fetch("http://127.0.0.1:8000/api/listeCellier")
-      .then(res => res.json())
-      .then(
-        (result) => {
-          this.setState({
-            isLoaded: true,
-            listeCellier: result
-          });
-        },
-        (error) => {
-          this.setState({
-            isLoaded: true,
-            error
-          });
-        }
-      );
+      .then((data) => data.json())
+      .then((data) => {
+        console.log(data);
+        setProduits(data);
+        setMiseAJour(false);
+      });
   }
 
-  render() {
-    const { error, isLoaded, listeCellier } = this.state;
-    if (error) {
-      return <div>Error: {error.message}</div>;
-    } else if (!isLoaded) {
-      return <div>Loading...</div>;
-    } else {
-      return (
-        <ul>
-          {listeCellier.map(item => (
-            <li key={item.id}>
-              <strong>{item.id_bouteille}</strong> : {item.notes}
-            </li>
-          ))}
-        </ul>
-      );
-    }
-  }
-}
+  const htmlProduit = produits.map((unProduit, index) => (
+    <Produit key={index} unProduit={unProduit} {...unProduit} />
+  ));
+
+  return (
+    <div>
+      <div className="items">{htmlProduit}</div>
+    </div>
+  );
+};
+
+export default ListeCellier;
