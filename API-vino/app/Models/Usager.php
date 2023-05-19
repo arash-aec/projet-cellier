@@ -21,6 +21,9 @@ class Usager extends Model
         'mot_de_passe',
         'role',
     ];
-
+    public function role()
+    {
+        return $this->belongsTo(Role::class, 'role');
+    }
 
 }
