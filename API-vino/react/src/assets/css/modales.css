@@ -40,7 +40,8 @@
 
 input[type="text"], 
 input[type="current-password"], 
-input[type="email"] {
+input[type="email"],
+input[type="password"] {
     padding: 10px;
     margin-bottom: 20px;
     border-radius: 5px;
@@ -76,4 +77,10 @@ input[type="submit"]:hover {
     padding: 2vh;
     padding-bottom: 40px;
     text-transform: uppercase;
+}
+
+.errors{
+    color: red;
+    padding: 20px;
+    
 }
