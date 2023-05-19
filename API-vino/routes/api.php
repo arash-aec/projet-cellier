@@ -49,6 +49,9 @@ Route::delete('/cellier/{id}', function ($id) {
 
 
 
+
+
+
 //Bouteille
 
 Route::get('/bouteilles', function () {
@@ -60,6 +63,28 @@ Route::get('/bouteille/{id}', function ($id) {
     $bouteille = Bouteille::find($id);
     return response()->json($bouteille);
 });
+
+// Modification d'un bouteille
+Route::put('/bouteille/{id}', function ($id, Request $request) {
+    $bouteille = Bouteille::findOrFail($id);
+    $bouteille->nom = $request->input('nom');
+    $bouteille->description = $request->input('description');
+    $bouteille->prix_saq = $request->input('prix_saq');
+    $bouteille->format = $request->input('format');
+    $bouteille->type = $request->input('type');
+    $bouteille->save();
+    return response()->json($bouteille);
+});
+
+// Suppression d'un bouteille
+Route::delete('/bouteille/{id}', function ($id) {
+    $bouteille = Bouteille::findOrFail($id);
+    $bouteille->delete();
+    return response()->json(['message' => 'bouteille supprimé avec succès']);
+});
+
+
+
 
 //Usager
 

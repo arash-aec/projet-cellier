@@ -28,6 +28,7 @@ class Bouteille extends Model
         'prix',
         'millesime',
     ];
+    
 
     public function pays()
 {
