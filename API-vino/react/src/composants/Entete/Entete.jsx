@@ -14,8 +14,8 @@ const Entete = () => {
           </label>
           <nav className="nav">
             <ul className="menu">
-              <li><Link to="/">Accueil</Link></li>
-              <li><Link to="/cellier">Cellier</Link></li>
+            <li><a href="/">Accueil</a></li>
+            <li><a href="/cellier">Cellier</a></li>
             </ul>
           </nav>
         </header>

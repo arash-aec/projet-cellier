@@ -6,10 +6,10 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 
-class ListeCellier extends Model
+class VinoBouteille extends Model
 {
     // Define the table name
-    protected $table = 'vino__cellier';
+    protected $table = 'vino__bouteille';
 
     // Define the primary key column name
     protected $primaryKey = 'idPrimaire';
@@ -19,14 +19,6 @@ class ListeCellier extends Model
 
     // Define the column names that can be mass assigned
     protected $fillable = [
-        'id_bouteille',
-        'date_achat',
-        'garde_jusqua',
-        'notes',
-        'prix',
-        'quantite',
-        'millesime',
-        'usager_id',
         'nom',
         'image',
         'code_saq',
@@ -39,24 +31,11 @@ class ListeCellier extends Model
         'type',
     ];
 
-    // Define the column types
     protected $casts = [
-        'id_bouteille' => 'integer',
-        'date_achat' => 'date',
-        'prix' => 'float',
-        'quantite' => 'integer',
-        'millesime' => 'integer',
-        'usager_id' => 'integer',
         'pays' => 'integer',
         'prix_saq' => 'float',
         'type' => 'integer',
     ];
 
-  
-    public function bouteille()
-    {
-        return $this->belongsTo(VinoBouteille::class, 'id_bouteille', 'id');
-    }
-
- 
 }
+
