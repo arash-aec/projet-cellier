@@ -2,6 +2,7 @@
 
 use App\Models\Cellier;
 use App\Models\Bouteille;
+use App\Models\Usager;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -58,4 +59,16 @@ Route::get('/bouteilles', function () {
 Route::get('/bouteille/{id}', function ($id) {
     $bouteille = Bouteille::find($id);
     return response()->json($bouteille);
+});
+
+//Usager
+
+Route::get('/usagers', function () {
+    $usagers = Usager::get();
+    return response()->json($usagers);
+});
+
+Route::get('/usager/{id}', function ($id) {
+    $usager = Usager::find($id);
+    return response()->json($usager);
 });
