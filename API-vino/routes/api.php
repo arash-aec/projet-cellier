@@ -1,6 +1,7 @@
 <?php
 
 use App\Models\ListeCellier;
+use App\Models\Cellier;
 use App\Models\VinoBouteille;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -25,4 +26,14 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 Route::get('/listeCellier', function () {
     $listeCelliers = ListeCellier::with('bouteille')->get();
     return response()->json($listeCelliers);
+});
+
+// Cellier 
+Route::get('/celliers', function () {
+    $celliers = Cellier::get();
+    return response()->json($celliers);
+});
+Route::get('/cellier/{id}', function ($id) {
+    $cellier = Cellier::find($id);
+    return response()->json($cellier);
 });

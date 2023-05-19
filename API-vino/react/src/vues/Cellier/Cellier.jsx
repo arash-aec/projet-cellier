@@ -9,7 +9,6 @@ const Cellier = () => {
             <img src="../public/images/cellier.jpeg" alt="image d'un cellier"/>
             <div className="header-contenu">
                 <h1>Cellier</h1>
-                <ListeCellier />
                 <div className="header-image-btn">
                   <div>
                     <a className="bouton header-button" href="#">Ajoute un cellier</a>
@@ -17,6 +16,7 @@ const Cellier = () => {
                 </div>
             </div>
         </section>  
+        
       </div>
   )
 }
