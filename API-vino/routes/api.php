@@ -1,6 +1,5 @@
 <?php
 
-use App\Models\ListeCellier;
 use App\Models\Cellier;
 use App\Models\Bouteille;
 use Illuminate\Http\Request;
@@ -22,17 +21,31 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-
-
-// Cellier 
+// ------------------------------------------ Cellier
+// Récupération de tous les celliers
 Route::get('/celliers', function () {
     $celliers = Cellier::get();
     return response()->json($celliers);
 });
+// Récupération d'un cellier avec son id
 Route::get('/cellier/{id}', function ($id) {
     $cellier = Cellier::find($id);
     return response()->json($cellier);
 });
+// Modification d'un cellier
+Route::put('/cellier/{id}', function ($id, Request $request) {
+    $cellier = Cellier::findOrFail($id);
+    $cellier->nom = $request->input('nom');
+    $cellier->save();
+    return response()->json($cellier);
+});
+// Suppression d'un cellier
+Route::delete('/cellier/{id}', function ($id) {
+    $cellier = Cellier::findOrFail($id);
+    $cellier->delete();
+    return response()->json(['message' => 'Cellier supprimé avec succès']);
+});
+
 
 
 //Bouteille
