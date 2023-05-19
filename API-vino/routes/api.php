@@ -72,3 +72,25 @@ Route::get('/usager/{id}', function ($id) {
     $usager = Usager::find($id);
     return response()->json($usager);
 });
+
+Route::put('/usager/{id}', function ($id, Request $request) {
+    $usager = Usager::findOrFail($id);
+    $usager->nom = $request->input('nom');
+    // Ajoutez tout autre champ que vous souhaitez modifier
+    $usager->save();
+    return response()->json($usager);
+});
+
+Route::post('/usager', function (Request $request) {
+    $usager = new Usager;
+    $usager->nom = $request->input('nom');
+    // Ajoutez tous les autres champs que vous souhaitez définir lors de la création de l'Usager
+    $usager->save();
+    return response()->json($usager);
+});
+
+Route::delete('/usager/{id}', function ($id) {
+    $usager = Usager::findOrFail($id);
+    $usager->delete();
+    return response()->json(['message' => 'Usager supprimé avec succès']);
+});
