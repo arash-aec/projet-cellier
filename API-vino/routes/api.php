@@ -88,18 +88,20 @@ Route::delete('/bouteille/{id}', function ($id) {
 
 //Usager
 
+// Récupération de tous les usagers
 Route::get('/usagers', function () {
     $usagers = Usager::get();
     return response()->json($usagers);
 });
 
+// Récupération d'un usager avec son id
 Route::get('/usager/{id}', function ($id) {
     $usager = Usager::find($id);
     return response()->json($usager);
 });
 
 
-
+// Modification d'un usager
 Route::put('/usager/{id}', function ($id, Request $request) {
     $usager = Usager::findOrFail($id);
     $usager->nom = $request->input('nom');
@@ -111,6 +113,7 @@ Route::put('/usager/{id}', function ($id, Request $request) {
     return response()->json($usager);
 });
 
+// Ajout d'un usager
 Route::post('/usager', function (Request $request) {
     $usager = new Usager;
     $usager->nom = $request->input('nom');
@@ -124,6 +127,7 @@ Route::post('/usager', function (Request $request) {
     return response()->json($usager);
 });
 
+// Suppression d'un usager
 Route::delete('/usager/{id}', function ($id) {
     $usager = Usager::findOrFail($id);
     $usager->delete();
