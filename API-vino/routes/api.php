@@ -97,3 +97,35 @@ Route::get('/usager/{id}', function ($id) {
     $usager = Usager::find($id);
     return response()->json($usager);
 });
+
+
+
+Route::put('/usager/{id}', function ($id, Request $request) {
+    $usager = Usager::findOrFail($id);
+    $usager->nom = $request->input('nom');
+    $usager->prenom = $request->input('prenom');
+    $usager->courriel = $request->input('courriel');
+    $usager->mot_de_passe = $request->input('mot_de_passe');
+    $usager->role = $request->input('role');
+    $usager->save();
+    return response()->json($usager);
+});
+
+Route::post('/usager', function (Request $request) {
+    $usager = new Usager;
+    $usager->nom = $request->input('nom');
+    $usager->prenom = $request->input('prenom');
+    $usager->courriel = $request->input('courriel');
+    $usager->mot_de_passe= $request->input('mot_de_passe');
+    $usager->role = $request->input('role');
+    // Ajoutez tous les autres champs que vous souhaitez définir lors de la création de l'Usager
+
+    $usager->save();
+    return response()->json($usager);
+});
+
+Route::delete('/usager/{id}', function ($id) {
+    $usager = Usager::findOrFail($id);
+    $usager->delete();
+    return response()->json(['message' => 'Usager supprimé avec succès']);
+});
