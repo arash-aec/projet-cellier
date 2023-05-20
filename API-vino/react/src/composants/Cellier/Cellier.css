@@ -1,0 +1,28 @@
+.cellier-item {
+    display: flex;
+    flex-direction: column;
+    background-color: var(--white);
+    width: 350px;
+    padding: 4vh;
+    color: var(--black);
+    text-align: center;
+    text-transform: capitalize;
+    gap: 4vh;
+}
+.cellier-icone {
+    display: flex;
+    gap: 1vw;
+    justify-content:space-around;
+}
+.cellier-item .cellier-icone__fa {
+    font-size: 30px;
+    cursor: pointer;
+}
+.cellier-nom {
+    display: block;
+} 
+.cellier-form {
+    display: none;
+    align-items: baseline;
+    gap : 2vh
+}

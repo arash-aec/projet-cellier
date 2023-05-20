@@ -201,3 +201,5 @@ INSERT INTO `vino__cellier` VALUES(1, 'Mon cellier 1', 1);
 INSERT INTO `vino__cellier` VALUES(2, 'Mon cellier 2', 1);
 
 
+INSERT INTO `vino__role` (`id`, `role`) VALUES ('1', 'membre');
+INSERT INTO `vino__usager` (`id`, `nom`, `prenom`, `courriel`, `mot_de_passe`, `role`) VALUES ('1', 'Premier ', 'usager', 'premierUsager@usager.com', '123456789', '1');

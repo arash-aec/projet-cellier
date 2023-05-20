@@ -16,10 +16,12 @@ class Cellier extends Model
 
     protected $fillable = [
         'nom',
+        'usager_id',
     ];
 
     protected $casts = [
         'nom' => 'string',
+        'usager_id' => 'integer',
     ];
 
     // Relation 1:N le cellier peux appartenir a un usager
