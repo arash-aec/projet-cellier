@@ -3,6 +3,7 @@ import Bouteille from "../../composants/Bouteille/Bouteille";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 
 const ListeBouteille = (props) => {
+  // console.log("Component Cellier rendered");
   let [miseAJour, setMiseAJour] = useState(false);
   let [bouteilles, setBouteilles] = useState([]);
 

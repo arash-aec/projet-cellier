@@ -1,9 +1,0 @@
-.cellier-item {
-    background-color: var(--white);
-    width: max-content;
-    padding: 4vh;
-    color: var(--black);
-    border-radius: 50%;
-    text-align: center;
-    text-transform: capitalize;
-}
