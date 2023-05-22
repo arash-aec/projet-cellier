@@ -115,11 +115,8 @@ Route::delete('/bouteille/{id}', function ($id) {
 });
 
 //Usager
-<<<<<<< HEAD
 
 // Récupération de tous les usagers
-=======
->>>>>>> d1a9e455a39b8c608874e086e1d7a88e3ae092d5
 Route::get('/usagers', function () {
     $usagers = Usager::get();
     return response()->json($usagers);
@@ -131,11 +128,8 @@ Route::get('/usager/{id}', function ($id) {
     return response()->json($usager);
 });
 
-<<<<<<< HEAD
 
 // Modification d'un usager
-=======
->>>>>>> d1a9e455a39b8c608874e086e1d7a88e3ae092d5
 Route::put('/usager/{id}', function ($id, Request $request) {
     $usager = Usager::findOrFail($id);
     $usager->nom = $request->input('nom');

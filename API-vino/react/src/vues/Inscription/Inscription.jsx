@@ -1,39 +1,3 @@
-// import React from "react";
-// import Input from "../../composants/UI/Input/Input";
-
-
-// const Inscription = () => {
-//   return (
-//     <>
-//       <div className="modal-overlay-inscription">
-//         <div className="modal-inscription">
-//           <span className="close-btn-inscription" >&times;</span>
-//           <h2>Inscription</h2>
-//           <form>
-//             <label htmlFor="nom">Votre nom:</label>
-//             <Input type="text" id="nom" name="nom" required />
-
-//             <label htmlFor="prenom">Votre prenom:</label>
-//             <Input type="text" id="prenom" name="prenom" required />
-
-//             <label htmlFor="email-inscrir">Votre courriel:</label>
-//             <Input type="email" id="email-inscrir" name="email" required />
-
-//             <label htmlFor="password-inscrir">Mot de passe:</label>
-//             <Input type="current-password" id="password-inscrir" name="password-inscrir" required />
-
-//             <label htmlFor="confirmpass">Confirmez mot de passe:</label>
-//             <Input type="current-password" id="confirmpass" name="password" required />
-
-//             <Input type="submit" value="Enregistrer" />
-//           </form>
-//         </div>
-//       </div>
-//     </>
-//   );
-// };
-
-// export default Inscription;
 
 import React, { useState, useRef } from "react";
 import Input from "../../composants/UI/Input/Input";
@@ -47,12 +11,12 @@ const Inscription = () => {
   const [errors, setErrors] = useState([]);
   const formRef = useRef(null);
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
-
+  
     // Réinitialiser les erreurs
     setErrors([]);
-
+  
     // Perform validation
     const validationErrors = [];
 
@@ -85,8 +49,41 @@ const Inscription = () => {
       return;
     }
 
-    // Soumettre le formulaire si la validation réussit
-    // ...
+   
+  
+    // Create user object
+    const user = {
+      nom: nom,
+      prenom: prenom,
+      courriel: email,
+      mot_de_passe: password,
+      role: 2 // le role par default (utilisateur)
+    };
+  
+    try {
+      const response = await fetch('http://127.0.0.1:8000/api/usager', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(user)
+      });
+  
+      if (!response.ok) {
+        throw new Error('Une erreur s\'est produite lors de la création de l\'usager.');
+      }
+  
+      // Handle successful user creation
+      // ...
+  
+      // Reset form fields and errors
+      handleModalClose();
+    } catch (error) {
+      console.error(error);
+      // Handle error
+      setErrors(["Une erreur s'est produite lors de la création de l'usager. Veuillez réessayer."]);
+    }
+  
   };
 
   const handleModalClose = () => {
@@ -97,7 +94,10 @@ const Inscription = () => {
     setConfirmPassword("");
     setErrors([]);
     formRef.current.reset();
+   
   };
+
+  
 
   return (
     <>
@@ -113,13 +113,13 @@ const Inscription = () => {
             <Input type="text" id="prenom" name="prenom" value={prenom} onChange={(e) => setPrenom(e.target.value)} required />
 
             <label htmlFor="email-inscrir">Votre courriel:</label>
-            <Input type="email" id="email-inscrir" name="email" value={email} onChange={(e) => setEmail(e.target.value)} required />
+            <Input type="email" id="email-inscrir" name="courriel" value={email} onChange={(e) => setEmail(e.target.value)} required />
 
             <label htmlFor="password-inscrir" className="password-label">Mot de passe:</label>
-            <Input type="password" id="password-inscrir" name="password-inscrir" value={password} onChange={(e) => setPassword(e.target.value)} required className="password-input" />
+            <Input type="password" id="password-inscrir" name="mot_de_passe" value={password} onChange={(e) => setPassword(e.target.value)} required className="password-input" />
 
             <label htmlFor="confirmpass" className="password-label">Confirmez le mot de passe:</label>
-            <Input type="password" id="confirmpass" name="password" value={confirmPassword} onChange={(e) => setConfirmPassword(e.target.value)} required
+            <Input type="password" id="confirmpass" name="mot_de_passe" value={confirmPassword} onChange={(e) => setConfirmPassword(e.target.value)} required
               className={`password-input ${errors.includes("Les mots de passe ne correspondent pas.") ? "input-error" : ""}`} />
             {errors.includes("Les mots de passe ne correspondent pas.") && (
               <span className="error-message">Les mots de passe ne correspondent pas.</span>
