@@ -9,6 +9,7 @@ const Inscription = () => {
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [errors, setErrors] = useState([]);
+  const [isModalOpen, setIsModalOpen] = useState(true); // Suivre la visibilité modale
   const formRef = useRef(null);
 
   const handleSubmit = async (event) => {
@@ -94,6 +95,7 @@ const Inscription = () => {
     setConfirmPassword("");
     setErrors([]);
     formRef.current.reset();
+    setIsModalOpen(false); // fermer le modale
    
   };
 
@@ -101,6 +103,7 @@ const Inscription = () => {
 
   return (
     <>
+    {isModalOpen && ( // Affiche le modal uniquement s'il est ouvert
       <div className="modal-overlay-inscription">
         <div className="modal-inscription">
           <span className="close-btn-inscription" onClick={handleModalClose}>&times;</span>
@@ -136,6 +139,7 @@ const Inscription = () => {
             )}
             </div>
           </div>
+        )} 
     </>
     );
   };
