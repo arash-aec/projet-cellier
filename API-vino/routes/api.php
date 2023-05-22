@@ -35,6 +35,7 @@ Route::get('/celliers', function () {
 Route::post('/cellier', function (Request $request) {
     $cellier = new Cellier();
     $cellier->nom = $request->input('nom');
+    $cellier->usager_id = 1;
     $cellier->save();
     return response()->json($cellier, 201);
 });

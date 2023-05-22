@@ -20,9 +20,10 @@
 @import "./composants/Entete/Entete.css";
 @import "./composants/Pied/Pied.css";
 @import "./composants/Bouteille/Bouteille.css";
+@import "./composants/Cellier/Cellier.css";
 
 
 /* ---------------------------------- Vues */
 @import "./vues/Accueil/Accueil.css";
-@import "./vues/Cellier/Cellier.css";
+@import "./vues/ListeCellier/ListeCellier.css";
 @import "./vues/ListeBouteille/ListeBouteille.css";

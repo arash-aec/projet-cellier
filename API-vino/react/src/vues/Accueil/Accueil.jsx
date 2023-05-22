@@ -3,17 +3,20 @@ import Login from '../Login/Login';
 import Inscription from '../Inscription/Inscription';
 
 const Accueil = () => {
-
+  console.log("Component Cellier rendered");
   const reference = useRef(null);
 
   useEffect(() => {
-
-    const element = reference.current;
+    const elements = reference.current;
+    gereDOM(elements);
     
-    if (element) {
+  }, []);
+
+  function gereDOM(elements) {
+    if (elements) {
 
       // Gestion modal Connexion
-      const btnConnexion = element.querySelector('[data-js-connexion]');
+      const btnConnexion = elements.querySelector('[data-js-connexion]');
       const modalOverlayConnexion = document.querySelector(".modal-overlay-connexion");
       const modalConnexion = document.querySelector(".modal-connexion");
       const closeBtnConnexion = document.querySelector(".close-btn-connexion");
@@ -44,7 +47,7 @@ const Accueil = () => {
         modalInscription.style.display = "none";
       });
     }
-  }, []);
+  }
 
   return (
     <div ref={reference}>
