@@ -1,10 +1,9 @@
-.cellier .header-image {
-	min-height: 40vh;
-}
-.cellier .header-image>div {
-	background: linear-gradient(to right, var(--black), transparent);
-}
-.header-contenu {
-	display: flex;
-	gap: 0;
+.cellier-item {
+    background-color: var(--white);
+    width: max-content;
+    padding: 4vh;
+    color: var(--black);
+    border-radius: 50%;
+    text-align: center;
+    text-transform: capitalize;
 }

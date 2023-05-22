@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import ListeCellier from "../../ListeCellier/ListeCellier";
+import { Link } from "react-router-dom";
 
 const Cellier = () => {
 
@@ -20,10 +20,11 @@ const Cellier = () => {
   }
 
   const htmlProduit = celliers.map((unCellier, index) => (
-      <div key={index}>
-        <p><strong>{unCellier.nom}</strong></p>
-        <p>{unCellier.usager_id}</p>
+    <Link to="/ListeBouteille">
+      <div key={index} className="cellier-item">
+        <h2>{unCellier.nom}</h2>
       </div>
+    </Link>
   ));
 
   return (
@@ -39,7 +40,7 @@ const Cellier = () => {
                 </div>
             </div>
         </section>  
-        <div>{htmlProduit}</div>
+        <div className="cellier-liste">{htmlProduit}</div>
       </div>
   )
 }

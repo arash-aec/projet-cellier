@@ -1,10 +1,13 @@
 <?php
 
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Route;
 use App\Models\Cellier;
 use App\Models\Bouteille;
 use App\Models\Usager;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Route;
+use App\Models\Type;
+use App\Models\Pays;
+use App\Models\Role;
 
 
 /*
@@ -28,6 +31,13 @@ Route::get('/celliers', function () {
     $celliers = Cellier::get();
     return response()->json($celliers);
 });
+// Ajout d'un cellier
+Route::post('/cellier', function (Request $request) {
+    $cellier = new Cellier();
+    $cellier->nom = $request->input('nom');
+    $cellier->save();
+    return response()->json($cellier, 201);
+});
 // Récupération d'un cellier avec son id
 Route::get('/cellier/{id}', function ($id) {
     $cellier = Cellier::find($id);
@@ -48,7 +58,27 @@ Route::delete('/cellier/{id}', function ($id) {
 });
 
 
+// ------------------------------------------ Type
+// Récupération d'un type avec son id
+Route::get('/type/{id}', function ($id) {
+    $type = Type::find($id);
+    return response()->json($type);
+});
 
+
+// ------------------------------------------ Pays
+// Récupération d'un pays avec son id
+Route::get('/pays/{id}', function ($id) {
+    $pays = Pays::find($id);
+    return response()->json($pays);
+});
+
+// ------------------------------------------ Role
+// Récupération d'un role avec son id
+Route::get('/role/{id}', function ($id) {
+    $role = Role::find($id);
+    return response()->json($role);
+});
 
 
 
@@ -83,12 +113,12 @@ Route::delete('/bouteille/{id}', function ($id) {
     return response()->json(['message' => 'bouteille supprimé avec succès']);
 });
 
-
-
-
 //Usager
+<<<<<<< HEAD
 
 // Récupération de tous les usagers
+=======
+>>>>>>> d1a9e455a39b8c608874e086e1d7a88e3ae092d5
 Route::get('/usagers', function () {
     $usagers = Usager::get();
     return response()->json($usagers);
@@ -100,8 +130,11 @@ Route::get('/usager/{id}', function ($id) {
     return response()->json($usager);
 });
 
+<<<<<<< HEAD
 
 // Modification d'un usager
+=======
+>>>>>>> d1a9e455a39b8c608874e086e1d7a88e3ae092d5
 Route::put('/usager/{id}', function ($id, Request $request) {
     $usager = Usager::findOrFail($id);
     $usager->nom = $request->input('nom');
