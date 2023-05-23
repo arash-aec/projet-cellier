@@ -4,11 +4,9 @@ import { Link } from "react-router-dom";
 
 export default function Bouteille(props) {
    
-<<<<<<< HEAD
+
   const {pays, nom, image, notes, prix_saq, id: idBouteille, quantite: initialQuantite, millesime, garde_jusqua, format, url_saq, type, onBouteilleAjouter, onBouteilleBoire } = props;
-=======
-  const {pays, nom, image, notes, prix, id: idBouteille, quantite: initialQuantite, millesime, garde_jusqua, format, url_saq, type, onBouteilleAjouter, onBouteilleBoire, onBouteilleModifie } = props;
->>>>>>> 6b22e2a4d6a2de182aa608a648bdee86a6469d7e
+
   const reference = useRef(null);
   const {id : idCellier} = useParams();
 
@@ -115,19 +113,19 @@ export default function Bouteille(props) {
           <div>
             <p className="note">Note : {notes}</p>
             <p className="format">Format : {format}</p>
-<<<<<<< HEAD
+
             <p className="prix">Prix: {prix_saq} $</p>
             <p className="quantite">
               Quantité : <strong className="quantite-chiffre">{initialQuantite}</strong>
             </p>
-=======
-            <p className="prix">Prix: {prix} $</p>
+
+            <p className="prix">Prix: {prix_saq} $</p>
             <p className="quantite">Quantité : <strong className="quantite-chiffre">{initialQuantite}</strong></p>
             <form action="" className="quantite-form">
                 <input type="number" name="quantite" className="quantite-input" placeholder={initialQuantite} min="0" />
                 <i className="bouteille-icone__fa fa fa-check" data-js-valider><p><small>Valider</small></p></i>
             </form>
->>>>>>> 6b22e2a4d6a2de182aa608a648bdee86a6469d7e
+
           </div>
         </div>
         <p>

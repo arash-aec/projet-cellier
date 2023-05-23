@@ -1,26 +1,33 @@
 import React, { useState, useEffect } from "react";
+import { useParams, useLocation } from "react-router-dom";
 import Bouteille from "../../composants/Bouteille/Bouteille";
 
-const ListeBouteille = (props) => {
-  // console.log("Component Cellier rendered");
+const ListeBouteille = () => {
   let [miseAJour, setMiseAJour] = useState(false);
   let [bouteilles, setBouteilles] = useState([]);
- 
+  const [rechercheBouteille, setRechercheBouteille] = useState("");
+  const [isRechercheVisible, setEstRechercheVisible] = useState(false);
 
+  // Récupération de l'id du cellier
+  const {id} = useParams();
+
+  // Récupération du non de cellier avec l'URL
+  const location = useLocation();
+  const searchParams = new URLSearchParams(location.search);
+  const nomCellier = searchParams.get('nom');
 
   useEffect(() => {
     getBouteilles();
   }, [miseAJour]);
 
   function getBouteilles() {
-    fetch("http://127.0.0.1:8000/api/bouteilles")
+    fetch("http://127.0.0.1:8000/api/bouteilles/" + id)
       .then((data) => data.json())
       .then((data) => {
         setBouteilles(data);
         setMiseAJour(false);
       });
   }
-
 
   const ajouteQuantiteBouteille = (index) => {
     setBouteilles(bouteilles.filter((_, idx) => idx !== index));
@@ -35,7 +42,6 @@ const ListeBouteille = (props) => {
     setBouteilles(bouteilles.filter((_, idx) => idx !== index));
     setMiseAJour(true);
   };
-
 
   //trier par nom A à Z
   const sortBouteillesParNomAaZ = (e) => {
@@ -73,11 +79,50 @@ const ListeBouteille = (props) => {
     );
     setBouteilles(sortedBouteillesPrixDecroissant);
   };
+
+
+// rechercher la bouteille
+
+  const handleRechercheInputChange = (e) => {
+    const nouvelleRecherche = e.target.value;
+    setRechercheBouteille(nouvelleRecherche);
+
+    if (nouvelleRecherche.trim() === "") {
+      // La requête de recherche est vide, réinitialiser et afficher toutes les bouteilles
+      getBouteilles();
+    } else {
+      BouteilleRecherche(nouvelleRecherche);
+    }
+  };
+
+  const BouteilleRecherche = (query) => {
+    const filteredBouteilles = bouteilles.filter((bouteille) =>
+      bouteille.nom.toLowerCase().includes(query.toLowerCase())
+    );
+    setBouteilles(filteredBouteilles);
+  };
+
+  const handleRechercheIconClick = (e) => {
+    e.preventDefault();
+    setEstRechercheVisible(!isRechercheVisible);
+    setRechercheBouteille("");
+    if (isRechercheVisible) {
+      // Afficher le champ de saisie et le mettre en évidence
+      const rechercheInput = document.getElementById("RechercheInput");
+      rechercheInput.focus();
+    }
+  };
   
 
-
   const htmlBouteille = bouteilles.map((uneBouteille) => (
-    <Bouteille key={uneBouteille.id} uneBouteille={uneBouteille} idCellier={id} {...uneBouteille} onBouteilleAjouter={ajouteQuantiteBouteille} onBouteilleBoire={boireBouteille} onBouteilleModifie={modifierQuantiteBouteille} />
+    <Bouteille
+     key={uneBouteille.id} 
+     uneBouteille={uneBouteille} 
+     idCellier={id} 
+     {...uneBouteille} 
+     onBouteilleAjouter={ajouteQuantiteBouteille} 
+     onBouteilleBoire={boireBouteille}
+     onBouteilleModifie={modifierQuantiteBouteille} />
   ));
 
   return (
@@ -86,6 +131,18 @@ const ListeBouteille = (props) => {
         <div className="cellier-header">
           <h2 className="cellier-titre">Mon cellier</h2>
           <a href="" className="cellier-lien">Ajouter une bouteille</a>
+          <label htmlFor="searchInput" className="recherche-label">Rechercher <a href="" onClick={handleRechercheIconClick}>
+              <i className="fa fa-search" aria-hidden="true"></i>
+            </a>
+            {isRechercheVisible && (
+              <input
+                type="text"
+                id="RechercheInput"
+                value={rechercheBouteille}
+                onChange={handleRechercheInputChange}
+              />
+            )}
+          </label>
           <select
             className="trierBouteille"
             onChange={(e) => {
