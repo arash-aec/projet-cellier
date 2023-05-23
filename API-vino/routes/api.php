@@ -216,3 +216,8 @@ Route::delete('/usager/{id}', function ($id) {
     $usager->delete();
     return response()->json(['message' => 'Usager supprimé avec succès']);
 });
+
+//Route API pour l'authentification des utilisateurs
+// Route::post('/login', 'AuthController@login');
+
+Route::post('/login', [App\Http\Controllers\AuthController::class, 'login']);
