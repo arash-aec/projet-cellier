@@ -1,41 +1,25 @@
 import React, { useState, useEffect } from "react";
-import { useParams, useLocation } from "react-router-dom";
 import Bouteille from "../../composants/Bouteille/Bouteille";
 
-const ListeBouteille = () => {
+const ListeBouteille = (props) => {
+  // console.log("Component Cellier rendered");
   let [miseAJour, setMiseAJour] = useState(false);
   let [bouteilles, setBouteilles] = useState([]);
+ 
 
-  // Récupération de l'id du cellier
-  const {id} = useParams();
-
-  // Récupération du non de cellier avec l'URL
-  const location = useLocation();
-  const searchParams = new URLSearchParams(location.search);
-  const nomCellier = searchParams.get('nom');
 
   useEffect(() => {
     getBouteilles();
   }, [miseAJour]);
 
   function getBouteilles() {
-    fetch("http://127.0.0.1:8000/api/bouteilles/" + id)
+    fetch("http://127.0.0.1:8000/api/bouteilles")
       .then((data) => data.json())
       .then((data) => {
         setBouteilles(data);
         setMiseAJour(false);
       });
   }
-
-  const ajouteBouteille = (bouteilleId) => {
-    setBouteilles(bouteilles.filter((bouteille) => bouteille.id !== bouteilleId));
-    setMiseAJour(true);
-  };
-
-  const boireBouteille = (bouteilleId) => {
-    setBouteilles(bouteilles.filter((bouteille) => bouteille.id !== bouteilleId));
-    setMiseAJour(true);
-  };
 
   //trier par nom A à Z
   const sortBouteillesParNomAaZ = (e) => {
@@ -76,7 +60,7 @@ const ListeBouteille = () => {
   
 
   const htmlBouteille = bouteilles.map((uneBouteille, index) => (
-    <Bouteille key={index} uneBouteille={uneBouteille} {...uneBouteille} onBouteilleAjouter={ajouteBouteille} onBouteilleBoire={boireBouteille}  />
+    <Bouteille key={index} uneBouteille={uneBouteille} {...uneBouteille} />
   ));
 
   return (

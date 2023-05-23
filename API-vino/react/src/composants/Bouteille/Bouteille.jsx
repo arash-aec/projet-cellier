@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 
 export default function Bouteille(props) {
    
-  const {pays, nom, image, notes, prix, id: idBouteille, quantite: initialQuantite, millesime, garde_jusqua, format, url_saq, type, onBouteilleAjouter, onBouteilleBoire } = props;
+  const {pays, nom, image, notes, prix_saq, id: idBouteille, quantite: initialQuantite, millesime, garde_jusqua, format, url_saq, type, onBouteilleAjouter, onBouteilleBoire } = props;
   const reference = useRef(null);
   const {id : idCellier} = useParams();
   
@@ -78,7 +78,7 @@ export default function Bouteille(props) {
           <div>
             <p className="note">Note : {notes}</p>
             <p className="format">Format : {format}</p>
-            <p className="prix">Prix: {prix} $</p>
+            <p className="prix">Prix: {prix_saq} $</p>
             <p className="quantite">
               Quantité : <strong className="quantite-chiffre">{initialQuantite}</strong>
             </p>
