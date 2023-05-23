@@ -1,4 +1,5 @@
 <?php
+use App\Models\Usager;
 
 return [
 
@@ -40,6 +41,10 @@ return [
             'driver' => 'session',
             'provider' => 'users',
         ],
+        'vino' => [
+            'driver' => 'session',
+            'provider' => 'usagers',
+        ],
     ],
 
     /*
@@ -63,6 +68,11 @@ return [
         'users' => [
             'driver' => 'eloquent',
             'model' => App\Models\User::class,
+        ],
+
+        'usagers' => [
+            'driver' => 'eloquent',
+            'model' => App\Models\Usager::class,
         ],
 
         // 'users' => [
