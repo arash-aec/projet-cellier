@@ -5,9 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Models\Cellier;
 use App\Models\Bouteille;
 use App\Models\Usager;
-use App\Models\Type;
-use App\Models\Pays;
-use App\Models\Role;
+use App\Models\CellierBouteilles;
 
 
 /*
@@ -24,6 +22,7 @@ use App\Models\Role;
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
+
 
 // ------------------------------------------ Cellier
 // Récupération de tous les celliers
@@ -59,60 +58,115 @@ Route::delete('/cellier/{id}', function ($id) {
 });
 
 
-// ------------------------------------------ Type
-// Récupération d'un type avec son id
-Route::get('/type/{id}', function ($id) {
-    $type = Type::find($id);
-    return response()->json($type);
-});
-
-
-// ------------------------------------------ Pays
-// Récupération d'un pays avec son id
-Route::get('/pays/{id}', function ($id) {
-    $pays = Pays::find($id);
-    return response()->json($pays);
-});
-
-// ------------------------------------------ Role
-// Récupération d'un role avec son id
-Route::get('/role/{id}', function ($id) {
-    $role = Role::find($id);
-    return response()->json($role);
-});
-
-
-
-//Bouteille
-
-Route::get('/bouteilles', function () {
-    $bouteilles = Bouteille::get();
+// ------------------------------------------ Bouteille
+// Récupération des bouteilles avec id d'un cellier 
+Route::get('/bouteilles/{id}', function ($id) {   
+    // Récupère les bouteilles du cellier par son id
+    $cellierBouteilles = CellierBouteilles::where('cellier_id', $id)->get();
+    // Extraction des bouteilles
+    $bouteilleIds = $cellierBouteilles->pluck('bouteille_id');
+    // Recuperation de Type et Pays
+    $bouteilles = Bouteille::whereIn('id', $bouteilleIds)->with('relationPays', 'relationType')->get();
+    // 
+    $bouteilles = $bouteilles->map(function ($bouteille) use ($cellierBouteilles) {
+        // Obtention du premier enregistrement
+        $cellierBouteille = $cellierBouteilles->firstWhere('bouteille_id', $bouteille->id);
+        // Si pas de quantite valeur 0
+        $quantite = $cellierBouteille ? $cellierBouteille->quantite : 0;
+        // Récupération des informations
+        $bouteilles = formatBouteille($bouteille);
+        // Ajout de la quantité
+        $bouteilles['quantite'] = $quantite;
+        return $bouteilles;
+    });
     return response()->json($bouteilles);
 });
-
+// Récupération d'une bouteille avec son id 
 Route::get('/bouteille/{id}', function ($id) {
-    $bouteille = Bouteille::find($id);
+    $bouteille = Bouteille::with('relationPays', 'relationType')->find($id);
+    $bouteille = $bouteille->map(function ($bouteille) {
+        return formatBouteille($bouteille);
+    });
     return response()->json($bouteille);
 });
-
-// Modification d'un bouteille
+// Modification d'une bouteille
 Route::put('/bouteille/{id}', function ($id, Request $request) {
     $bouteille = Bouteille::findOrFail($id);
     $bouteille->nom = $request->input('nom');
     $bouteille->description = $request->input('description');
-    $bouteille->prix_saq = $request->input('prix_saq');
+    $bouteille->prix = $request->input('prix');
     $bouteille->format = $request->input('format');
     $bouteille->type = $request->input('type');
     $bouteille->save();
     return response()->json($bouteille);
 });
-
-// Suppression d'un bouteille
+// Suppression d'une bouteille
 Route::delete('/bouteille/{id}', function ($id) {
     $bouteille = Bouteille::findOrFail($id);
     $bouteille->delete();
     return response()->json(['message' => 'bouteille supprimé avec succès']);
 });
+// Fonction pour formater une bouteille
+function formatBouteille($bouteille) {
+    return [
+        'id' => $bouteille->id,
+        'nom' => $bouteille->nom,
+        'image' => $bouteille->image,
+        'code_saq' => $bouteille->code_saq,
+        'pays' => $bouteille->relationPays->pays,
+        'description' => $bouteille->description,
+        'prix_saq' => $bouteille->prix_saq,
+        'url_saq' => $bouteille->url_saq,
+        'url_img' => $bouteille->url_img,
+        'format' => $bouteille->format,
+        'type' => $bouteille->relationType->type,
+        'date_achat' => $bouteille->date_achat,
+        'garde_jusqua' => $bouteille->garde_jusqua,
+        'notes' => $bouteille->notes,
+        'prix' => $bouteille->prix,
+        'millesime' => $bouteille->millesime,
+    ];
+}
+
+
+// ------------------------------------------ Cellier_bouteilles
+// Récupérer les bouteilles d'un cellier
+Route::get('/cellier-bouteilles/{id}', function ($id) {
+    $cellierBouteilles = CellierBouteilles::where('cellier_id', $id)->get();
+    return response()->json($cellierBouteilles);
+});
+// Ajouter une bouteille à la quantité Cellier_bouteilles
+Route::post('/cellier-bouteilles/{bouteille_id}/{cellier_id}/ajouter', function ($bouteille_id, $cellier_id, Request $request) {
+    $cellierBouteille = CellierBouteilles::where('bouteille_id', $bouteille_id)
+        ->where('cellier_id', $cellier_id)
+        ->first();
+
+    $cellierBouteille->quantite += 1;
+    $cellierBouteille->save();
+
+    return response()->json(['message' => 'Quantité augmentée avec succès']);
+});
+// Retirer une bouteille à la quantité Cellier_bouteilles
+Route::post('/cellier-bouteilles/{bouteille_id}/{cellier_id}/boire', function ($bouteille_id, $cellier_id, Request $request) {
+    $cellierBouteille = CellierBouteilles::where('bouteille_id', $bouteille_id)
+        ->where('cellier_id', $cellier_id)
+        ->first();
+
+    if ($cellierBouteille) {
+        $cellierBouteille->quantite -= 1;
+        // Vérifier si la quantité atteint 0 et supprimer la ligne si c'est le cas
+        if ($cellierBouteille->quantite <= 0) {
+            $cellierBouteille->delete();
+        } else {
+            $cellierBouteille->save();
+        }
+
+        return response()->json(['message' => 'Quantité diminuée avec succès']);
+    } else {
+        return response()->json(['error' => 'Cellier bouteille non trouvé'], 404);
+    }
+});
+
 
 //Usager
 
