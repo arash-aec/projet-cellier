@@ -4,9 +4,15 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use App\Models\Type;
+use App\Models\Pays;
+use App\Models\CellierBouteilles;
+
 
 class Bouteille extends Model
 {
+    use HasFactory;
+    
     protected $table = 'vino__bouteille';
     protected $primaryKey = 'id';
     public $timestamps = false;
@@ -28,17 +34,19 @@ class Bouteille extends Model
         'prix',
         'millesime',
     ];
-    
 
-    public function pays()
-{
-    return $this->belongsTo(Pays::class, 'pays');
-}
+    public function relationPays()
+    {
+        return $this->belongsTo(Pays::class, 'pays');
+    }
 
-public function type()
-{
-    return $this->belongsTo(Type::class, 'type');
-}
+    public function relationType()
+    {
+        return $this->belongsTo(Type::class, 'type');
+    }
 
-
+    public function celliers()
+    {
+        return $this->hasMany(CellierBouteilles::class, 'bouteille_id')->with('cellier');
+    }
 }
