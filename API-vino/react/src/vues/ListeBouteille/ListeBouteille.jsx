@@ -27,13 +27,17 @@ const ListeBouteille = () => {
       });
   }
 
-  const ajouteBouteille = (bouteilleId) => {
-    setBouteilles(bouteilles.filter((bouteille) => bouteille.id !== bouteilleId));
+  const ajouteQuantiteBouteille = (index) => {
+    setBouteilles(bouteilles.filter((_, idx) => idx !== index));
     setMiseAJour(true);
   };
-
-  const boireBouteille = (bouteilleId) => {
-    setBouteilles(bouteilles.filter((bouteille) => bouteille.id !== bouteilleId));
+  
+  const boireBouteille = (index) => {
+    setBouteilles(bouteilles.filter((_, idx) => idx !== index));
+    setMiseAJour(true);
+  };
+  const modifierQuantiteBouteille = (index) => {
+    setBouteilles(bouteilles.filter((_, idx) => idx !== index));
     setMiseAJour(true);
   };
 
@@ -75,8 +79,8 @@ const ListeBouteille = () => {
   };
   
 
-  const htmlBouteille = bouteilles.map((uneBouteille, index) => (
-    <Bouteille key={index} uneBouteille={uneBouteille} {...uneBouteille} onBouteilleAjouter={ajouteBouteille} onBouteilleBoire={boireBouteille}  />
+  const htmlBouteille = bouteilles.map((uneBouteille) => (
+    <Bouteille key={uneBouteille.id} uneBouteille={uneBouteille} idCellier={id} {...uneBouteille} onBouteilleAjouter={ajouteQuantiteBouteille} onBouteilleBoire={boireBouteille} onBouteilleModifie={modifierQuantiteBouteille} />
   ));
 
   return (

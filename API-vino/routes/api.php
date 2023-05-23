@@ -166,6 +166,16 @@ Route::post('/cellier-bouteilles/{bouteille_id}/{cellier_id}/boire', function ($
         return response()->json(['error' => 'Cellier bouteille non trouvé'], 404);
     }
 });
+// Modification de la Quantite
+Route::put('/cellier-bouteilles/{bouteille_id}/{cellier_id}/modifier', function ($bouteille_id, $cellier_id, Request $request) {
+    $cellierBouteille = CellierBouteilles::where('bouteille_id', $bouteille_id)
+    ->where('cellier_id', $cellier_id)
+    ->first();
+    $cellierBouteille->quantite = $request->input('quantite');
+    $cellierBouteille->save();
+    return response()->json($cellierBouteille);
+});
+
 
 
 //Usager
