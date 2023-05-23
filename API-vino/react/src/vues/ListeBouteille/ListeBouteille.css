@@ -45,6 +45,11 @@ select {
 	color: #000;
 }
 
+
+.recherche-label {
+	display: block;
+}
+
 @media (min-width: 768px) {
 	.modifier form div,
 	.ajouter .nouvelleBouteille div,
