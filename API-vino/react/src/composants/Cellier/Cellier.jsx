@@ -86,7 +86,7 @@ export default function Cellier(props) {
             <div className="cellier-icone">
             <i className="cellier-icone__fa fa fa-edit" data-js-modifier><p><small>Modifier</small></p></i>
             <i className="cellier-icone__fa fa fa-trash" data-js-supprimer><p><small>Supprimer</small></p></i>
-            <Link to="/ListeBouteille"><i className="cellier-icone__fa fa fa-eye"><p><small>Voir</small></p></i></Link>
+            <Link to={"/ListeBouteille/" + id + `?nom=${nom}`}><i className="cellier-icone__fa fa fa-eye"><p><small>Voir</small></p></i></Link>
             </div>
         </div>
     )
