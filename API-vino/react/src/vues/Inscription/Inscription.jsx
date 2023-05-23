@@ -58,7 +58,7 @@ const Inscription = () => {
       prenom: prenom,
       courriel: email,
       mot_de_passe: password,
-      role: 2 // le role par default (utilisateur)
+      role: 1 // le role par default (membre)
     };
   
     try {
