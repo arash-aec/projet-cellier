@@ -32,6 +32,19 @@
 	background-color: #36383F;
 	padding: 4vh;
 }
+
+
+select {
+	background-color: #f9f9f9;
+	cursor: pointer;
+}
+
+.trierPar {
+	font-size: 14px;
+	background-color: #f9f9f9;
+	color: #000;
+}
+
 @media (min-width: 768px) {
 	.modifier form div,
 	.ajouter .nouvelleBouteille div,
