@@ -21,6 +21,22 @@ const ListeBouteille = (props) => {
       });
   }
 
+
+  const ajouteQuantiteBouteille = (index) => {
+    setBouteilles(bouteilles.filter((_, idx) => idx !== index));
+    setMiseAJour(true);
+  };
+  
+  const boireBouteille = (index) => {
+    setBouteilles(bouteilles.filter((_, idx) => idx !== index));
+    setMiseAJour(true);
+  };
+  const modifierQuantiteBouteille = (index) => {
+    setBouteilles(bouteilles.filter((_, idx) => idx !== index));
+    setMiseAJour(true);
+  };
+
+
   //trier par nom A à Z
   const sortBouteillesParNomAaZ = (e) => {
     e.preventDefault();
@@ -59,8 +75,9 @@ const ListeBouteille = (props) => {
   };
   
 
-  const htmlBouteille = bouteilles.map((uneBouteille, index) => (
-    <Bouteille key={index} uneBouteille={uneBouteille} {...uneBouteille} />
+
+  const htmlBouteille = bouteilles.map((uneBouteille) => (
+    <Bouteille key={uneBouteille.id} uneBouteille={uneBouteille} idCellier={id} {...uneBouteille} onBouteilleAjouter={ajouteQuantiteBouteille} onBouteilleBoire={boireBouteille} onBouteilleModifie={modifierQuantiteBouteille} />
   ));
 
   return (

@@ -49,3 +49,23 @@
 .options {
 	margin: 2vh 0;
 }
+.options {
+	display: flex;
+    gap: 30px;
+    justify-content:center;
+}
+.bouteille-icone__fa {
+    font-size: 30px;
+    cursor: pointer;
+}
+.quantite {
+    display: block;
+} 
+.quantite-form {
+    display: none;
+    align-items: baseline;
+    gap : 2vh
+}
+.quantite-form .quantite-input {
+	width: 80px;
+}
