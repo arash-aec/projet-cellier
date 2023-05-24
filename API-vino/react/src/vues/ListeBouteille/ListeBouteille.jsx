@@ -1,10 +1,12 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { useParams, useLocation } from "react-router-dom";
 import Bouteille from "../../composants/Bouteille/Bouteille";
+import AjoutBouteille from "../Formulaire/AjoutBouteille";
 
 const ListeBouteille = () => {
-  let [miseAJour, setMiseAJour] = useState(false);
-  let [bouteilles, setBouteilles] = useState([]);
+  const [miseAJour, setMiseAJour] = useState(false);
+  const [bouteilles, setBouteilles] = useState([]);
+  // const [ajoutBouteille, setAjoutBouteille] = useState(false);
 
   // Récupération de l'id du cellier
   const {id} = useParams();
@@ -14,17 +16,45 @@ const ListeBouteille = () => {
   const searchParams = new URLSearchParams(location.search);
   const nomCellier = searchParams.get('nom');
 
+  // Bouton ajouter 
+  const reference = useRef(null);
+
   useEffect(() => {
     getBouteilles();
+
+    const elements = reference.current;
+    gereDOM(elements);
   }, [miseAJour]);
 
   function getBouteilles() {
     fetch("http://127.0.0.1:8000/api/bouteilles/" + id)
       .then((data) => data.json())
       .then((data) => {
+        console.log(data)
         setBouteilles(data);
         setMiseAJour(false);
       });
+  }
+
+  function gereDOM(elements) {
+    if (elements) {
+      // Gestion modal AjoutBouteille 
+      const btnAjoutBouteille = elements.querySelector('[data-js-ajout-bouteille-btn]');
+      const modalOverlayAjoutBouteille = document.querySelector(".modal-overlay-ajoutBouteille");
+      const modalAjoutBouteille = document.querySelector(".modal-ajoutBouteille");
+      const closeBtnAjoutBouteille = document.querySelector(".close-btn-ajoutBouteille");
+
+      btnAjoutBouteille.addEventListener("click", function(e) {
+        e.preventDefault();
+        modalOverlayAjoutBouteille.style.display = "block";
+        modalAjoutBouteille.style.display = "block";
+      });
+
+      closeBtnAjoutBouteille.addEventListener("click", function() {
+        modalOverlayAjoutBouteille.style.display = "none";
+        modalAjoutBouteille.style.display = "none";
+      });    
+    }
   }
 
   const ajouteQuantiteBouteille = (index) => {
@@ -38,6 +68,11 @@ const ListeBouteille = () => {
   };
   const modifierQuantiteBouteille = (index) => {
     setBouteilles(bouteilles.filter((_, idx) => idx !== index));
+    setMiseAJour(true);
+  };
+  const bouteilleAjouterCellier = (index) => {
+    setBouteilles((bouteilles) => [...bouteilles.filter((_, idx) => idx !== index)]);
+    // setAjoutBouteille(true);
     setMiseAJour(true);
   };
 
@@ -68,7 +103,6 @@ const ListeBouteille = () => {
     setBouteilles(sortedBouteillesPrix);
   };
 
-
   //trier par prix order decroissant 
   const sortBouteillesParPrixDecroissant = (e) => {
     e.preventDefault();
@@ -84,11 +118,11 @@ const ListeBouteille = () => {
   ));
 
   return (
-    <div>
+    <div ref={reference}>
       <div className="cellier">
         <div className="cellier-header">
-          <h2 className="cellier-titre">Mon cellier</h2>
-          <a href="" className="cellier-lien">Ajouter une bouteille</a>
+          <h2 className="cellier-titre">{nomCellier}</h2>
+          <a href="" id="open-modal-ajoutBouteille-btn" className="cellier-lien" data-js-ajout-bouteille-btn>Ajouter une bouteille</a>
           <select
             className="trierBouteille"
             onChange={(e) => {
@@ -113,6 +147,8 @@ const ListeBouteille = () => {
           <div className="cellier-liste">{htmlBouteille}</div>
         </div>
       </div>
+      <AjoutBouteille idCellier={id} onBouteilleAjoutCellier={bouteilleAjouterCellier} />
+      
     </div>
   );
   

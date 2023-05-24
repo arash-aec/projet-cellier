@@ -21,12 +21,22 @@ class CellierBouteilles extends Model
         'cellier_id',
         'bouteille_id',
         'quantite',
+        'date_achat',
+        'garde_jusqua',
+        'notes',
+        'prix',
+        'millesime',
     ];
 
     protected $casts = [
         'cellier_id'    => 'integer',
         'bouteille_id'  => 'integer',
         'quantite'      => 'integer',
+        'date_achat'    => 'date',
+        'garde_jusqua'  => 'string',
+        'notes'         => 'string',
+        'prix'          => 'float',
+        'millesime'     => 'integer',
     ];
 
     protected $keyType = 'int';

@@ -1,6 +1,7 @@
 /*-------------------------------------- Modales */
 .modal-overlay-inscription, 
-.modal-overlay-connexion {
+.modal-overlay-connexion,
+.modal-overlay-ajoutBouteille {
     position: fixed;
     top: 0;
     left: 0;
@@ -13,7 +14,8 @@
 
 /* Style for modal window */
 .modal-inscription, 
-.modal-connexion {
+.modal-connexion,
+.modal-ajoutBouteille {
     position: absolute;
     top: 50%;
     left: 50%;
@@ -30,7 +32,8 @@
 
 /* Style for close button */
 .close-btn-inscription, 
-.close-btn-connexion {
+.close-btn-connexion,
+.close-btn-ajoutBouteille {
     position: absolute;
     top: 2vh;
     right: 2vh;
@@ -73,13 +76,13 @@ input[type="submit"]:hover {
     background-color: var(--rouge-violet);
 }
 .modal-inscription h2, 
-.modal-connexion h2 {
+.modal-connexion h2,
+.modal-ajoutBouteille h2 {
     text-align: center;
     padding: 2vh;
     padding-bottom: 40px;
     text-transform: uppercase;
 }
-
 .errors{
     color: red;
     padding: 20px;

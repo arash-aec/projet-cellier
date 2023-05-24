@@ -3,7 +3,6 @@ import Login from '../Login/Login';
 import Inscription from '../Inscription/Inscription';
 
 const Accueil = () => {
-  console.log("Component Cellier rendered");
   const reference = useRef(null);
 
   useEffect(() => {
