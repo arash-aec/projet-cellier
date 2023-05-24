@@ -71,12 +71,24 @@ Route::get('/bouteilles/{id}', function ($id) {
     $bouteilles = $bouteilles->map(function ($bouteille) use ($cellierBouteilles) {
         // Obtention du premier enregistrement
         $cellierBouteille = $cellierBouteilles->firstWhere('bouteille_id', $bouteille->id);
-        // Si pas de quantite valeur 0
+        
+        // Déclaration des variables 
         $quantite = $cellierBouteille ? $cellierBouteille->quantite : 0;
+        $dateAchat = $cellierBouteille ? $cellierBouteille->date_achat : null;
+        $gardeJusqua = $cellierBouteille ? $cellierBouteille->garde_jusqua : null;
+        $notes = $cellierBouteille ? $cellierBouteille->notes : null;
+        $prix = $cellierBouteille ? $cellierBouteille->prix : null;
+        $millesime = $cellierBouteille ? $cellierBouteille->millesime : null;
+
         // Récupération des informations
         $bouteilles = formatBouteille($bouteille);
         // Ajout de la quantité
         $bouteilles['quantite'] = $quantite;
+        $bouteilles['date_achat'] = $dateAchat;
+        $bouteilles['garde_jusqua'] = $gardeJusqua;
+        $bouteilles['notes'] = $notes;
+        $bouteilles['prix'] = $prix;
+        $bouteilles['millesime'] = $millesime;
         return $bouteilles;
     });
     return response()->json($bouteilles);
@@ -107,6 +119,24 @@ Route::delete('/bouteille/{id}', function ($id) {
     $bouteille->delete();
     return response()->json(['message' => 'bouteille supprimé avec succès']);
 });
+
+
+// Auto Complete Liste Bouteille
+Route::post('/bouteilles/autocompleteBouteille', function (Request $request) {
+    $nom = $request->input('nom');
+    $nb_resultat = 10;
+    $nom = preg_replace("/\*/", "%", $nom);
+    $rows = Bouteille::select('id', 'nom')
+        ->whereRaw('LOWER(nom) LIKE LOWER(?)', ['%' . $nom . '%'])
+        ->limit($nb_resultat)
+        ->get()
+        ->toArray();
+    foreach ($rows as &$row) {
+        $row['nom'] = trim(utf8_encode($row['nom']));
+    }
+    return response()->json($rows);
+});
+
 // Fonction pour formater une bouteille
 function formatBouteille($bouteille) {
     return [
@@ -121,11 +151,6 @@ function formatBouteille($bouteille) {
         'url_img' => $bouteille->url_img,
         'format' => $bouteille->format,
         'type' => $bouteille->relationType->type,
-        'date_achat' => $bouteille->date_achat,
-        'garde_jusqua' => $bouteille->garde_jusqua,
-        'notes' => $bouteille->notes,
-        'prix' => $bouteille->prix,
-        'millesime' => $bouteille->millesime,
     ];
 }
 
@@ -176,7 +201,22 @@ Route::put('/cellier-bouteilles/{bouteille_id}/{cellier_id}/modifier', function 
     $cellierBouteille->save();
     return response()->json($cellierBouteille);
 });
+// Ajouter une bouteille à cellier
+Route::post('/cellier-bouteilles/ajoutBouteilleCellier', function (Request $request) {
+    $cellierBouteille = new CellierBouteilles();
+    $cellierBouteille->bouteille_id = $request->input('bouteille_id');
+    $cellierBouteille->cellier_id = $request->input('cellier_id');
+    $cellierBouteille->quantite = $request->input('quantite');
+    $cellierBouteille->date_achat = $request->input('date_achat');
+    $cellierBouteille->millesime = $request->input('millesime');
+    $cellierBouteille->prix = $request->input('prix');
+    $cellierBouteille->garde_jusqua = $request->input('garde_jusqua');
+    $cellierBouteille->notes = $request->input('notes');
+    
+    $res = $cellierBouteille->save();
 
+    return response()->json(['success' => $res]);
+});
 
 
 //Usager

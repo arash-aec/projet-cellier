@@ -28,7 +28,6 @@ export default function Bouteille(props) {
       const btnBoire = target.closest('[data-js-boire]');
       const btnModifier = target.closest('[data-js-modifier]');
       const idBouteille = target.getAttribute('data-id');
-  
       if (btnAjouter) {
         ajouterBouteille(idBouteille, idCellier);
       } else if (btnBoire) {

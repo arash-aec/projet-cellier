@@ -28,11 +28,6 @@ class Bouteille extends Model
         'url_img',
         'format',
         'type',
-        'date_achat',
-        'garde_jusqua',
-        'notes',
-        'prix',
-        'millesime',
     ];
 
     public function relationPays()

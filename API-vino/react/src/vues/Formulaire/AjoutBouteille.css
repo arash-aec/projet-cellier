@@ -1,0 +1,57 @@
+/*--------------------------------- formulaire Modifier / Ajouter */
+.modifier h2,
+.ajouter h2 {
+	color: #36383F;
+	text-align: center;
+	text-transform: uppercase;
+	padding: 4vh 0;
+}
+.nouvelleBouteille {
+	margin-bottom: 4vh;
+}
+.nouvelleBouteille div,
+.listeAutoComplete {
+	text-align: start;
+	display: block;
+	max-width: max-content;
+	margin: 0 auto;
+}
+.nouvelleBouteille div * {
+	padding: 5px 0;
+}
+.listeAutoComplete li {
+	padding: 5px;
+	cursor: pointer;
+}
+.listeAutoComplete li:hover {
+	background-color: #7e003f21;
+	border-radius: 5px;
+}
+
+.modifier form div,
+.ajouter .nouvelleBouteille div,
+.ajouter .nouvelleBouteille>input {
+	display: flex;
+	flex-direction: column;
+	max-width: 250px;
+	margin-bottom: 2vh;
+	margin: 0 auto;
+}
+.modifier form div input,
+.ajouter .nouvelleBouteille div input {
+	padding: 10px;
+    border-radius: 5px;
+    border: none;
+    background-color: #f2f2f2;
+}
+
+@media (min-width: 768px) {
+	.modifier form div,
+	.ajouter .nouvelleBouteille div,
+	.ajouter .nouvelleBouteille>input {
+		max-width: 400px;
+	}
+	.bouteille {
+		max-width: 380px;
+	}
+}
