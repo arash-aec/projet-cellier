@@ -93,6 +93,7 @@ Route::get('/bouteilles/{id}', function ($id) {
     });
     return response()->json($bouteilles);
 });
+
 // Récupération d'une bouteille avec son id 
 Route::get('/bouteille/{id}', function ($id) {
     $bouteille = Bouteille::with('relationPays', 'relationType')->find($id);
