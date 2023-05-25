@@ -218,6 +218,20 @@ Route::post('/cellier-bouteilles/ajoutBouteilleCellier', function (Request $requ
     return response()->json(['success' => $res]);
 });
 
+// Supprimer une bouteille d'un cellier
+Route::delete('/cellier-bouteilles/{bouteille_id}/{cellier_id}/supprimer', function ($bouteille_id, $cellier_id, Request $request) {
+    $cellierBouteille = CellierBouteilles::where('bouteille_id', $bouteille_id)
+        ->where('cellier_id', $cellier_id)
+        ->first();
+
+    if ($cellierBouteille) {
+        $cellierBouteille->delete();
+        return response()->json(['message' => 'Bouteille supprimée avec succès']);
+    } else {
+        return response()->json(['error' => 'Cellier bouteille non trouvé'], 404);
+    }
+});
+
 
 //Usager
 
