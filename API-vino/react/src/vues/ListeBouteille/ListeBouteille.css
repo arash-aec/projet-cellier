@@ -48,6 +48,7 @@ select {
 
 .recherche-label {
 	display: block;
+	margin-bottom: 20px;
 }
 
 @media (min-width: 768px) {

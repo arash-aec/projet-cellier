@@ -11,7 +11,6 @@ use Illuminate\Database\Eloquent\Model;
 class Usager extends Model implements Authenticatable
 {
     
-    use \Illuminate\Auth\Authenticatable;
 
     protected $table = 'vino__usager';
     protected $primaryKey = 'id';

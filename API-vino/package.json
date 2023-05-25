@@ -12,6 +12,7 @@
         "vite": "^4.0.0"
     },
     "dependencies": {
+        "circular-json": "^0.5.9",
         "react-icons": "^4.8.0"
     }
 }
