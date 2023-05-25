@@ -6,7 +6,8 @@ use App\Models\Cellier;
 use App\Models\Bouteille;
 use App\Models\Usager;
 use App\Models\CellierBouteilles;
-
+use App\Http\Controllers\AuthController;
+use GuzzleHttp\Middleware;
 
 /*
 |--------------------------------------------------------------------------
@@ -261,18 +262,7 @@ Route::put('/usager/{id}', function ($id, Request $request) {
 });
 
 // Ajout d'un usager
-Route::post('/usager', function (Request $request) {
-    $usager = new Usager;
-    $usager->nom = $request->input('nom');
-    $usager->prenom = $request->input('prenom');
-    $usager->courriel = $request->input('courriel');
-    $usager->mot_de_passe= $request->input('mot_de_passe');
-    $usager->role = $request->input('role');
-    // Ajoutez tous les autres champs que vous souhaitez définir lors de la création de l'Usager
 
-    $usager->save();
-    return response()->json($usager);
-});
 
 // Suppression d'un usager
 Route::delete('/usager/{id}', function ($id) {
@@ -285,4 +275,13 @@ Route::delete('/usager/{id}', function ($id) {
 // Route::post('/login', 'AuthController@login');
 
 
+Route::post('/registration', [App\Http\Controllers\AuthController::class, 'register']);
 Route::post('/login', [App\Http\Controllers\AuthController::class, 'login']);
+
+Route::group(['middleware'=> ['auth:sanctum']], function() {
+    Route::post('/profile', [App\Http\Controllers\AuthController::class, 'profile']);
+    Route::post('/logout', [App\Http\Controllers\AuthController::class, 'logout']);
+
+});
+
+
