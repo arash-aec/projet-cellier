@@ -30,13 +30,18 @@ Site : https://e2295853.webdev.cmaisonneuve.qc.ca/vino_etu/
 # Retrospective du sprint 2 
 
 ## Ce qui a bien été :
-- Nous avons réussi à finir le sprint 1 
-- Les corrections du sprint 1 vue avec Mamadou 
+- Nous avons fini les tâches pas terminé du sprint 1 
 - Le partage des issues du sprint 2 (chacun a choisi ses issues pour une meilleure organisation)
 - L'organisation et la gestion de GitHub
+- Le passage entre le projet de base MVC et les Framework React et Laravel
+- L'affichage du Frontend 
+- La récupération des données avec Laravel (API)
 
 ## Ce qui a moins bien été :
 - Les horaires et jour de travail, nous n'avions pas établi des normes de travail
+- Problème avec la connexion et la déconnexion
+
     
 ## Comment on peut s'améliorer :
 - Nous avons établi des horaires de contact (8h-20h) et des jours de travail fixe.
+- Passer plus de temps a l'école pour profiter de l'aide de nos professeurs
