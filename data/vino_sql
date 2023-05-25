@@ -16,7 +16,8 @@ USE `vino_db` ;
 -- -----------------------------------------------------
 -- Table `vino_db`.`vino__pays`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `vino_db`.`vino__pays` (
+DROP TABLE `vino_db`.`vino__pays`;
+CREATE TABLE `vino_db`.`vino__pays` (
   `id` INT(11) NOT NULL AUTO_INCREMENT,
   `pays` VARCHAR(50) NOT NULL,
   PRIMARY KEY (`id`))
@@ -27,7 +28,8 @@ DEFAULT CHARACTER SET = latin1;
 -- -----------------------------------------------------
 -- Table `vino_db`.`vino__type`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `vino_db`.`vino__type` (
+DROP TABLE `vino_db`.`vino__type`;
+CREATE TABLE `vino_db`.`vino__type` (
   `id` INT(11) NOT NULL AUTO_INCREMENT,
   `type` VARCHAR(20) NOT NULL,
   PRIMARY KEY (`id`))
@@ -38,7 +40,8 @@ DEFAULT CHARACTER SET = latin1;
 -- -----------------------------------------------------
 -- Table `vino_db`.`vino__role`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `vino_db`.`vino__role` (
+DROP TABLE `vino_db`.`vino__role`;
+CREATE TABLE `vino_db`.`vino__role` (
   `id` INT(11) NOT NULL AUTO_INCREMENT,
   `role` VARCHAR(45) NOT NULL,
   PRIMARY KEY (`id`))
@@ -47,37 +50,10 @@ DEFAULT CHARACTER SET = latin1;
 
 
 -- -----------------------------------------------------
--- Table `vino_db`.`vino__bouteille`
--- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `vino_db`.`vino__bouteille` (
-  `id` INT(11) NOT NULL AUTO_INCREMENT,
-  `nom` VARCHAR(200) NULL DEFAULT NULL,
-  `image` VARCHAR(255) NULL DEFAULT NULL,
-  `code_saq` VARCHAR(50) NULL DEFAULT NULL,
-  `pays` INT(11) NULL DEFAULT NULL,
-  `description` VARCHAR(200) NULL DEFAULT NULL,
-  `prix_saq` FLOAT NULL DEFAULT NULL,
-  `url_saq` VARCHAR(200) NULL DEFAULT NULL,
-  `url_img` VARCHAR(200) NULL DEFAULT NULL,
-  `format` VARCHAR(20) NULL DEFAULT NULL,
-  `type` INT(11) NULL DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  INDEX `fk_vino__bouteille_vino__type1_idx` (`type` ASC),
-  INDEX `fk_vino__bouteille_vino__pays1_idx` (`pays` ASC),
-  CONSTRAINT `fk_vino__bouteille_vino__pays1`
-    FOREIGN KEY (`pays`)
-    REFERENCES `vino_db`.`vino__pays` (`id`),
-  CONSTRAINT `fk_vino__bouteille_vino__type1`
-    FOREIGN KEY (`type`)
-    REFERENCES `vino_db`.`vino__type` (`id`))
-ENGINE = InnoDB
-DEFAULT CHARACTER SET = latin1;
-
-
--- -----------------------------------------------------
 -- Table `vino_db`.`vino__usager`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `vino_db`.`vino__usager` (
+DROP TABLE `vino_db`.`vino__usager`;
+CREATE TABLE `vino_db`.`vino__usager` (
   `id` INT(11) NOT NULL AUTO_INCREMENT,
   `nom` VARCHAR(100) NOT NULL,
   `prenom` VARCHAR(100) NOT NULL,
@@ -95,9 +71,47 @@ DEFAULT CHARACTER SET = latin1;
 
 
 -- -----------------------------------------------------
+-- Table `vino_db`.`vino__bouteille`
+-- -----------------------------------------------------
+DROP TABLE `vino_db`.`vino__bouteille`;
+CREATE TABLE `vino_db`.`vino__bouteille` (
+  `id` INT(11) NOT NULL AUTO_INCREMENT,
+  `nom` VARCHAR(200) NULL DEFAULT NULL,
+  `image` VARCHAR(255) NULL DEFAULT NULL,
+  `code_saq` VARCHAR(50) NULL DEFAULT NULL,
+  `pays` INT(11) NULL DEFAULT NULL,
+  `description` VARCHAR(200) NULL DEFAULT NULL,
+  `prix_saq` FLOAT NULL DEFAULT NULL,
+  `url_saq` VARCHAR(200) NULL DEFAULT NULL,
+  `url_img` VARCHAR(200) NULL DEFAULT NULL,
+  `format` VARCHAR(20) NULL DEFAULT NULL,
+  `type` INT(11) NULL DEFAULT NULL,
+  `usager_id` INT(11) NULL DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  INDEX `fk_vino__bouteille_vino__type1_idx` (`type` ASC),
+  INDEX `fk_vino__bouteille_vino__pays1_idx` (`pays` ASC),
+  INDEX `fk_vino__bouteille_vino__usager1_idx` (`usager_id` ASC),
+  CONSTRAINT `fk_vino__bouteille_vino__pays1`
+    FOREIGN KEY (`pays`)
+    REFERENCES `vino_db`.`vino__pays` (`id`),
+  CONSTRAINT `fk_vino__bouteille_vino__type1`
+    FOREIGN KEY (`type`)
+    REFERENCES `vino_db`.`vino__type` (`id`),
+  CONSTRAINT `fk_vino__bouteille_vino__usager1`
+    FOREIGN KEY (`usager_id`)
+    REFERENCES `vino_db`.`vino__usager` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB
+AUTO_INCREMENT = 11
+DEFAULT CHARACTER SET = latin1;
+
+
+-- -----------------------------------------------------
 -- Table `vino_db`.`vino__cellier`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `vino_db`.`vino__cellier` (
+DROP TABLE `vino_db`.`vino__cellier`;
+CREATE TABLE `vino_db`.`vino__cellier` (
   `id` INT(11) NOT NULL AUTO_INCREMENT,
   `nom` VARCHAR(100) NULL DEFAULT NULL,
   `usager_id` INT(11) NOT NULL,
@@ -117,7 +131,8 @@ DEFAULT CHARACTER SET = latin1;
 -- -----------------------------------------------------
 -- Table `vino_db`.`vino__liste_achat`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `vino_db`.`vino__liste_achat` (
+DROP TABLE `vino_db`.`vino__liste_achat`;
+CREATE TABLE `vino_db`.`vino__liste_achat` (
   `usager_id` INT(11) NOT NULL AUTO_INCREMENT,
   `bouteille_id` INT(11) NOT NULL,
   `quantite` INT(11) NULL DEFAULT NULL,
@@ -137,7 +152,8 @@ DEFAULT CHARACTER SET = latin1;
 -- -----------------------------------------------------
 -- Table `vino_db`.`vino__cellier_bouteilles`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `vino_db`.`vino__cellier_bouteilles` (
+DROP TABLE `vino_db`.`vino__cellier_bouteilles`;
+CREATE TABLE `vino_db`.`vino__cellier_bouteilles` (
   `cellier_id` INT(11) NOT NULL,
   `bouteille_id` INT(11) NOT NULL,
   `quantite` INT(11) NULL DEFAULT NULL,
