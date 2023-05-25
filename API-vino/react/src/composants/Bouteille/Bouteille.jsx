@@ -27,6 +27,8 @@ export default function Bouteille(props) {
       const btnAjouter = target.closest('[data-js-ajouter]');
       const btnBoire = target.closest('[data-js-boire]');
       const btnModifier = target.closest('[data-js-modifier]');
+      const btnSupprimer = target.closest('[data-js-supprimer]'); //supprimer
+
       const idBouteille = target.getAttribute('data-id');
       if (btnAjouter) {
         ajouterBouteille(idBouteille, idCellier);
@@ -34,6 +36,8 @@ export default function Bouteille(props) {
         boireBouteille(idBouteille, idCellier);
       } else if (btnModifier) {
         modifieQuantiteBouteille(idBouteille, idCellier);
+      } else if (btnSupprimer) { // Added condition
+        supprimerBouteille(idBouteille, idCellier); //supprimer
       }
   }
 
@@ -94,6 +98,35 @@ export default function Bouteille(props) {
         formQuantite.style.display = "none"; 
     });
   }
+
+  function supprimerBouteille(idBouteille) {
+    const bouteilleElement = reference.current;
+  
+    fetch(`http://127.0.0.1:8000/api/cellier-bouteilles/${idBouteille}/${idCellier}/supprimer`, {
+      method: 'DELETE',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    })
+      .then((response) => {
+        if (response.ok) {
+          //Bouteille supprimée avec succès, supprimez-la de l'interface utilisateur
+          bouteilleElement.remove();
+          console.log('Bouteille deleted successfully');
+        } else {
+          // Gérer l'erreur réseau
+          response.json().then((errorData) => {
+            console.error('Erreur lors de la suppression de la bouteille:', errorData.error);
+          });
+        }
+      })
+      .catch((error) => {
+        // Gérer l'erreur réseau
+        console.error('Erreur lors de la suppression de la bouteille:', error);
+      });
+  }
+
+
   
   return(
     <div className="bouteille bouteille-item" key={idBouteille} ref={reference} data-id={idBouteille} >
@@ -127,6 +160,7 @@ export default function Bouteille(props) {
           <i className="btnModifier bouteille-icone__fa fa fa-edit" data-js-modifier data-id={idBouteille}><p><small>Modifier</small></p></i>
           <i className="btnAjouter bouteille-icone__fa fa fa-plus" data-js-ajouter data-id={idBouteille}><p><small>Ajouter</small></p></i>
           <i className="btnBoire bouteille-icone__fa fa fa-minus" data-js-boire data-id={idBouteille}><p><small>Boire</small></p></i>
+          <i className="btnSupprimer bouteille-icone__fa fa fa-trash" data-js-supprimer data-id={idBouteille}><p><small>Supprimer</small></p></i>
         </div>
       </div>
     </div>
