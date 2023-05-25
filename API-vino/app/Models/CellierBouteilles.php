@@ -13,7 +13,7 @@ class CellierBouteilles extends Model
     use HasFactory;
 
     protected $table = 'vino__cellier_bouteilles';
-    protected $primaryKey = null;
+    protected $primaryKey = 'id';  //ajout ID au leu de null
     public $incrementing = false;
     public $timestamps = false;
 
