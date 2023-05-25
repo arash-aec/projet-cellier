@@ -2,21 +2,21 @@
 
 namespace App\Models;
 
-use App\Models\User;
-use Illuminate\Contracts\Auth\Authenticatable;
-use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Notifications\Notifiable;
+use Laravel\Sanctum\HasApiTokens;
 
-
-
-class Usager extends Model implements Authenticatable
+class Usager extends Authenticatable
 {
-    
-    use \Illuminate\Auth\Authenticatable;
-
+    use HasApiTokens, HasFactory, Notifiable;
     protected $table = 'vino__usager';
-    protected $primaryKey = 'id';
-    public $timestamps = false;
 
+    /**
+     * The attributes that are mass assignable.
+     *
+     * @var array
+     */
     protected $fillable = [
         'nom',
         'prenom',
@@ -24,43 +24,14 @@ class Usager extends Model implements Authenticatable
         'mot_de_passe',
         'role',
     ];
-    public function role()
-    {
-        return $this->belongsTo(Role::class, 'role');
-    }
 
-
-   
-
-    // Implement Authenticatable methods
-    public function getAuthIdentifierName()
-    {
-        return 'id';
-    }
-
-    public function getAuthIdentifier()
-    {
-        return $this->getAttribute('courriel');
-    }
-
-    public function getAuthPassword()
-    {
-        return $this->getAttribute('mot_de_passe');
-    }
-
-    public function getRememberToken()
-    {
-        // Not needed if you don't have "remember me" functionality
-    }
-
-    public function setRememberToken($value)
-    {
-        // Not needed if you don't have "remember me" functionality
-    }
-
-    public function getRememberTokenName()
-    {
-        // Not needed if you don't have "remember me" functionality
-    }
-
+    /**
+     * The attributes that should be hidden for serialization.
+     *
+     * @var array
+     */
+    protected $hidden = [
+        'mot_de_passe',
+        'remember_token',
+    ];
 }

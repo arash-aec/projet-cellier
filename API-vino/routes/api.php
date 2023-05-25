@@ -3,11 +3,12 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
-use App\Models\Usager;
-
+use App\Http\Controllers\AuthController;
+use GuzzleHttp\Middleware;
 use App\Http\Controllers\BouteilleController;
 use App\Http\Controllers\CellierController;
 use App\Http\Controllers\CellierBouteillesController;
+use App\Http\Controllers\UsagerController;
 
 /*
 |--------------------------------------------------------------------------
@@ -83,52 +84,32 @@ Route::delete('/cellier-bouteilles/{bouteille_id}/{cellier_id}/supprimer', [Cell
 
 // ------------------------------------------ Usager
 // Récupération de tous les usagers
-Route::get('/usagers', function () {
-    $usagers = Usager::get();
-    return response()->json($usagers);
-});
+Route::get('/usagers', [UsagerController::class, 'getUsagers']);
 
 // Récupération d'un usager avec son id
-Route::get('/usager/{id}', function ($id) {
-    $usager = Usager::find($id);
-    return response()->json($usager);
-});
-
+Route::get('/usager/{id}', [UsagerController::class, 'getUsager']);
 
 // Modification d'un usager
-Route::put('/usager/{id}', function ($id, Request $request) {
-    $usager = Usager::findOrFail($id);
-    $usager->nom = $request->input('nom');
-    $usager->prenom = $request->input('prenom');
-    $usager->courriel = $request->input('courriel');
-    $usager->mot_de_passe = $request->input('mot_de_passe');
-    $usager->role = $request->input('role');
-    $usager->save();
-    return response()->json($usager);
-});
+Route::put('/usager/{id}', [UsagerController::class, 'modifierUsager']);
 
 // Ajout d'un usager
-Route::post('/usager', function (Request $request) {
-    $usager = new Usager;
-    $usager->nom = $request->input('nom');
-    $usager->prenom = $request->input('prenom');
-    $usager->courriel = $request->input('courriel');
-    $usager->mot_de_passe= $request->input('mot_de_passe');
-    $usager->role = $request->input('role');
-    // Ajoutez tous les autres champs que vous souhaitez définir lors de la création de l'Usager
-
-    $usager->save();
-    return response()->json($usager);
-});
+Route::post('/usager', [UsagerController::class, 'ajouterUsager']);
 
 // Suppression d'un usager
-Route::delete('/usager/{id}', function ($id) {
-    $usager = Usager::findOrFail($id);
-    $usager->delete();
-    return response()->json(['message' => 'Usager supprimé avec succès']);
-});
+Route::delete('/usager/{id}', [UsagerController::class, 'supprimerUsager']);
+
 
 //Route API pour l'authentification des utilisateurs
 // Route::post('/login', 'AuthController@login');
 
+
+Route::post('/registration', [App\Http\Controllers\AuthController::class, 'register']);
 Route::post('/login', [App\Http\Controllers\AuthController::class, 'login']);
+
+Route::group(['middleware'=> ['auth:sanctum']], function() {
+    Route::post('/profile', [App\Http\Controllers\AuthController::class, 'profile']);
+    Route::post('/logout', [App\Http\Controllers\AuthController::class, 'logout']);
+
+});
+
+
