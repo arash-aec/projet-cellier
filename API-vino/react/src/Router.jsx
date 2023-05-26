@@ -11,14 +11,13 @@ import Login from "./vues/Login/Login";
 const AppRouter = () => {
   
   const [connecter, setConnecter] = useState(false);
-  const [prenom, setPrenom] = useState("");
 
   return (
     <Router>
       <Login setConnecter={setConnecter} connecter={connecter} />
-      <Entete connecter={connecter}  setConnecter={setConnecter} prenom={prenom} setPrenom={setPrenom} />
+      <Entete connecter={connecter}  setConnecter={setConnecter} />
       <Routes>
-        <Route path="/" element={<Accueil connecter={connecter}  setConnecter={setConnecter} prenom={prenom} setPrenom={setPrenom}/>} />
+        <Route path="/" element={<Accueil connecter={connecter}  setConnecter={setConnecter} />} />
         <Route path="/listeBouteille/:id" element={<ListeBouteille />} />
         <Route path="/celliers" element={<ListeCellier />} />
         <Route path="*" element={<NonTrouve />} />

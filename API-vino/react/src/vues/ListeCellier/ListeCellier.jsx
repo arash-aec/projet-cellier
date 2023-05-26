@@ -2,12 +2,15 @@ import React, { useState, useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
 import Cellier from "../../composants/Cellier/Cellier";
 
-const ListeCellier = () => {
+const ListeCellier = (props) => {
   const [miseAJour, setMiseAJour] = useState(false);
   const [celliers, setCelliers] = useState([]);
   const reference = useRef(null);
 
+  // const {connecter} = props;
+
   useEffect(() => {
+    // console.log(props)
     const elements = reference.current;
     getCelliers();
   }, [miseAJour]);
