@@ -101,17 +101,19 @@
 /* Responsive */
 @media (min-width: 768px) {
     .nav {
-    max-height: none;
-    top: 0;
-    position: relative;
-    width: fit-content;
-    background-color: transparent;
+        max-height: none;
+        top: 0;
+        position: relative;
+        width: fit-content;
+        background-color: transparent;
     }
     .menu {
-    flex-direction: row;  
+        display: flex;
+        flex-direction: row; 
+        align-items: center; 
     }
     .hamb {
-    display: none;
+        display: none;
     }
 }
  

@@ -1,11 +1,12 @@
 import React, { useState, useEffect, useRef } from "react";
 import { useParams, useLocation } from "react-router-dom";
+
 import Bouteille from "../../composants/Bouteille/Bouteille";
 import AjoutBouteille from "../Formulaire/AjoutBouteille";
 
 const ListeBouteille = () => {
-  let [miseAJour, setMiseAJour] = useState(false);
-  let [bouteilles, setBouteilles] = useState([]);
+  const [miseAJour, setMiseAJour] = useState(false);
+  const [bouteilles, setBouteilles] = useState([]);
   const [rechercheBouteille, setRechercheBouteille] = useState("");
   const [isRechercheVisible, setEstRechercheVisible] = useState(false);
 
