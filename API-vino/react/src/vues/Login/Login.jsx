@@ -1,12 +1,18 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import Input from "../../composants/UI/Input/Input";
 import AuthContext from "../../contexte/AuthProvider";
+import Entete from "../../composants/Entete/Entete";
 
 const Login = (props) => {
-  const { setAuth } = useContext(AuthContext);
+  const {setConnecter, connecter} = props;
+  const { setAuth  } = useContext(AuthContext);
   const [courriel, setCourriel] = useState("");
   const [mot_de_passe, setMotDePasse] = useState("");
   const [errors, setErrors] = useState([]);
+  const [isModalOpen, setIsModalOpen] = useState(true);
+  let [miseAJour, setMiseAJour] = useState(false);
+
+
 
   const handleCourrielChange = (event) => {
     setCourriel(event.target.value);
@@ -36,7 +42,7 @@ const Login = (props) => {
     }
 
     try {
-      const response = await fetch("http://127.0.0.1:8000/api/login", {
+      const response = await fetch("http://127.0.0.1:8000/api/connexion", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -55,11 +61,18 @@ const Login = (props) => {
 
         // Set the authenticated user in the auth context
         setAuth(data);
+       
+        const isConnected = ()=> {
+          setConnecter(true);
+        }
+
+
 
         // Reset form fields and errors
         setCourriel("");
         setMotDePasse("");
         setErrors([]);
+        setIsModalOpen(false);
       } else {
         const errorData = await response.json();
         console.error("Error:", errorData.error);
@@ -72,8 +85,17 @@ const Login = (props) => {
     }
   };
 
+  useEffect(() => {
+    console.log("connecter updated:", connecter);
+  }, [miseAJour]);
+
+  if (!isModalOpen) {
+    return null;
+  }
+
   return (
     <>
+ 
       <div className="modal-overlay-connexion">
         <div className="modal-connexion">
           <span className="close-btn-connexion" onClick={props.onClose}>
@@ -99,7 +121,6 @@ const Login = (props) => {
               onChange={handleMotDePasseChange}
               required
             />
-
             <Input type="submit" value="Connexion" />
           </form>
           {errors.length > 0 && (
@@ -111,8 +132,8 @@ const Login = (props) => {
           )}
         </div>
       </div>
+
     </>
   );
-};
-
+}
 export default Login;
