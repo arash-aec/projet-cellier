@@ -1,9 +1,26 @@
-import React from "react";
+import React, { useState, useContext, useEffect } from "react";
 import { Link } from "react-router-dom";
+import { useSelector, useDispatch } from 'react-redux';
+import { TokenContext } from '../../App';
+import { deconnexion } from '../../global/authentification/authAction.jsx';
+import { useNavigate } from "react-router-dom";
 
-const Entete = (props) => { 
-  const {setConnecter, connecter} = props;
-  
+
+const Entete = () => { 
+  const estConnecte = useSelector(state => state.auth.estConnecte);
+  const token = useContext(TokenContext);
+
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    dispatch(deconnexion());
+    // Redirection vers la page Accueil
+    navigate("/");
+
+    // Mettre deconnexion Laravel 
+  };
+
   return (
     <>
       <header className="header">
@@ -12,14 +29,15 @@ const Entete = (props) => {
         <label className="hamb" htmlFor="side-menu">
           <span className="hamb-line"></span>
         </label>
-        {connecter ?
-          (<nav className="nav">
+        {estConnecte && (
+          <nav className="nav">
             <ul className="menu">
-              <li><a href="/">Accueil</a></li>
-              <li><a href="/celliers">Mes Celliers</a></li>
-              <li><a href="/">Déconnexion</a></li>
+              <li><Link to="/">Accueil</Link></li>
+              <li><Link to="/celliers">Mes Celliers</Link></li>
+              <li><button className="bouton button-primary" onClick={handleLogout}>Déconnexion</button></li>
             </ul>
-          </nav>) : ("") }
+          </nav>
+        )}
       </header>
     </>
   );
