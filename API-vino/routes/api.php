@@ -98,6 +98,9 @@ Route::post('/usager', [UsagerController::class, 'ajouterUsager']);
 // Suppression d'un usager
 Route::delete('/usager/{id}', [UsagerController::class, 'supprimerUsager']);
 
+// Ajout de bouteille non liste
+Route::post('bouteilles/nouvelle', [BouteilleController::class, 'ajouterNouvelleBouteille']);
+
 
 //Route API pour l'authentification des utilisateurs
 // Route::post('/login', 'AuthController@login');
