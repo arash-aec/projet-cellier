@@ -3,7 +3,6 @@ import { useParams } from "react-router-dom";
 import { Link } from "react-router-dom";
 
 export default function Bouteille(props) {
-   
 
   const {pays, nom, image, notes, prix_saq, id: idBouteille, quantite: initialQuantite, prix, millesime, garde_jusqua, format, url_saq, type, onBouteilleAjouter, onBouteilleBoire, onBouteilleModifie } = props;
 
@@ -126,7 +125,6 @@ export default function Bouteille(props) {
       });
   }
 
-
   
   return(
     <div className="bouteille bouteille-item" key={idBouteille} ref={reference} data-id={idBouteille} >
@@ -160,7 +158,7 @@ export default function Bouteille(props) {
           <i className="btnModifier bouteille-icone__fa fa fa-edit" data-js-modifier data-id={idBouteille}><p><small>Modifier</small></p></i>
           <i className="btnAjouter bouteille-icone__fa fa fa-plus" data-js-ajouter data-id={idBouteille}><p><small>Ajouter</small></p></i>
           <i className="btnBoire bouteille-icone__fa fa fa-minus" data-js-boire data-id={idBouteille}><p><small>Boire</small></p></i>
-          <i className="btnSupprimer bouteille-icone__fa fa fa-trash" data-js-supprimer data-id={idBouteille}><p><small>Supprimer</small></p></i>
+          {/* <i className="btnSupprimer bouteille-icone__fa fa fa-trash" data-js-supprimer data-id={idBouteille}><p><small>Supprimer</small></p></i> */}
         </div>
       </div>
     </div>

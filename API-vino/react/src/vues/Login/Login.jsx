@@ -1,11 +1,9 @@
 import React, { useState, useContext, useEffect } from "react";
 import Input from "../../composants/UI/Input/Input";
-import AuthContext from "../../contexte/AuthProvider";
 import Entete from "../../composants/Entete/Entete";
 
 const Login = (props) => {
   const {setConnecter, connecter} = props;
-  const { setAuth  } = useContext(AuthContext);
   const [courriel, setCourriel] = useState("");
   const [mot_de_passe, setMotDePasse] = useState("");
   const [errors, setErrors] = useState([]);
@@ -56,9 +54,6 @@ const Login = (props) => {
       if (response.ok) {
         const data = await response.json();
         console.log("Data:", data);
-
-        // Set the authenticated user in the auth context
-        setAuth(data);
         
         setConnecter(true);
 
@@ -89,7 +84,6 @@ const Login = (props) => {
 
   return (
     <>
- 
       <div className="modal-overlay-connexion">
         <div className="modal-connexion">
           <span className="close-btn-connexion" onClick={props.onClose}>
@@ -98,23 +92,9 @@ const Login = (props) => {
           <h2>Connexion</h2>
           <form onSubmit={handleSubmit} method="POST">
             <label htmlFor="courriel">Votre courriel:</label>
-            <Input
-              type="email"
-              id="courriel"
-              name="courriel"
-              value={courriel}
-              onChange={handleCourrielChange}
-              required
-            />
+            <Input type="email" id="courriel" name="courriel" value={courriel} onChange={handleCourrielChange} required />
             <label htmlFor="mot_de_passe">Votre mot de passe:</label>
-            <Input
-              type="password"
-              id="mot_de_passe"
-              name="mot_de_passe"
-              value={mot_de_passe}
-              onChange={handleMotDePasseChange}
-              required
-            />
+            <Input type="password" id="mot_de_passe" name="mot_de_passe" value={mot_de_passe} onChange={handleMotDePasseChange} required />
             <Input type="submit" value="Connexion" />
           </form>
           {errors.length > 0 && (
@@ -126,7 +106,6 @@ const Login = (props) => {
           )}
         </div>
       </div>
-
     </>
   );
 }

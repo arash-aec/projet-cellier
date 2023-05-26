@@ -2,6 +2,17 @@
 
 ### 41e - Epreuve finale
 
+---
+
+Saman Nazari | Arash Ashtari | Jerome Fosse
+
+Github project : https://github.com/orgs/arash-aec/projects/3
+Github : https://github.com/arash-aec/projet-cellier
+Site : https://jerome-fosse.ca/public/projet/vino/
+
+--- 
+
+
 Objectif : permettre à un usager de gérer leur(s) cellier(s) de vin à partir d'une application Web
 
 Il est implicite que l'application doit être pensée en fonction d'un utilisateur « dans l'action » avec un appareil mobile et non un utilisateur assis devant un écran large (mobile first)
