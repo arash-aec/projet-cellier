@@ -107,7 +107,7 @@ Route::post('bouteilles/nouvelle', [BouteilleController::class, 'ajouterNouvelle
 
 
 Route::post('/registration', [App\Http\Controllers\AuthController::class, 'register']);
-Route::post('/login', [App\Http\Controllers\AuthController::class, 'login']);
+Route::post('/connexion', [App\Http\Controllers\AuthController::class, 'login']);
 
 Route::group(['middleware'=> ['auth:sanctum']], function() {
     Route::post('/profile', [App\Http\Controllers\AuthController::class, 'profile']);

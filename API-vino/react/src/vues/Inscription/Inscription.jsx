@@ -58,11 +58,12 @@ const Inscription = () => {
       prenom: prenom,
       courriel: email,
       mot_de_passe: password,
+      mot_de_passe_confirmation: confirmPassword,
       role: 1 // le role par default (membre)
     };
   
     try {
-      const response = await fetch('http://127.0.0.1:8000/api/usager', {
+      const response = await fetch('http://127.0.0.1:8000/api/registration', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
@@ -122,7 +123,7 @@ const Inscription = () => {
             <Input type="password" id="password-inscrir" name="mot_de_passe" value={password} onChange={(e) => setPassword(e.target.value)} required className="password-input" />
 
             <label htmlFor="confirmpass" className="password-label">Confirmez le mot de passe:</label>
-            <Input type="password" id="confirmpass" name="mot_de_passe" value={confirmPassword} onChange={(e) => setConfirmPassword(e.target.value)} required
+            <Input type="password" id="confirmpass" name="confirmationPassword" value={confirmPassword} onChange={(e) => setConfirmPassword(e.target.value)} required
               className={`password-input ${errors.includes("Les mots de passe ne correspondent pas.") ? "input-error" : ""}`} />
             {errors.includes("Les mots de passe ne correspondent pas.") && (
               <span className="error-message">Les mots de passe ne correspondent pas.</span>
