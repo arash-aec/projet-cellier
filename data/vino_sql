@@ -56,6 +56,8 @@ CREATE TABLE IF NOT EXISTS `vino_db`.`vino__usager` (
   `courriel` VARCHAR(255) NOT NULL,
   `mot_de_passe` VARCHAR(255) NOT NULL,
   `role` INT(11) NOT NULL,
+  `created_at` TIMESTAMP NULL DEFAULT NULL,
+  `updated_at` TIMESTAMP NULL DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE INDEX `courriel_UNIQUE` (`courriel` ASC),
   INDEX `fk_vino__usager_vino__role1_idx` (`role` ASC),
@@ -215,7 +217,7 @@ INSERT INTO `vino__cellier` VALUES(2, 'Mon cellier 2', 1, null, null);
 INSERT INTO `vino__role` (`id`, `role`) VALUES ('1', 'membre');
 INSERT INTO `vino__role` (`id`, `role`) VALUES ('2', 'admin');
 
-INSERT INTO `vino__usager` (`id`, `nom`, `prenom`, `courriel`, `mot_de_passe`, `role`) VALUES ('1', 'Premier ', 'usager', 'premierUsager@usager.com', '123456789', '1');
+INSERT INTO `vino__usager` (`id`, `nom`, `prenom`, `courriel`, `mot_de_passe`, `role`) VALUES ('1', 'Premier ', 'usager', 'premierusager@usager.com', '123456789', '1', null, null);
 
 INSERT INTO `vino__cellier_bouteilles` (`cellier_id`, `bouteille_id`, `quantite`, `date_achat`, `garde_jusqua`, `notes`, `prix`, `millesime`) VALUES ('1', '5', '1', '2023-05-09', '2023', 'tanique', 25.5, 2010);
 INSERT INTO `vino__cellier_bouteilles` (`cellier_id`, `bouteille_id`, `quantite`, `date_achat`, `garde_jusqua`, `notes`, `prix`, `millesime`) VALUES ('1', '1', '10', '2023-04-11', '2000', 'dur', 23.95, 2019);

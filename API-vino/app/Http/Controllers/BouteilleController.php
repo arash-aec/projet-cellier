@@ -117,4 +117,34 @@ class BouteilleController extends Controller
         ];
     }
 
+    public function ajouterNouvelleBouteille(Request $request)
+    {
+        // Créer une nouvelle bouteille
+        $bouteille = new Bouteille();
+        $bouteille->nom = $request->input('nom');
+        $bouteille->description = $request->input('description');
+        // Définir d'autres propriétés de la bouteille
+    
+        // Enregistrez la bouteille dans la base de données
+        $bouteille->save();
+    
+        // Créer une nouvelle entrée dans la table vino_cellier_bouteilles
+        $cellierBouteille = new CellierBouteilles();
+        $cellierBouteille->cellier_id = $request->input('cellier_id');
+        $cellierBouteille->bouteille_id = $bouteille->id;
+        $cellierBouteille->quantite = $request->input('quantite');
+        $cellierBouteille->date_achat = $request->input('date_achat');
+        $cellierBouteille->garde_jusqua = $request->input('garde_jusqua');
+        $cellierBouteille->notes = $request->input('notes');
+        $cellierBouteille->prix = $request->input('prix');
+        $cellierBouteille->millesime = $request->input('millesime');
+        
+        // Définir les autres propriétés de la bouteille cellier
+    
+        // Enregistrer la bouteille de cellier dans la base de données
+        $cellierBouteille->save();
+    
+        return response()->json(['success' => true, 'bouteille' => $bouteille, 'cellier_bouteille' => $cellierBouteille]);
+    }
+
 }

@@ -20,7 +20,7 @@ return new class extends Migration
             $table->string('courriel')->unique();
             $table->timestamp('courriel_verified_at')->nullable();
             $table->string('mot_de_passe');
-            $table->string('role');
+            $table->int('role');
             $table->rememberToken();
             $table->timestamps();
         });
