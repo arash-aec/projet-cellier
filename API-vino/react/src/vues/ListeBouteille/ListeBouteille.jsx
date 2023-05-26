@@ -9,6 +9,7 @@ const ListeBouteille = () => {
   const [rechercheBouteille, setRechercheBouteille] = useState("");
   const [isRechercheVisible, setEstRechercheVisible] = useState(false);
 
+
   // Récupération de l'id du cellier
   const {id} = useParams();
 

@@ -16,8 +16,7 @@ USE `vino_db` ;
 -- -----------------------------------------------------
 -- Table `vino_db`.`vino__pays`
 -- -----------------------------------------------------
-DROP TABLE `vino_db`.`vino__pays`;
-CREATE TABLE `vino_db`.`vino__pays` (
+CREATE TABLE IF NOT EXISTS `vino_db`.`vino__pays` (
   `id` INT(11) NOT NULL AUTO_INCREMENT,
   `pays` VARCHAR(50) NOT NULL,
   PRIMARY KEY (`id`))
@@ -28,8 +27,7 @@ DEFAULT CHARACTER SET = latin1;
 -- -----------------------------------------------------
 -- Table `vino_db`.`vino__type`
 -- -----------------------------------------------------
-DROP TABLE `vino_db`.`vino__type`;
-CREATE TABLE `vino_db`.`vino__type` (
+CREATE TABLE IF NOT EXISTS `vino_db`.`vino__type` (
   `id` INT(11) NOT NULL AUTO_INCREMENT,
   `type` VARCHAR(20) NOT NULL,
   PRIMARY KEY (`id`))
@@ -40,8 +38,7 @@ DEFAULT CHARACTER SET = latin1;
 -- -----------------------------------------------------
 -- Table `vino_db`.`vino__role`
 -- -----------------------------------------------------
-DROP TABLE `vino_db`.`vino__role`;
-CREATE TABLE `vino_db`.`vino__role` (
+CREATE TABLE IF NOT EXISTS `vino_db`.`vino__role` (
   `id` INT(11) NOT NULL AUTO_INCREMENT,
   `role` VARCHAR(45) NOT NULL,
   PRIMARY KEY (`id`))
@@ -52,14 +49,15 @@ DEFAULT CHARACTER SET = latin1;
 -- -----------------------------------------------------
 -- Table `vino_db`.`vino__usager`
 -- -----------------------------------------------------
-DROP TABLE `vino_db`.`vino__usager`;
-CREATE TABLE `vino_db`.`vino__usager` (
+CREATE TABLE IF NOT EXISTS `vino_db`.`vino__usager` (
   `id` INT(11) NOT NULL AUTO_INCREMENT,
   `nom` VARCHAR(100) NOT NULL,
   `prenom` VARCHAR(100) NOT NULL,
   `courriel` VARCHAR(255) NOT NULL,
   `mot_de_passe` VARCHAR(255) NOT NULL,
   `role` INT(11) NOT NULL,
+  `created_at` TIMESTAMP NULL DEFAULT NULL,
+  `updated_at` TIMESTAMP NULL DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE INDEX `courriel_UNIQUE` (`courriel` ASC),
   INDEX `fk_vino__usager_vino__role1_idx` (`role` ASC),
@@ -73,8 +71,7 @@ DEFAULT CHARACTER SET = latin1;
 -- -----------------------------------------------------
 -- Table `vino_db`.`vino__bouteille`
 -- -----------------------------------------------------
-DROP TABLE `vino_db`.`vino__bouteille`;
-CREATE TABLE `vino_db`.`vino__bouteille` (
+CREATE TABLE IF NOT EXISTS `vino_db`.`vino__bouteille` (
   `id` INT(11) NOT NULL AUTO_INCREMENT,
   `nom` VARCHAR(200) NULL DEFAULT NULL,
   `image` VARCHAR(255) NULL DEFAULT NULL,
@@ -110,8 +107,7 @@ DEFAULT CHARACTER SET = latin1;
 -- -----------------------------------------------------
 -- Table `vino_db`.`vino__cellier`
 -- -----------------------------------------------------
-DROP TABLE `vino_db`.`vino__cellier`;
-CREATE TABLE `vino_db`.`vino__cellier` (
+CREATE TABLE IF NOT EXISTS `vino_db`.`vino__cellier` (
   `id` INT(11) NOT NULL AUTO_INCREMENT,
   `nom` VARCHAR(100) NULL DEFAULT NULL,
   `usager_id` INT(11) NOT NULL,
@@ -131,8 +127,7 @@ DEFAULT CHARACTER SET = latin1;
 -- -----------------------------------------------------
 -- Table `vino_db`.`vino__liste_achat`
 -- -----------------------------------------------------
-DROP TABLE `vino_db`.`vino__liste_achat`;
-CREATE TABLE `vino_db`.`vino__liste_achat` (
+CREATE TABLE IF NOT EXISTS `vino_db`.`vino__liste_achat` (
   `usager_id` INT(11) NOT NULL AUTO_INCREMENT,
   `bouteille_id` INT(11) NOT NULL,
   `quantite` INT(11) NULL DEFAULT NULL,
@@ -152,8 +147,7 @@ DEFAULT CHARACTER SET = latin1;
 -- -----------------------------------------------------
 -- Table `vino_db`.`vino__cellier_bouteilles`
 -- -----------------------------------------------------
-DROP TABLE `vino_db`.`vino__cellier_bouteilles`;
-CREATE TABLE `vino_db`.`vino__cellier_bouteilles` (
+CREATE TABLE IF NOT EXISTS `vino_db`.`vino__cellier_bouteilles` (
   `cellier_id` INT(11) NOT NULL,
   `bouteille_id` INT(11) NOT NULL,
   `quantite` INT(11) NULL DEFAULT NULL,
@@ -223,7 +217,7 @@ INSERT INTO `vino__cellier` VALUES(2, 'Mon cellier 2', 1, null, null);
 INSERT INTO `vino__role` (`id`, `role`) VALUES ('1', 'membre');
 INSERT INTO `vino__role` (`id`, `role`) VALUES ('2', 'admin');
 
-INSERT INTO `vino__usager` (`id`, `nom`, `prenom`, `courriel`, `mot_de_passe`, `role`) VALUES ('1', 'Premier ', 'usager', 'premierUsager@usager.com', '123456789', '1');
+INSERT INTO `vino__usager` (`id`, `nom`, `prenom`, `courriel`, `mot_de_passe`, `role`) VALUES ('1', 'Premier ', 'usager', 'premierusager@usager.com', '123456789', '1', null, null);
 
 INSERT INTO `vino__cellier_bouteilles` (`cellier_id`, `bouteille_id`, `quantite`, `date_achat`, `garde_jusqua`, `notes`, `prix`, `millesime`) VALUES ('1', '5', '1', '2023-05-09', '2023', 'tanique', 25.5, 2010);
 INSERT INTO `vino__cellier_bouteilles` (`cellier_id`, `bouteille_id`, `quantite`, `date_achat`, `garde_jusqua`, `notes`, `prix`, `millesime`) VALUES ('1', '1', '10', '2023-04-11', '2000', 'dur', 23.95, 2019);
@@ -233,3 +227,18 @@ INSERT INTO `vino__cellier_bouteilles` (`cellier_id`, `bouteille_id`, `quantite`
 INSERT INTO `vino__cellier_bouteilles` (`cellier_id`, `bouteille_id`, `quantite`, `date_achat`, `garde_jusqua`, `notes`, `prix`, `millesime`) VALUES ('2', '6', '1', '2020-11-13', '2022', 'bon', 35, 2004);
 INSERT INTO `vino__cellier_bouteilles` (`cellier_id`, `bouteille_id`, `quantite`, `date_achat`, `garde_jusqua`, `notes`, `prix`, `millesime`) VALUES ('1', '8', '1', '2019-11-21', '2020', 'correct', 40, 2010);
 INSERT INTO `vino__cellier_bouteilles` (`cellier_id`, `bouteille_id`, `quantite`, `date_achat`, `garde_jusqua`, `notes`, `prix`, `millesime`) VALUES ('1', '9', '1', '2020-09-25', '2022', 'null', 100, NULL);
+
+
+-- Pour la suppression de cellier et ses bouteilles :
+
+-- Supprimer l'ancienne contrainte de clé étrangère
+ALTER TABLE `vino_db`.`vino__cellier_bouteilles`
+DROP FOREIGN KEY `fk_vino__cellier_has_vino__bouteille_vino__cellier1`;
+
+-- Ajouter la nouvelle contrainte de clé étrangère avec l'action en cascade
+ALTER TABLE `vino_db`.`vino__cellier_bouteilles`
+ADD CONSTRAINT `fk_vino__cellier_has_vino__bouteille_vino__cellier1`
+  FOREIGN KEY (`cellier_id`)
+  REFERENCES `vino_db`.`vino__cellier` (`id`)
+  ON DELETE CASCADE
+  ON UPDATE NO ACTION;

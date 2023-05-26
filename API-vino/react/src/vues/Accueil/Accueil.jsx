@@ -51,7 +51,7 @@ const Accueil = () => {
   return (
     <div ref={reference}>
       <div className="header-image">
-        <img src="images/Beautiful-white-wine-in-wine-glass.jpg" alt="image-vin" />
+        <img src="../public/images/Beautiful-white-wine-in-wine-glass.jpg" alt="image-vin" />
         <div>
           <h1>Vino</h1>
           <p><strong>La meilleure application de gestion de cellier !</strong></p>
@@ -66,19 +66,19 @@ const Accueil = () => {
       <section className="presentation">
         <article>
           <div>
-            <img src="images/cellier.jpeg" alt="photo d'un cellier en bois" />
+            <img src="../public/images/cellier.jpeg" alt="photo d'un cellier en bois" />
           </div>
           <h2>Gestion de cellier</h2>
         </article>
         <article>
           <div>
-            <img src="images/cellier-vine.jpg" alt="photo de plusieurs bouteilles" />
+            <img src="../public/images/cellier-vine.jpg" alt="photo de plusieurs bouteilles" />
           </div>
           <h2>Liste d'achat</h2>
         </article>
         <article>
           <div>
-            <img src="images/wine-box.jpg" alt="photo d'un coffret de bouteille" />
+            <img src="../public/images/wine-box.jpg" alt="photo d'un coffret de bouteille" />
           </div>
           <h2>Vin de la SAQ</h2>
         </article>

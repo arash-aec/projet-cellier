@@ -10,9 +10,7 @@ const Login = (props) => {
   const [mot_de_passe, setMotDePasse] = useState("");
   const [errors, setErrors] = useState([]);
   const [isModalOpen, setIsModalOpen] = useState(true);
-  let [miseAJour, setMiseAJour] = useState(false);
-
-
+  const [miseAJour, setMiseAJour] = useState(false);
 
   const handleCourrielChange = (event) => {
     setCourriel(event.target.value);
@@ -61,12 +59,8 @@ const Login = (props) => {
 
         // Set the authenticated user in the auth context
         setAuth(data);
-       
-        const isConnected = ()=> {
-          setConnecter(true);
-        }
-
-
+        
+        setConnecter(true);
 
         // Reset form fields and errors
         setCourriel("");
