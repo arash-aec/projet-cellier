@@ -28,7 +28,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 // ------------------------------------------ Cellier
 // Récupération de tous les celliers
-Route::get('/celliers', [CellierController::class, 'getCelliers']);
+Route::get('/celliers/{id}', [CellierController::class, 'getCelliers']);
 
 // Récupération d'un cellier avec son id
 Route::get('/cellier/{id}', [CellierController::class, 'getCellier']);

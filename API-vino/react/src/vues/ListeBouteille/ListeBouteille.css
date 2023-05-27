@@ -25,15 +25,13 @@
 .cellier-lien:hover {
 	background-color: #5c2231;
 }
-.cellier-liste {
+.liste-bouteille {
 	display: grid;
     grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
     gap: 30px;
 	background-color: #36383F;
 	padding: 4vh;
 }
-
-
 select {
 	background-color: #f9f9f9;
 	cursor: pointer;

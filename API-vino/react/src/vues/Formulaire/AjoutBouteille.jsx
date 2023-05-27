@@ -31,7 +31,6 @@ const AjoutBouteille = (props) => {
           .then(response => {
             // Affichage des résultats de l'autocomplétion
             response.forEach(function (element) {
-              console.log(element.id);
               liste.innerHTML += "<li data-id='" + element.id + "'>" + element.nom + "</li>";
             })
           }).catch(error => {

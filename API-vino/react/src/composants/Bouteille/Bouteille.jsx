@@ -1,13 +1,14 @@
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useParams } from "react-router-dom";
 import { Link } from "react-router-dom";
 
 export default function Bouteille(props) {
 
-  const {pays, nom, image, notes, prix_saq, id: idBouteille, quantite: initialQuantite, prix, millesime, garde_jusqua, format, url_saq, type, onBouteilleAjouter, onBouteilleBoire, onBouteilleModifie } = props;
+  const {pays, nom, image, notes, prix_saq, id: idBouteille, quantite: initialQuantite, prix, millesime, garde_jusqua, format, url_saq, type, onBouteilleAjouter, onBouteilleBoire, onBouteilleModifie, onBouteilleSupprime } = props;
 
   const reference = useRef(null);
   const {id : idCellier} = useParams();
+  const [bouteilleVisible, setBouteilleVisible] = useState(true);
 
   useEffect(() => {
     const element = reference.current;
@@ -26,7 +27,7 @@ export default function Bouteille(props) {
       const btnAjouter = target.closest('[data-js-ajouter]');
       const btnBoire = target.closest('[data-js-boire]');
       const btnModifier = target.closest('[data-js-modifier]');
-      const btnSupprimer = target.closest('[data-js-supprimer]'); //supprimer
+      const btnSupprimer = target.closest('[data-js-supprimer]'); 
 
       const idBouteille = target.getAttribute('data-id');
       if (btnAjouter) {
@@ -35,8 +36,8 @@ export default function Bouteille(props) {
         boireBouteille(idBouteille, idCellier);
       } else if (btnModifier) {
         modifieQuantiteBouteille(idBouteille, idCellier);
-      } else if (btnSupprimer) { // Added condition
-        supprimerBouteille(idBouteille, idCellier); //supprimer
+      } else if (btnSupprimer) { 
+        supprimerBouteille(idBouteille, idCellier); 
       }
   }
 
@@ -98,9 +99,12 @@ export default function Bouteille(props) {
     });
   }
 
-  function supprimerBouteille(idBouteille) {
-    const bouteilleElement = reference.current;
-  
+  function supprimerBouteille(idBouteille, idCellier) {
+
+    
+    // const element = reference.current;
+    // const parent = element.parentNode;
+
     fetch(`http://127.0.0.1:8000/api/cellier-bouteilles/${idBouteille}/${idCellier}/supprimer`, {
       method: 'DELETE',
       headers: {
@@ -110,7 +114,8 @@ export default function Bouteille(props) {
       .then((response) => {
         if (response.ok) {
           //Bouteille supprimée avec succès, supprimez-la de l'interface utilisateur
-          bouteilleElement.remove();
+          setBouteilleVisible(false);
+          onBouteilleSupprime(idBouteille);
           console.log('Bouteille deleted successfully');
         } else {
           // Gérer l'erreur réseau
@@ -158,7 +163,7 @@ export default function Bouteille(props) {
           <i className="btnModifier bouteille-icone__fa fa fa-edit" data-js-modifier data-id={idBouteille}><p><small>Modifier</small></p></i>
           <i className="btnAjouter bouteille-icone__fa fa fa-plus" data-js-ajouter data-id={idBouteille}><p><small>Ajouter</small></p></i>
           <i className="btnBoire bouteille-icone__fa fa fa-minus" data-js-boire data-id={idBouteille}><p><small>Boire</small></p></i>
-          {/* <i className="btnSupprimer bouteille-icone__fa fa fa-trash" data-js-supprimer data-id={idBouteille}><p><small>Supprimer</small></p></i> */}
+          <i className="btnSupprimer bouteille-icone__fa fa fa-trash" data-js-supprimer data-id={idBouteille}><p><small>Supprimer</small></p></i>
         </div>
       </div>
     </div>

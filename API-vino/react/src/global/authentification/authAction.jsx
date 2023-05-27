@@ -1,10 +1,7 @@
-export const connexion = (courriel, mot_de_passe) => {
+export const connexion = (usagerData) => {
   return {
     type: 'CONNEXION',
-    payload: {
-      courriel,
-      mot_de_passe
-    }
+    payload: usagerData
   };
 };
 
