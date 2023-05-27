@@ -20,6 +20,15 @@ const Entete = () => {
     // Mettre deconnexion Laravel 
   };
 
+  // Condition Admin nav
+  let role = null;
+  const usagerData = localStorage.getItem('usagerData');
+  if (usagerData) {
+    const parsedData = JSON.parse(usagerData);
+    role = parsedData.role_usager;
+  }
+
+
   return (
     <>
       <header className="header">
@@ -28,9 +37,13 @@ const Entete = () => {
         <label className="hamb" htmlFor="side-menu">
           <span className="hamb-line"></span>
         </label>
+
         {estConnecte && (
           <nav className="nav">
             <ul className="menu">
+              { role === 2 && (
+                <li><Link to="/admin">Espace Admin</Link></li>
+              )}
               {/* <li><Link to="/">Accueil</Link></li> */}
               <li><Link to="/celliers">Mes Celliers</Link></li>
               <li><Link to="/" onClick={handleLogout}>Déconnexion</Link></li>

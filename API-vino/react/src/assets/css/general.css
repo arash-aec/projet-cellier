@@ -86,13 +86,25 @@ small {
 	display: inline-block;
 	padding: .8em 1.3em;
     text-transform: uppercase;
+    border-radius: 5px;
 }
 .button-primary {
     background-color: var(--rouge-saq);
-	border-radius: 5px;
 	color: var(--white);
 	font-size: 18px;
     border: 4px solid var(--rouge-saq);
+}
+.button-black {
+    border: 4px solid var(--black);
+    color:  var(--black);
+    font-size: 18px;
+    background-color: var(--white);
+}
+.button-rouge {
+    border: 4px solid var(--rouge-saq);
+    color:  var(--rouge-saq);
+    font-size: 18px;
+    background-color: var(--white);
 }
 .header-button {
 	background-color: var(--rouge-saq);

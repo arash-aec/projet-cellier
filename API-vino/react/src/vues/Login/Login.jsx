@@ -55,7 +55,7 @@ const Login = (props) => {
           id_usager: data.usager.id,
           role_usager: data.usager.role
         };
-        console.log(usagerData)
+        console.log()
 
         // Stockage de l'objet dans le localStorage
         localStorage.setItem('usagerData', JSON.stringify(usagerData));
@@ -69,8 +69,12 @@ const Login = (props) => {
         setIsModalOpen(false);
         setIsConnected(true); // Mise à jour de la variable isConnected
 
-        // Redirection vers la page "/cellier"
-        navigate("/celliers");
+        if (usagerData.role_usager == 2 ) {
+          navigate("/admin");
+        } else {
+          // Redirection vers la page "/cellier"
+          navigate("/celliers");
+        }
 
       } else {
         const errorData = await response.json();
