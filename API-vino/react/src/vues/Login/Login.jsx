@@ -16,6 +16,7 @@ const Login = (props) => {
     courriel: '',
     mot_de_passe: ''
   })
+
   const [erreur, setErreur] = useState({});
   const [isConnected, setIsConnected] = useState(false);
 
@@ -32,22 +33,6 @@ const Login = (props) => {
       setErreur(erreurs);
 
     if (Object.keys(erreurs).length === 0) {
-  
-    const validationErrors = [];
-  
-    if (courriel.trim() === "") {
-      validationErrors.push("Le courriel est requis.");
-    }
-  
-    if (mot_de_passe.trim() === "") {
-      validationErrors.push("Le mot de passe est requis.");
-    }
-  
-    if (validationErrors.length > 0) {
-      setErrors(validationErrors);
-      return;
-    }
-  
     try {
       const response = await fetch("http://127.0.0.1:8000/api/connexion", {
         method: "POST",
@@ -63,10 +48,8 @@ const Login = (props) => {
       if (response.ok) {
         const data = await response.json();
         console.log("Data:", data);
-        
-       
+    
         setValues({ courriel: "", mot_de_passe: "" });
-  
         dispatch(connexion(courriel, mot_de_passe));
 
         // récupération du Token
@@ -76,7 +59,6 @@ const Login = (props) => {
         // Reset form fields and errors
         setCourriel("");
         setMotDePasse("");
-        setErrors([]);
         setIsModalOpen(false);
         setIsConnected(true); // Mise à jour de la variable isConnected
 
@@ -86,7 +68,6 @@ const Login = (props) => {
       } else {
         const errorData = await response.json();
         setErreur({ mot_de_passe: "L'Adresse de courriel ou le mot de passe est incorrect" });
-        console.error("Error:", errorData.error);
       }
     } catch (error) {
       console.error("Error:", error);
@@ -103,8 +84,6 @@ const Login = (props) => {
   if (!isModalOpen) {
     return null;
   }
-
-
   return (
     <>
       <div className="modal-overlay-connexion">
