@@ -175,38 +175,43 @@ const ListeBouteille = () => {
           <div className="cellier">
             <div className="cellier-header">
               <h2 className="cellier-titre">{nomCellier}</h2>
-              <a href="" id="open-modal-ajoutBouteille-btn" className="cellier-lien" data-js-ajout-bouteille-btn>Ajouter une bouteille</a>
-              <label htmlFor="searchInput" className="recherche-label">Rechercher <a href="" onClick={handleRechercheIconClick}>
-                  <i className="fa fa-search" aria-hidden="true"></i>
-                </a>
-                {isRechercheVisible && (
-                  <input
-                    type="text"
-                    id="RechercheInput"
-                    value={rechercheBouteille}
-                    onChange={handleRechercheInputChange}
-                  />
-                )}
-              </label>
-              <select
-                className="trierBouteille"
-                onChange={(e) => {
-                  if (e.target.value === "nom") {
-                    sortBouteillesParNomAaZ(e);
-                  } else if (e.target.value === "prix") {
-                    sortBouteillesParPrix(e);
-                  } else if (e.target.value === "nomDesc") {
-                    sortBouteillesParNomZaA(e);
-                  } else if (e.target.value === "prixDesc") {
-                    sortBouteillesParPrixDecroissant(e);
-                  }
-                }}
-              >
-                <option className="trierPar" value="nom">Trier par : Nom du produit (A-Z)</option>
-                <option className="trierPar" value="nomDesc">Trier par : Nom du produit (Z-A)</option>
-                <option className="trierPar" value="prix">Trier par : Prix (ordre croissant)</option>
-                <option className="trierPar" value="prixDesc">Trier par : Prix (ordre décroissant)</option>
-              </select>
+              <div className="cellier-boutons">
+                <button id="open-modal-ajoutBouteille-btn" className="bouton button-rouge" data-js-ajout-bouteille-btn> ajouter bouteille saq</button>
+                <button id="open-modal-ajoutBouteille-btn" className="bouton button-black" data-js-ajout-bouteille-btn> ajouter bouteille</button>
+              </div>
+              <div className="filtre">
+                <label htmlFor="RechercheInput" className="recherche-label">Rechercher <a href="" onClick={handleRechercheIconClick}>
+                    <i className="fa fa-search" aria-hidden="true"></i>
+                  </a>
+                  {isRechercheVisible && (
+                    <input
+                      type="text"
+                      id="RechercheInput"
+                      value={rechercheBouteille}
+                      onChange={handleRechercheInputChange}
+                    />
+                  )}
+                </label>
+                <select
+                  className="trierBouteille"
+                  onChange={(e) => {
+                    if (e.target.value === "nom") {
+                      sortBouteillesParNomAaZ(e);
+                    } else if (e.target.value === "prix") {
+                      sortBouteillesParPrix(e);
+                    } else if (e.target.value === "nomDesc") {
+                      sortBouteillesParNomZaA(e);
+                    } else if (e.target.value === "prixDesc") {
+                      sortBouteillesParPrixDecroissant(e);
+                    }
+                  }}
+                >
+                  <option className="trierPar" value="nom">Trier par : Nom du produit (A-Z)</option>
+                  <option className="trierPar" value="nomDesc">Trier par : Nom du produit (Z-A)</option>
+                  <option className="trierPar" value="prix">Trier par : Prix (ordre croissant)</option>
+                  <option className="trierPar" value="prixDesc">Trier par : Prix (ordre décroissant)</option>
+                </select>
+              </div>
             </div>
             <div className="">
               <div className="liste-bouteille">{htmlBouteille}</div>

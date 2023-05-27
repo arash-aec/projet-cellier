@@ -3,24 +3,24 @@
 	background-color: #f9f9f9;
 }
 .cellier-header {
-	padding: 6vh 4vh;
+	padding: 4vh;
+	display: flex;
+	flex-direction: column;
+	gap: 40px;
 }
 .cellier-titre {
 	color: #36383F;
 	text-align: center;
 	text-transform: uppercase;
 }
-.cellier-lien {
-	display: block;
-	max-width: max-content;
-	margin-left: auto;
-	margin-top: 2vh;
-	background-color: #7E003F;
-	color: #f9f9f9;
-	text-decoration: none;
-	padding: 1em 1.5em;
-	border-radius: 5px;
-	text-transform: uppercase;
+.cellier-boutons {
+	display: flex;
+	justify-content: center;
+	gap: 30px;
+	padding: 2vh;
+}
+.cellier-boutons>button {
+	font-size: 16px;
 }
 .cellier-lien:hover {
 	background-color: #5c2231;
@@ -32,18 +32,22 @@
 	background-color: #36383F;
 	padding: 4vh;
 }
+.filtre {
+	display: flex;
+	justify-content: space-between;
+	align-items: baseline;
+}
 select {
 	background-color: #f9f9f9;
 	cursor: pointer;
+	padding: 10px;
+	border-radius: 5px;
 }
-
 .trierPar {
 	font-size: 14px;
 	background-color: #f9f9f9;
 	color: #000;
 }
-
-
 .recherche-label {
 	display: block;
 	margin-bottom: 20px;
