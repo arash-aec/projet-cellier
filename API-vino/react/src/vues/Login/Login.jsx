@@ -1,42 +1,31 @@
 import React, { useState, useContext, useEffect } from "react";
 import Input from "../../composants/UI/Input/Input";
 import Entete from "../../composants/Entete/Entete";
+import Validation from "../../composants/Validation/Validation";
+import './Login.css'
 
 const Login = (props) => {
   const {setConnecter, connecter} = props;
   const [courriel, setCourriel] = useState("");
   const [mot_de_passe, setMotDePasse] = useState("");
-  const [errors, setErrors] = useState([]);
   const [isModalOpen, setIsModalOpen] = useState(true);
   const [miseAJour, setMiseAJour] = useState(false);
+  const [values, setValues] = useState({
+    courriel: '',
+    mot_de_passe: ''
+  })
+  const [erreur, setErreur] = useState({});
 
-  const handleCourrielChange = (event) => {
-    setCourriel(event.target.value);
+  const handleChange = (e) => {
+    setValues({...values, [e.target.name]: e.target.value});
   };
-
-  const handleMotDePasseChange = (event) => {
-    setMotDePasse(event.target.value);
-  };
-
   const handleSubmit = async (event) => {
     event.preventDefault();
 
-    // Perform validation
-    const validationErrors = [];
+     const erreurs = Validation(values);
+      setErreur(erreurs);
 
-    if (courriel.trim() === "") {
-      validationErrors.push("Le courriel est requis.");
-    }
-
-    if (mot_de_passe.trim() === "") {
-      validationErrors.push("Le mot de passe est requis.");
-    }
-
-    if (validationErrors.length > 0) {
-      setErrors(validationErrors);
-      return;
-    }
-
+    if (Object.keys(erreurs).length === 0) {
     try {
       const response = await fetch("http://127.0.0.1:8000/api/connexion", {
         method: "POST",
@@ -44,8 +33,8 @@ const Login = (props) => {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          courriel: courriel,
-          mot_de_passe: mot_de_passe,
+          courriel: values.courriel,
+          mot_de_passe: values.mot_de_passe, 
         }),
       });
 
@@ -56,26 +45,21 @@ const Login = (props) => {
         console.log("Data:", data);
         
         setConnecter(true);
-
-        // Reset form fields and errors
-        setCourriel("");
-        setMotDePasse("");
-        setErrors([]);
+        setValues({ courriel: "", mot_de_passe: "" });
         setIsModalOpen(false);
       } else {
         const errorData = await response.json();
-        console.error("Error:", errorData.error);
-        // Update the state with the error message or perform any other error handling
+        setErreur({ mot_de_passe: "L'Adresse de courriel ou le mot de passe est incorrect" });
       }
     } catch (error) {
       console.error("Error:", error);
-      // Handle network or other errors
-      // ...
     }
-  };
+  }
+};
 
   useEffect(() => {
-    console.log("connecter updated:", connecter);
+    if(Object.keys(erreur).length === 0 && (values.courriel !== "" && values.mot_de_passe !== ""))
+   alert("form submit")
   }, [miseAJour]);
 
   if (!isModalOpen) {
@@ -90,23 +74,31 @@ const Login = (props) => {
             &times;
           </span>
           <h2>Connexion</h2>
-          <form onSubmit={handleSubmit} method="POST">
-            <label htmlFor="courriel">Votre courriel:</label>
-            <Input type="email" id="courriel" name="courriel" value={courriel} onChange={handleCourrielChange} required />
-            <label htmlFor="mot_de_passe">Votre mot de passe:</label>
-            <Input type="password" id="mot_de_passe" name="mot_de_passe" value={mot_de_passe} onChange={handleMotDePasseChange} required />
-            <Input type="submit" value="Connexion" />
-          </form>
-          {errors.length > 0 && (
-            <ul className="errors">
-              {errors.map((error, index) => (
-                <li key={index}>{error}</li>
-              ))}
-            </ul>
-          )}
+        <form onSubmit={handleSubmit} method="POST">
+          <label htmlFor="courriel" className="label">Adresse de courriel</label>
+          <Input
+            type="text"
+            id="courriel"
+            name="courriel"
+            value={values.courriel}
+            onChange={handleChange}
+          />
+          {erreur.courriel && <p className="error-message">{erreur.courriel}</p>} 
+          <label htmlFor="mot_de_passe">Mot de passe</label>
+          <Input
+            type="password"
+            id="mot_de_passe"
+            name="mot_de_passe"
+            value={values.mot_de_passe}
+            onChange={handleChange}
+          />
+          {erreur.mot_de_passe && <p className="error-message">{erreur.mot_de_passe}</p>} 
+          <Input type="submit" value="Connexion" />
+        </form>
         </div>
       </div>
     </>
   );
-}
-export default Login;
+  
+                }
+export default Login
