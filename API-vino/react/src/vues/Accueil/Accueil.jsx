@@ -1,5 +1,6 @@
 import React, { useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
+import { useSelector, useDispatch } from 'react-redux';
 import Login from '../Login/Login';
 import Inscription from '../Inscription/Inscription';
 
@@ -57,8 +58,8 @@ const Accueil = () => {
           <h1>Vino</h1>
           <p><strong>La meilleure application de gestion de cellier !</strong></p>
           <div className="header-image-btn">
-            <div><a id="open-modal-connexion-btn" className="bouton header-button" data-js-connexion>Connexion</a></div>
-            <div><a id="open-modal-inscription-btn" className="bouton header-button-light" data-js-inscription>Inscription</a></div>
+            <div><button id="open-modal-connexion-btn" className="bouton header-button" data-js-connexion>Connexion</button></div>
+            <div><button id="open-modal-inscription-btn" className="bouton header-button-light" data-js-inscription>Inscription</button></div>
           </div>
         </div>
       </div>

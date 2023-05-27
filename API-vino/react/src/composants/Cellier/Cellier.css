@@ -2,7 +2,7 @@
     display: flex;
     flex-direction: column;
     background-color: var(--white);
-    width: 350px;
+    width: 100%;
     padding: 4vh;
     color: var(--black);
     text-align: center;
@@ -25,4 +25,10 @@
     display: none;
     align-items: baseline;
     gap : 2vh
+}
+
+@media (min-width: 768px) {
+    .cellier-item {
+        width: 350px;
+    }
 }

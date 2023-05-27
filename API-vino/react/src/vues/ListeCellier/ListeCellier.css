@@ -1,0 +1,7 @@
+.liste-cellier {
+    display: flex;
+    justify-content: start;
+    gap: 30px;
+	background-color: #36383F;
+	padding: 4vh;
+}

@@ -11,7 +11,7 @@ const authReducer = (state = initialState, action) => {
       return {
         ...state,
         estConnecte: true,
-        usager: action.payload.courriel
+        usager: action.payload
       };
     case 'DECONNEXION':
       return {

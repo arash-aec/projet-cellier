@@ -25,6 +25,12 @@ a {
 ul {
     list-style: none;
 }
+/* Taille de l'écran Desktop */
+@media (min-width: 768px) {
+    #root>div {
+        min-height: 55vw;
+    }
+}
 
 
 /*--------------------------------- Font size */

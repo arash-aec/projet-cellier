@@ -10,8 +10,8 @@ class CellierController extends Controller
     /**
      * Récupération de tous les celliers
      */
-    public function getCelliers() { 
-        $celliers = Cellier::get();
+    public function getCelliers($id) { 
+        $celliers = Cellier::where('usager_id', $id)->get();
         return response()->json($celliers);
     }
 
@@ -29,7 +29,7 @@ class CellierController extends Controller
     public function ajoutCellier(Request $request) {
         $cellier = new Cellier();
         $cellier->nom = $request->input('nom');
-        $cellier->usager_id = 1;
+        $cellier->usager_id = $request->input('usager_id');
         $cellier->save();
         return response()->json($cellier, 201);
     }

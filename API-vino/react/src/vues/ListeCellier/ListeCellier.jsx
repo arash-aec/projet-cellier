@@ -1,11 +1,18 @@
 import React, { useState, useEffect, useRef } from "react";
+import { useSelector } from 'react-redux';
+import { useNavigate } from "react-router-dom";
+
 import Cellier from "../../composants/Cellier/Cellier";
 
 const ListeCellier = () => {
+
   const [miseAJour, setMiseAJour] = useState(false);
   const [celliers, setCelliers] = useState([]);
   const reference = useRef(null);
 
+  const estConnecte = useSelector(state => state.auth.estConnecte);
+  const navigate = useNavigate();
+  
   useEffect(() => {
     const elements = reference.current;
     getCelliers();
@@ -26,20 +33,42 @@ const ListeCellier = () => {
   }, []);
 
   function getCelliers() {
-    fetch("http://127.0.0.1:8000/api/celliers")
-      .then((data) => data.json())
-      .then((data) => {
-        setCelliers(data);
-        setMiseAJour(false);
-      });
+    // Récupération de l'id_usager depuis le localStorage
+    let id_usager = null;
+    const usagerData = localStorage.getItem('usagerData');
+    if (usagerData) {
+      const parsedData = JSON.parse(usagerData);
+      id_usager = parsedData.id_usager;
+    }
+
+    if (id_usager) {
+      fetch("http://127.0.0.1:8000/api/celliers/" + id_usager)
+        .then((data) => data.json())
+        .then((data) => {
+          if (Array.isArray(data)) {
+            setCelliers(data);
+            setMiseAJour(false);
+          } else {
+            // Gérer le cas où data n'est pas un tableau
+          }
+        });
+    }
   }
 
   function ajouterCellier(e) {
     e.preventDefault();
+
+    // Récupération de l'id_usager depuis le localStorage
+    let id_usager = null;
+    const usagerData = localStorage.getItem('usagerData');
+    if (usagerData) {
+      const parsedData = JSON.parse(usagerData);
+      id_usager = parsedData.id_usager;
+    }
     
     const nouveauCellier = {
       nom: 'Nouveau Cellier',
-      usager_id: 1,
+      usager_id: id_usager,
     };
 
     fetch("http://127.0.0.1:8000/api/cellier/", {
@@ -71,20 +100,24 @@ const ListeCellier = () => {
   ));
 
   return (
-      <div className="cellier" ref={reference}>
-        <section className="header-image">
-            <img src="../public/images/cellier.jpeg" alt="image d'un cellier"/>
-            <div className="header-contenu">
-                <h1>Cellier</h1>
-                <div className="header-image-btn">
-                  <div>
-                    <button className="bouton header-button" data-js-ajouter>Ajoute un cellier</button>
+    <>
+      { estConnecte ? (
+        <div className="cellier" ref={reference}>
+          <section className="header-image">
+              <img src="../public/images/cellier.jpeg" alt="image d'un cellier"/>
+              <div className="header-contenu">
+                  <h1>Cellier</h1>
+                  <div className="header-image-btn">
+                    <div>
+                      <button className="bouton header-button" data-js-ajouter>Ajoute un cellier</button>
+                    </div>
                   </div>
-                </div>
-            </div>
-        </section>  
-        <div className="cellier-liste">{htmlCellier}</div>
-      </div>
+              </div>
+          </section>  
+          <div className="liste-cellier">{htmlCellier}</div>
+        </div>
+      ) : ( navigate("/") ) }
+    </>
   )
 }
 export default ListeCellier

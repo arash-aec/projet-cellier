@@ -1,15 +1,20 @@
 import React, { useState, useEffect, useRef } from "react";
 import { useParams, useLocation } from "react-router-dom";
+import { useSelector } from 'react-redux';
+import { useNavigate } from "react-router-dom";
 
 import Bouteille from "../../composants/Bouteille/Bouteille";
 import AjoutBouteille from "../Formulaire/AjoutBouteille";
 
 const ListeBouteille = () => {
+
   const [miseAJour, setMiseAJour] = useState(false);
   const [bouteilles, setBouteilles] = useState([]);
   const [rechercheBouteille, setRechercheBouteille] = useState("");
   const [isRechercheVisible, setEstRechercheVisible] = useState(false);
 
+  const estConnecte = useSelector(state => state.auth.estConnecte);
+  const navigate = useNavigate();
 
   // Récupération de l'id du cellier
   const {id} = useParams();
@@ -33,7 +38,6 @@ const ListeBouteille = () => {
     fetch("http://127.0.0.1:8000/api/bouteilles/" + id)
       .then((data) => data.json())
       .then((data) => {
-        console.log(data)
         setBouteilles(data);
         setMiseAJour(false);
       });
@@ -70,6 +74,10 @@ const ListeBouteille = () => {
     setMiseAJour(true);
   };
   const modifierQuantiteBouteille = (index) => {
+    setBouteilles(bouteilles.filter((_, idx) => idx !== index));
+    setMiseAJour(true);
+  };
+  const supprimeBouteille = (index) => {
     setBouteilles(bouteilles.filter((_, idx) => idx !== index));
     setMiseAJour(true);
   };
@@ -116,8 +124,7 @@ const ListeBouteille = () => {
   };
 
 
-// rechercher la bouteille
-
+  // rechercher la bouteille
   const handleRechercheInputChange = (e) => {
     const nouvelleRecherche = e.target.value;
     setRechercheBouteille(nouvelleRecherche);
@@ -157,56 +164,59 @@ const ListeBouteille = () => {
      {...uneBouteille} 
      onBouteilleAjouter={ajouteQuantiteBouteille} 
      onBouteilleBoire={boireBouteille}
-     onBouteilleModifie={modifierQuantiteBouteille} />
+     onBouteilleModifie={modifierQuantiteBouteille}
+     onBouteilleSupprime={supprimeBouteille} />
   ));
 
   return (
-    <div ref={reference}>
-      <div className="cellier">
-        <div className="cellier-header">
-          <h2 className="cellier-titre">{nomCellier}</h2>
-          <a href="" id="open-modal-ajoutBouteille-btn" className="cellier-lien" data-js-ajout-bouteille-btn>Ajouter une bouteille</a>
-          <label htmlFor="searchInput" className="recherche-label">Rechercher <a href="" onClick={handleRechercheIconClick}>
-              <i className="fa fa-search" aria-hidden="true"></i>
-            </a>
-            {isRechercheVisible && (
-              <input
-                type="text"
-                id="RechercheInput"
-                value={rechercheBouteille}
-                onChange={handleRechercheInputChange}
-              />
-            )}
-          </label>
-          <select
-            className="trierBouteille"
-            onChange={(e) => {
-              if (e.target.value === "nom") {
-                sortBouteillesParNomAaZ(e);
-              } else if (e.target.value === "prix") {
-                sortBouteillesParPrix(e);
-              } else if (e.target.value === "nomDesc") {
-                sortBouteillesParNomZaA(e);
-              } else if (e.target.value === "prixDesc") {
-                sortBouteillesParPrixDecroissant(e);
-              }
-            }}
-          >
-            <option className="trierPar" value="nom">Trier par : Nom du produit (A-Z)</option>
-            <option className="trierPar" value="nomDesc">Trier par : Nom du produit (Z-A)</option>
-            <option className="trierPar" value="prix">Trier par : Prix (ordre croissant)</option>
-            <option className="trierPar" value="prixDesc">Trier par : Prix (ordre décroissant)</option>
-          </select>
+    <>
+      { estConnecte ? (
+        <div ref={reference}>
+          <div className="cellier">
+            <div className="cellier-header">
+              <h2 className="cellier-titre">{nomCellier}</h2>
+              <a href="" id="open-modal-ajoutBouteille-btn" className="cellier-lien" data-js-ajout-bouteille-btn>Ajouter une bouteille</a>
+              <label htmlFor="searchInput" className="recherche-label">Rechercher <a href="" onClick={handleRechercheIconClick}>
+                  <i className="fa fa-search" aria-hidden="true"></i>
+                </a>
+                {isRechercheVisible && (
+                  <input
+                    type="text"
+                    id="RechercheInput"
+                    value={rechercheBouteille}
+                    onChange={handleRechercheInputChange}
+                  />
+                )}
+              </label>
+              <select
+                className="trierBouteille"
+                onChange={(e) => {
+                  if (e.target.value === "nom") {
+                    sortBouteillesParNomAaZ(e);
+                  } else if (e.target.value === "prix") {
+                    sortBouteillesParPrix(e);
+                  } else if (e.target.value === "nomDesc") {
+                    sortBouteillesParNomZaA(e);
+                  } else if (e.target.value === "prixDesc") {
+                    sortBouteillesParPrixDecroissant(e);
+                  }
+                }}
+              >
+                <option className="trierPar" value="nom">Trier par : Nom du produit (A-Z)</option>
+                <option className="trierPar" value="nomDesc">Trier par : Nom du produit (Z-A)</option>
+                <option className="trierPar" value="prix">Trier par : Prix (ordre croissant)</option>
+                <option className="trierPar" value="prixDesc">Trier par : Prix (ordre décroissant)</option>
+              </select>
+            </div>
+            <div className="">
+              <div className="liste-bouteille">{htmlBouteille}</div>
+            </div>
+          </div>
+          <AjoutBouteille idCellier={id} onBouteilleAjoutCellier={bouteilleAjouterCellier} />
         </div>
-        <div className="">
-          <div className="cellier-liste">{htmlBouteille}</div>
-        </div>
-      </div>
-      <AjoutBouteille idCellier={id} onBouteilleAjoutCellier={bouteilleAjouterCellier} />
-      
-    </div>
-  );
-  
+      ) : ( navigate("/") ) }
+    </>
+  ); 
 };
 
 export default ListeBouteille;

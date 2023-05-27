@@ -19,7 +19,7 @@
 /* Nav menu */
 .nav {
     width: 100%;
-    position: fixed;
+    /* position: fixed; */
     background-color: var(--black);
     overflow: hidden;
     max-width: max-content;

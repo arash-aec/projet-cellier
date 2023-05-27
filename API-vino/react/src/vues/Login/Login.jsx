@@ -1,7 +1,6 @@
-import React, { useState, useContext, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import Input from "../../composants/UI/Input/Input";
-import Entete from "../../composants/Entete/Entete";
 import Validation from "../../composants/Validation/Validation";
 import './Login.css'
 import { useDispatch } from 'react-redux';
@@ -47,14 +46,22 @@ const Login = (props) => {
   
       if (response.ok) {
         const data = await response.json();
-        console.log("Data:", data);
-    
+        
         setValues({ courriel: "", mot_de_passe: "" });
-        dispatch(connexion(courriel, mot_de_passe));
 
-        // récupération du Token
-        const token = data.token
-        localStorage.setItem('token', token);
+        // Création de l'objet contenant les informations
+        const usagerData = {
+          token: data.token,
+          id_usager: data.usager.id,
+          role_usager: data.usager.role
+        };
+        console.log(usagerData)
+
+        // Stockage de l'objet dans le localStorage
+        localStorage.setItem('usagerData', JSON.stringify(usagerData));
+        console.log(JSON.stringify(usagerData))
+
+        dispatch(connexion(usagerData));
 
         // Reset form fields and errors
         setCourriel("");
