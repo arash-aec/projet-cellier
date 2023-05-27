@@ -1,11 +1,13 @@
 import React, { useState, useContext, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import Input from "../../composants/UI/Input/Input";
 import Entete from "../../composants/Entete/Entete";
 import Validation from "../../composants/Validation/Validation";
 import './Login.css'
+import { useDispatch } from 'react-redux';
+import { connexion } from '../../global/authentification/authAction.jsx';
 
 const Login = (props) => {
-  const {setConnecter, connecter} = props;
   const [courriel, setCourriel] = useState("");
   const [mot_de_passe, setMotDePasse] = useState("");
   const [isModalOpen, setIsModalOpen] = useState(true);
@@ -15,6 +17,10 @@ const Login = (props) => {
     mot_de_passe: ''
   })
   const [erreur, setErreur] = useState({});
+  const [isConnected, setIsConnected] = useState(false);
+
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const handleChange = (e) => {
     setValues({...values, [e.target.name]: e.target.value});
@@ -26,6 +32,22 @@ const Login = (props) => {
       setErreur(erreurs);
 
     if (Object.keys(erreurs).length === 0) {
+  
+    const validationErrors = [];
+  
+    if (courriel.trim() === "") {
+      validationErrors.push("Le courriel est requis.");
+    }
+  
+    if (mot_de_passe.trim() === "") {
+      validationErrors.push("Le mot de passe est requis.");
+    }
+  
+    if (validationErrors.length > 0) {
+      setErrors(validationErrors);
+      return;
+    }
+  
     try {
       const response = await fetch("http://127.0.0.1:8000/api/connexion", {
         method: "POST",
@@ -37,19 +59,34 @@ const Login = (props) => {
           mot_de_passe: values.mot_de_passe, 
         }),
       });
-
-      console.log("Response:", response);
-
+  
       if (response.ok) {
         const data = await response.json();
         console.log("Data:", data);
         
-        setConnecter(true);
+       
         setValues({ courriel: "", mot_de_passe: "" });
+  
+        dispatch(connexion(courriel, mot_de_passe));
+
+        // récupération du Token
+        const token = data.token
+        localStorage.setItem('token', token);
+
+        // Reset form fields and errors
+        setCourriel("");
+        setMotDePasse("");
+        setErrors([]);
         setIsModalOpen(false);
+        setIsConnected(true); // Mise à jour de la variable isConnected
+
+        // Redirection vers la page "/cellier"
+        navigate("/celliers");
+
       } else {
         const errorData = await response.json();
         setErreur({ mot_de_passe: "L'Adresse de courriel ou le mot de passe est incorrect" });
+        console.error("Error:", errorData.error);
       }
     } catch (error) {
       console.error("Error:", error);
@@ -60,11 +97,13 @@ const Login = (props) => {
   useEffect(() => {
     if(Object.keys(erreur).length === 0 && (values.courriel !== "" && values.mot_de_passe !== ""))
    alert("form submit")
+    // console.log("connecter updated:", dispatch);
   }, [miseAJour]);
 
   if (!isModalOpen) {
     return null;
   }
+
 
   return (
     <>
@@ -99,6 +138,6 @@ const Login = (props) => {
       </div>
     </>
   );
-  
-                }
-export default Login
+}
+
+export default Login;
