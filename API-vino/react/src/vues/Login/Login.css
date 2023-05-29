@@ -1,10 +1,9 @@
 .error-message {
     color: red;
     font-size: 14px;
-    margin-top: -1.5rem;
+    margin-top: 0.5em;
+    margin-bottom: 1em;
   }
-
-  
-  label {
-    font-weight: 600;
-  }
+label {
+  font-weight: 600;
+}

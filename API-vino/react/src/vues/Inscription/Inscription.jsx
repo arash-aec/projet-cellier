@@ -92,7 +92,7 @@ const Inscription = (props) => {
 
         handleModalClose();
       } catch (error) {
-        console.error("Error:", error);
+        // console.error("Error:", error);
         setErreur({ courriel: "L'adresse e-mail existe déjà" });
       }
     }

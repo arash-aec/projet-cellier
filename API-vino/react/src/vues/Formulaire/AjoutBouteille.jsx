@@ -1,8 +1,21 @@
 import React, { useState, useEffect, useRef } from "react";
 
+import ValidationBouteilleSAQ from "../../composants/Validation/ValidationBouteilleSaq";
+
 const AjoutBouteille = (props) => {
+  const formRef = useRef(null);
   const { idCellier, onBouteilleAjoutCellier } = props;
+  const inputNomBouteilleRef = useRef(null);
   const [isBouteilleAjoutee, setIsBouteilleAjoutee] = useState(false);
+  const [erreur, setErreur] = useState({});
+  const [values, setValues] = useState({
+    millesime: '',
+    quantite: '',
+    date_achat: '',
+    prix: '',
+    garde_jusqua: '',
+    notes: '',
+  })
 
   useEffect(() => {
     const inputNomBouteille = document.querySelector("[name='nom_bouteille']");
@@ -44,6 +57,7 @@ const AjoutBouteille = (props) => {
     }
 
     const handleClick = (evt) => {
+      inputNomBouteilleRef.current.value = "";
       if (evt.target.tagName === "LI") {
         const bouteille = {
           nom: modalAjoutBouteille.querySelector(".nom_bouteille"),
@@ -63,71 +77,70 @@ const AjoutBouteille = (props) => {
       liste.addEventListener("click", handleClick);
     }
 
-    const btnAjouter = modalAjoutBouteille.querySelector("[name='ajouterBouteilleCellier']");
-
     const handleAjouterClick = (e) => {
       e.preventDefault();
 
-      if (isBouteilleAjoutee) {
-        console.log("La bouteille a déjà été ajoutée.");
-        return;
+      // Effectuez la validation des valeurs
+      const erreurs = ValidationBouteilleSAQ(values);
+      setErreur(erreurs);
+      
+      if (Object.keys(erreurs).length === 0) {
+  
+        const bouteilleCellier = {
+          bouteille_id: modalAjoutBouteille.querySelector(".nom_bouteille").dataset.id,
+          cellier_id: idCellier,
+          quantite: modalAjoutBouteille.querySelector("[name='quantite']").value,
+          date_achat : modalAjoutBouteille.querySelector("[name='date_achat']").value,
+          millesime : modalAjoutBouteille.querySelector("[name='millesime']").value,
+          prix : modalAjoutBouteille.querySelector("[name='prix']").value,
+          garde_jusqua : modalAjoutBouteille.querySelector("[name='garde_jusqua']").value,
+          notes : modalAjoutBouteille.querySelector("[name='notes']").value,
+        };
+  
+        const resetForm = () => {
+          inputNomBouteille.value = "";
+          liste.innerHTML = "";
+          modalAjoutBouteille.querySelector(".nom_bouteille").dataset.id = "";
+          modalAjoutBouteille.querySelector(".nom_bouteille").innerHTML = "";
+          modalAjoutBouteille.querySelector("[name='quantite']").value = "1";
+          modalAjoutBouteille.querySelector("[name='date_achat']").value = "";
+          modalAjoutBouteille.querySelector("[name='millesime']").value = "";
+          modalAjoutBouteille.querySelector("[name='prix']").value = "";
+          modalAjoutBouteille.querySelector("[name='garde_jusqua']").value = "";
+          modalAjoutBouteille.querySelector("[name='notes']").value = "";
+        };
+        fetch("http://127.0.0.1:8000/api/cellier-bouteilles/ajoutBouteilleCellier", { 
+          method: 'POST', 
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body : JSON.stringify(bouteilleCellier) 
+        })
+          .then(response => {
+            if (response.status === 200) {
+              onBouteilleAjoutCellier(bouteilleCellier.bouteille_id);
+              resetForm();
+              modalOverlayAjoutBouteille.style.display = "none";
+              modalAjoutBouteille.style.display = "none";
+              console.log("Bouteille ajoutée");
+              setIsBouteilleAjoutee(true);
+              return response.json();
+            } else {
+              throw new Error('Erreur');
+            }
+          })
+          .catch(error => {
+            erreurs.bouteille = "Bouteille déjà dans le cellier";
+            setErreur(erreurs);
+            setIsBouteilleAjoutee(true);
+          });
       }
-
-      const bouteilleCellier = {
-        bouteille_id: modalAjoutBouteille.querySelector(".nom_bouteille").dataset.id,
-        cellier_id: idCellier,
-        quantite: modalAjoutBouteille.querySelector("[name='quantite']").value,
-        date_achat : modalAjoutBouteille.querySelector("[name='date_achat']").value,
-        millesime : modalAjoutBouteille.querySelector("[name='millesime']").value,
-        prix : modalAjoutBouteille.querySelector("[name='prix']").value,
-        garde_jusqua : modalAjoutBouteille.querySelector("[name='garde_jusqua']").value,
-        notes : modalAjoutBouteille.querySelector("[name='notes']").value,
-      };
-
-      const resetForm = () => {
-        inputNomBouteille.value = "";
-        liste.innerHTML = "";
-        modalAjoutBouteille.querySelector(".nom_bouteille").dataset.id = "";
-        modalAjoutBouteille.querySelector(".nom_bouteille").innerHTML = "";
-        modalAjoutBouteille.querySelector("[name='quantite']").value = "1";
-        modalAjoutBouteille.querySelector("[name='date_achat']").value = "";
-        modalAjoutBouteille.querySelector("[name='millesime']").value = "";
-        modalAjoutBouteille.querySelector("[name='prix']").value = "";
-        modalAjoutBouteille.querySelector("[name='garde_jusqua']").value = "";
-        modalAjoutBouteille.querySelector("[name='notes']").value = "";
-      };
-
-      fetch("http://127.0.0.1:8000/api/cellier-bouteilles/ajoutBouteilleCellier", { 
-        method: 'POST', 
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body : JSON.stringify(bouteilleCellier) 
-      })
-        .then(response => {
-          if (response.status === 200) {
-            onBouteilleAjoutCellier(bouteilleCellier.bouteille_id);
-            resetForm();
-            modalOverlayAjoutBouteille.style.display = "none";
-            modalAjoutBouteille.style.display = "none";
-            console.log("Bouteille ajoutée");
-            return response.json();
-          } else {
-            throw new Error('Erreur');
-          }
-        })
-        .then(response => {
-          console.log(response);
-        })
-        .catch(error => {
-          console.error(error);
-        });
-
-      setIsBouteilleAjoutee(true);
     };
 
-    if (btnAjouter) {
-      btnAjouter.addEventListener("click", handleAjouterClick);
+    const form = modalAjoutBouteille.querySelector("form");
+
+    if (form) {
+      form.addEventListener("submit", handleAjouterClick);
     }
 
     return () => {
@@ -139,11 +152,11 @@ const AjoutBouteille = (props) => {
         liste.removeEventListener("click", handleClick);
       }
 
-      if (btnAjouter) {
-        btnAjouter.removeEventListener("click", handleAjouterClick);
+      if (form) {
+        form.removeEventListener("submit", handleAjouterClick);
       }
     };
-  }, []);
+  }, [values]);
 
   return (
     <div className="ajouter">
@@ -152,36 +165,42 @@ const AjoutBouteille = (props) => {
           <span className="close-btn-ajoutBouteille" >&times;</span>
           <h2>Ajouter une bouteille</h2>
           {/* <!-- Formulaire pour ajouter une nouvelle bouteille --> */}
-          <form className="nouvelleBouteille">
+          <form ref={formRef} className="nouvelleBouteille">
             <label htmlFor="nom_bouteille">Recherche : </label> 
-            <input type="text" name="nom_bouteille" id="nom_bouteille" className="rechercheListeBouteille" />
+            <input type="text" name="nom_bouteille" id="nom_bouteille" className="rechercheListeBouteille" ref={inputNomBouteilleRef} />
             <ul className="listeAutoComplete"></ul>
             {/* <!-- Affichage de la bouteille trouvée grâce à l'autocomplétion --> */}
             <div>
               <label htmlFor="nom_bouteille">Nom :</label>
               <strong data-id="" className="nom_bouteille" id="nom_bouteille"></strong>
+              {erreur.bouteille && <p className="error-message">{erreur.bouteille}</p>}
               <label htmlFor="millesime">Millesime : * </label>
-              <input name="millesime" id="millesime" required />
+              <input name="millesime" id="millesime" placeholder="Une année (ex : 2020)" onChange={(e) => setValues({ ...values, millesime: e.target.value })} required />
+              {erreur.millesime && <p className="error-message">{erreur.millesime}</p>}
               <label htmlFor="quantite">Quantite : * </label>
-              <input name="quantite" id="quantite" required />
+              <input name="quantite" id="quantite" placeholder="Veuillez entrer une quantité" onChange={(e) => setValues({ ...values, quantite: e.target.value })} required />
+              {erreur.quantite && <p className="error-message">{erreur.quantite}</p>}
               <label htmlFor="date_achat">Date achat : *</label>
-              <input name="date_achat" id="date_achat" required />
+              <input name="date_achat" id="date_achat" placeholder="Format : aaaa-mm-jj" onChange={(e) => setValues({ ...values, date_achat: e.target.value })} required />
+              {erreur.date_achat && <p className="error-message">{erreur.date_achat}</p>}
               <label htmlFor="prix">Prix : * </label>
-              <input name="prix" id="prix" required />
+              <input name="prix" id="prix" placeholder="Veuillez entrer le prix d'achat" onChange={(e) => setValues({ ...values, prix: e.target.value })} required />
+              {erreur.prix && <p className="error-message">{erreur.prix}</p>}
               <label htmlFor="garde_jusqua">Garde : * </label>
-              <input name="garde_jusqua" id="garde_jusqua" required />
-              <label htmlFor="notes">Notes : * </label>
-              <input name="notes" id="notes" required />
+              <input name="garde_jusqua" id="garde_jusqua" placeholder="Nombre d'années (ex : 20)" onChange={(e) => setValues({ ...values, garde_jusqua: e.target.value })} required />
+              {erreur.garde_jusqua && <p className="error-message">{erreur.garde_jusqua}</p>}
+              <label htmlFor="notes">Note : * </label>
+              <input name="notes" id="notes" placeholder="Un chiffre de 1 à 5" onChange={(e) => setValues({ ...values, notes: e.target.value })} required />
+              {erreur.notes && <p className="error-message">{erreur.notes}</p>}
               <small>* Champs obligatoires</small>
             </div>
             {/* <!-- Bouton pour ajouter la nouvelle bouteille --> */}
-            <button name="ajouterBouteilleCellier" className="btn-ajouter">Ajouter</button>
-            {/* <!-- <button name="ajouterBouteilleCellier" >Ajouter</button> --> */}
+            <input type="submit" name="ajouterBouteilleCellier" className="btn-ajouter" value="Ajouter" />
           </form>
         </div>
       </div>
     </div>
-    );
+  );
 };
 
 export default AjoutBouteille;
