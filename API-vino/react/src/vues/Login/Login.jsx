@@ -55,11 +55,9 @@ const Login = (props) => {
           id_usager: data.usager.id,
           role_usager: data.usager.role
         };
-        console.log()
 
         // Stockage de l'objet dans le localStorage
         localStorage.setItem('usagerData', JSON.stringify(usagerData));
-        console.log(JSON.stringify(usagerData))
 
         dispatch(connexion(usagerData));
 
@@ -89,7 +87,6 @@ const Login = (props) => {
   useEffect(() => {
     if(Object.keys(erreur).length === 0 && (values.courriel !== "" && values.mot_de_passe !== ""))
    alert("form submit")
-    // console.log("connecter updated:", dispatch);
   }, [miseAJour]);
 
   if (!isModalOpen) {

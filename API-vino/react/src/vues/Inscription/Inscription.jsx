@@ -1,6 +1,10 @@
 
 import React, { useState, useRef } from "react";
+import { useNavigate } from "react-router-dom";
 import Input from "../../composants/UI/Input/Input";
+import { useDispatch } from 'react-redux';
+import { connexion } from '../../global/authentification/authAction.jsx';
+
 
 const Inscription = () => {
   const [nom, setNom] = useState("");
@@ -11,6 +15,10 @@ const Inscription = () => {
   const [errors, setErrors] = useState([]);
   const [isModalOpen, setIsModalOpen] = useState(true); // Suivre la visibilité modale
   const formRef = useRef(null);
+  
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const [isConnected, setIsConnected] = useState(false);
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -49,8 +57,6 @@ const Inscription = () => {
       setErrors(validationErrors);
       return;
     }
-
-   
   
     // Create user object
     const user = {
@@ -74,9 +80,29 @@ const Inscription = () => {
       if (!response.ok) {
         throw new Error('Une erreur s\'est produite lors de la création de l\'usager.');
       }
-  
-      // Handle successful user creation
-      // ...
+
+      const data = await response.json();
+      console.log(data)
+      
+      const usagerData = {
+        token: data.token,
+        id_usager: data.usager.id,
+        role_usager: data.usager.role
+      };
+
+      // Stockage de l'objet dans le localStorage
+      localStorage.setItem('usagerData', JSON.stringify(usagerData));
+
+      dispatch(connexion(usagerData));
+
+      setIsConnected(true);
+
+      if (usagerData.role_usager == 2 ) {
+        navigate("/admin");
+      } else {
+        // Redirection vers la page "/cellier"
+        navigate("/celliers");
+      }
   
       // Reset form fields and errors
       handleModalClose();

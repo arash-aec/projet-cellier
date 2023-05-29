@@ -1,0 +1,17 @@
+.admin {
+    padding: 4vh;
+}
+.admin h1 {
+    text-align: center;
+}
+.admin-saq-entete {
+    display: flex;
+    gap: 40px;
+    justify-content: center;
+    align-items: center;
+    padding: 4vh 0;
+}
+.success {
+    text-align: center;
+    display: none;
+}
