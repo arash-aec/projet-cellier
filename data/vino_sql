@@ -242,3 +242,18 @@ ADD CONSTRAINT `fk_vino__cellier_has_vino__bouteille_vino__cellier1`
   REFERENCES `vino_db`.`vino__cellier` (`id`)
   ON DELETE CASCADE
   ON UPDATE NO ACTION;
+
+
+-- Pour la suppression de l'usager et ses celliers :
+
+-- Supprimer l'ancienne contrainte de clé étrangère
+ALTER TABLE `vino_db`.`vino__cellier`
+DROP FOREIGN KEY `fk_vino__cellier_vino__usager1`;
+
+-- Ajouter la nouvelle contrainte de clé étrangère avec l'action en cascade
+ALTER TABLE `vino_db`.`vino__cellier`
+ADD CONSTRAINT `fk_vino__cellier_vino__usager1`
+  FOREIGN KEY (`usager_id`)
+  REFERENCES `vino_db`.`vino__usager` (`id`)
+  ON DELETE CASCADE
+  ON UPDATE NO ACTION;

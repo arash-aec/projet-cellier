@@ -1,20 +1,28 @@
 .admin {
-    padding: 4vh;
+  padding: 4vh;
 }
 .admin h1 {
-    text-align: center;
+  text-align: center;
 }
 .admin-saq-entete {
-    display: flex;
-    gap: 40px;
-    justify-content: center;
-    align-items: center;
-    padding: 4vh 0;
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+  justify-content: center;
+  align-items: center;
+  padding: 4vh 0;
 }
 .success {
-    text-align: center;
-    display: none;
+  text-align: center;
+  display: none;
 }
+@media (min-width: 768px) {
+	.admin-saq-entete {
+    display: flex;
+    flex-direction: row;
+  }
+}
+
 .tableUsagers {
     display: flex;
     flex-direction: column;

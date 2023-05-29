@@ -3,7 +3,7 @@ const ValidationInscription = (values) => {
     const courrielRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
     const nomRegex = /^[a-zA-Z]{2,}$/;
     const prenomRegex = /^[a-zA-Z]{2,}$/;
-    const passwordRegex = /^(?=.*[@#$%])[A-Za-z\d@#$%]{6,}$/;
+    const passwordRegex = /^(?=.*[@#$%])[A-Za-z\d@#$%]{6}$/;
   
     if (!values.courriel) {
       erreurs.courriel = "Courriel obligatoire!";
