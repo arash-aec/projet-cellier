@@ -1,4 +1,4 @@
-const Validation = (values) => {
+const ValidationLogin = (values) => {
   let erreurs = {};
   const courrielRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
 
@@ -16,4 +16,4 @@ const Validation = (values) => {
   return erreurs;
 };
 
-export default Validation;
+export default ValidationLogin;

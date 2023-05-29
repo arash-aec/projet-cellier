@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import Input from "../../composants/UI/Input/Input";
-import Validation from "../../composants/Validation/Validation";
+import ValidationLogin from "../../composants/Validation/ValidationLogin";
 import './Login.css'
 import { useDispatch } from 'react-redux';
 import { connexion } from '../../global/authentification/authAction.jsx';
@@ -28,7 +28,7 @@ const Login = (props) => {
   const handleSubmit = async (event) => {
     event.preventDefault();
 
-     const erreurs = Validation(values);
+     const erreurs = ValidationLogin(values);
       setErreur(erreurs);
 
     if (Object.keys(erreurs).length === 0) {
