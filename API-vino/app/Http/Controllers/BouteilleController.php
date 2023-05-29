@@ -138,8 +138,6 @@ class BouteilleController extends Controller
         $cellierBouteille->notes = $request->input('notes');
         $cellierBouteille->prix = $request->input('prix');
         $cellierBouteille->millesime = $request->input('millesime');
-        
-        // Définir les autres propriétés de la bouteille cellier
     
         // Enregistrer la bouteille de cellier dans la base de données
         $cellierBouteille->save();

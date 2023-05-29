@@ -2,13 +2,13 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-
 use App\Http\Controllers\AuthController;
 use GuzzleHttp\Middleware;
 use App\Http\Controllers\BouteilleController;
 use App\Http\Controllers\CellierController;
 use App\Http\Controllers\CellierBouteillesController;
 use App\Http\Controllers\UsagerController;
+use App\Http\Controllers\SAQController;
 
 /*
 |--------------------------------------------------------------------------
@@ -101,18 +101,17 @@ Route::delete('/usager/{id}', [UsagerController::class, 'supprimerUsager']);
 // Ajout de bouteille non liste
 Route::post('bouteilles/nouvelle', [BouteilleController::class, 'ajouterNouvelleBouteille']);
 
-
-//Route API pour l'authentification des utilisateurs
-// Route::post('/login', 'AuthController@login');
-
-
+// ------------------------------------------ Authentification
+// Inscription
 Route::post('/registration', [App\Http\Controllers\AuthController::class, 'register']);
+// Connexion
 Route::post('/connexion', [App\Http\Controllers\AuthController::class, 'login']);
 
 Route::group(['middleware'=> ['auth:sanctum']], function() {
     Route::post('/profile', [App\Http\Controllers\AuthController::class, 'profile']);
     Route::post('/logout', [App\Http\Controllers\AuthController::class, 'logout']);
-
 });
 
-
+// ------------------------------------------ SAQ
+// Importation des bouteilles de la SAQ
+Route::get('/importation-saq/{nombre}/{page}', [SAQController::class, 'getProduits']);
