@@ -1,148 +1,131 @@
 
-import React, { useState, useRef } from "react";
+import React, { useState, useRef,useEffect } from "react";
 import Input from "../../composants/UI/Input/Input";
+import ValidationInscription from "../../composants/Validation/ValidationInscription";
+import { useNavigate } from "react-router-dom";
 
-const Inscription = () => {
-  const [nom, setNom] = useState("");
-  const [prenom, setPrenom] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [confirmPassword, setConfirmPassword] = useState("");
-  const [errors, setErrors] = useState([]);
+const Inscription = (props) => {
   const [isModalOpen, setIsModalOpen] = useState(true); // Suivre la visibilité modale
   const formRef = useRef(null);
+  const [erreur, setErreur] = useState({});
+  const [values, setValues] = useState({
+    nom: '',
+    prenom: '',
+    courriel: '',
+    mot_de_passe: '',
+    mot_de_passe_confirmation: '',
+
+  })
+  const navigate = useNavigate();
+  const handleChange = (e) => {
+    setValues({ ...values, [e.target.name]: e.target.value });
+    setErreur((prevState) => ({ ...prevState, courriel: '', mot_de_passe: '' }));
+  };
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-  
-    // Réinitialiser les erreurs
-    setErrors([]);
-  
-    // Perform validation
-    const validationErrors = [];
 
-    if (!/^[a-zA-Z]{2,}$/.test(nom)) {
-      validationErrors.push("Le nom doit contenir au moins 2 lettres et ne peut contenir que des lettres.");
+        const erreurs = ValidationInscription(values);
+        setErreur(erreurs);
+
+        if (
+          Object.keys(erreurs).length === 0 &&
+          values.mot_de_passe !== values.mot_de_passe_confirmation
+        ) {
+          setErreur({
+            ...erreurs,
+            mot_de_passe_confirmation: "Les mots de passe ne correspondent pas.",
+          });
+          return;
+        }
+  
+      if (Object.keys(erreurs).length === 0) {
+      try {
+        const response = await fetch("http://127.0.0.1:8000/api/registration", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            nom: values.nom,
+            prenom: values.prenom,
+            courriel: values.courriel,
+            mot_de_passe: values.mot_de_passe,
+            mot_de_passe_confirmation: values.mot_de_passe_confirmation,
+            role: 1
+          }),
+        });
+        if (response.status === 200) {
+          const data = await response.json();
+          setValues({
+            nom: '',
+            prenom: '',
+            courriel: '',
+            mot_de_passe: '',
+            mot_de_passe_confirmation: '',
+            role: ''
+          });
+         
+          setIsModalOpen(false);
+            window.location.reload();
+            } 
+          } catch (error) {
+            console.error("Error:", error);
+            setErreur({ courriel: "L'adresse e-mail existe déjà" });
+          }
+        }
+      };
+        
+    useEffect(() => {
+      if(Object.keys(erreur).length === 0 && (values.nom !== "" && values.prenom !== "" && values.courriel !== "" && values.mot_de_passe !== "", values.mot_de_passe_confirmation !== ""))
+     console.log(erreur)
+    }, []);
+  
+    if (!isModalOpen) {
+      return null;
     }
-
-    if (!/^[a-zA-Z]{2,}$/.test(prenom)) {
-      validationErrors.push("Le prénom doit contenir au moins 2 lettres et ne peut contenir que des lettres.");
-    }
-
-    if (email.trim() === "") {
-      validationErrors.push("Le courriel est requis.");
-    }
-
-    if (password.trim() === "") {
-      validationErrors.push("Le mot de passe est requis.");
-    }
-
-    if (confirmPassword.trim() === "") {
-      validationErrors.push("La confirmation du mot de passe est requise.");
-    }
-
-    if (password !== confirmPassword) {
-      validationErrors.push("Le mot de passe et la confirmation du mot de passe ne correspondent pas.");
-    }
-
-    if (validationErrors.length > 0) {
-      setErrors(validationErrors);
-      return;
-    }
-
-   
-  
-    // Create user object
-    const user = {
-      nom: nom,
-      prenom: prenom,
-      courriel: email,
-      mot_de_passe: password,
-      mot_de_passe_confirmation: confirmPassword,
-      role: 1 // le role par default (membre)
-    };
-  
-    try {
-      const response = await fetch('http://127.0.0.1:8000/api/registration', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(user)
-      });
-  
-      if (!response.ok) {
-        throw new Error('Une erreur s\'est produite lors de la création de l\'usager.');
-      }
-  
-      // Handle successful user creation
-      // ...
-  
-      // Reset form fields and errors
-      handleModalClose();
-    } catch (error) {
-      console.error(error);
-      // Handle error
-      setErrors(["Une erreur s'est produite lors de la création de l'usager. Veuillez réessayer."]);
-    }
-  
-  };
-
-  const handleModalClose = () => {
-    setNom("");
-    setPrenom("");
-    setEmail("");
-    setPassword("");
-    setConfirmPassword("");
-    setErrors([]);
-    formRef.current.reset();
-    setIsModalOpen(false); // fermer le modale
-   
-  };
-
-  
-
   return (
     <>
-    {isModalOpen && ( // Affiche le modal uniquement s'il est ouvert
-      <div className="modal-overlay-inscription">
-        <div className="modal-inscription">
-          <span className="close-btn-inscription" onClick={handleModalClose}>&times;</span>
-          <h2>Inscription</h2>
-          <form ref={formRef} onSubmit={handleSubmit}>
-            <label htmlFor="nom">Votre nom:</label>
-            <Input type="text" id="nom" name="nom" value={nom} onChange={(e) => setNom(e.target.value)} required />
-
-            <label htmlFor="prenom">Votre prénom:</label>
-            <Input type="text" id="prenom" name="prenom" value={prenom} onChange={(e) => setPrenom(e.target.value)} required />
-
-            <label htmlFor="email-inscrir">Votre courriel:</label>
-            <Input type="email" id="email-inscrir" name="courriel" value={email} onChange={(e) => setEmail(e.target.value)} required />
-
-            <label htmlFor="password-inscrir" className="password-label">Mot de passe:</label>
-            <Input type="password" id="password-inscrir" name="mot_de_passe" value={password} onChange={(e) => setPassword(e.target.value)} required className="password-input" />
-
-            <label htmlFor="confirmpass" className="password-label">Confirmez le mot de passe:</label>
-            <Input type="password" id="confirmpass" name="confirmationPassword" value={confirmPassword} onChange={(e) => setConfirmPassword(e.target.value)} required
-              className={`password-input ${errors.includes("Les mots de passe ne correspondent pas.") ? "input-error" : ""}`} />
-            {errors.includes("Les mots de passe ne correspondent pas.") && (
-              <span className="error-message">Les mots de passe ne correspondent pas.</span>
-            )}
-
-            <Input type="submit" value="Enregistrer" />
+        <div className="modal-overlay-inscription">
+          <div className="modal-inscription">
+            <span className="close-btn-inscription" onClick={props.onClose}>
+              &times;
+            </span>
+            <h2>Créer un compte</h2>
+            <form ref={formRef} onSubmit={handleSubmit}>
+              <label htmlFor="nom">Nom</label>
+              <Input type="text" id="nom" name="nom" value={values.nom} onChange={handleChange} />
+              {erreur.nom && <p className="error-message">{erreur.nom}</p>}
+              <label htmlFor="prenom">Prénom:</label>
+              <Input type="text" id="prenom" name="prenom" value={values.prenom} onChange={handleChange} />
+              {erreur.prenom && <p className="error-message">{erreur.prenom}</p>}
+              <label htmlFor="email-inscrir">E-mail</label>
+              <Input type="text" id="email-inscrir" name="courriel" value={values.courriel} onChange={handleChange} />
+              {erreur.courriel && <p className="error-message">{erreur.courriel}</p>}
+              <label htmlFor="password-inscrir" className="password-label">
+                Mot de passe
+              </label>
+              <Input type="password" id="password-inscrir" name="mot_de_passe" value={values.mot_de_passe} onChange={handleChange} className="password-input" />
+              {erreur.mot_de_passe && <p className="error-message">{erreur.mot_de_passe}</p>}
+              <label htmlFor="confirmpass" className="password-label">
+                Confirmez le mot de passe
+                </label>
+              <Input
+                type="password"
+                id="confirmpass"
+                name="mot_de_passe_confirmation"
+                value={values.mot_de_passe_confirmation}
+                onChange={handleChange}
+              />
+                {erreur.mot_de_passe_confirmation && (
+                  <p className="error-message">{erreur.mot_de_passe_confirmation}</p>
+                )}
+              <Input type="submit" value="Enregistrer" />
             </form>
-            {errors.length > 0 && (
-              <ul className="errors">
-                {errors.map((error, index) => (
-                  <li key={index}>{error}</li>
-                ))}
-              </ul>
-            )}
-            </div>
           </div>
-        )} 
+        </div>
     </>
-    );
-  };
+  );
+};
 
   export default Inscription;

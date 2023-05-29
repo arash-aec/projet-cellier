@@ -15,7 +15,7 @@ class AuthController extends Controller
         $fields = $request->validate([
             'nom' => 'required',
             'prenom'=> 'required',
-            'courriel'=> 'required',
+            'courriel' => 'required|unique:vino__usager',
             'mot_de_passe' => 'required|confirmed',
             'role' => 'required',
         ]);
