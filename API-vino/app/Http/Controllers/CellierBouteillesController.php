@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 use App\Models\CellierBouteilles;
 
 
@@ -71,6 +72,23 @@ class CellierBouteillesController extends Controller
      * Ajouter une bouteille dans cellier
      */
     public function ajouterBouteilleCellier(Request $request) {
+        $validator = Validator::make($request->all(), [
+            'bouteille_id' => 'required|integer',
+            'cellier_id' => 'required|integer',
+            'quantite' => 'required|integer|min:1',
+            'date_achat' => 'required',
+            'millesime' => 'required|integer|min:1900|max:'.date('Y'),
+            'prix' => 'required|numeric|min:0',
+            'garde_jusqua' => 'integer',
+            'notes' => 'nullable|integer',
+        ]);
+    
+        if ($validator->fails()) {
+            // Les données n'ont pas passé la validation
+            return response()->json(['errors' => $validator->errors()], 400);
+        }
+    
+        // Les données ont été validées, vous pouvez les utiliser en toute sécurité
         $cellierBouteille = new CellierBouteilles();
         $cellierBouteille->bouteille_id = $request->input('bouteille_id');
         $cellierBouteille->cellier_id = $request->input('cellier_id');
@@ -80,11 +98,11 @@ class CellierBouteillesController extends Controller
         $cellierBouteille->prix = $request->input('prix');
         $cellierBouteille->garde_jusqua = $request->input('garde_jusqua');
         $cellierBouteille->notes = $request->input('notes');
-        
+    
         $res = $cellierBouteille->save();
     
         return response()->json(['success' => $res]);
-    }
+    }    
 
     /**
      * Supprimer une bouteille d'un cellier
