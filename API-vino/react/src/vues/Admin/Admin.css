@@ -15,3 +15,93 @@
     text-align: center;
     display: none;
 }
+.tableUsagers {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+
+.tableUsagers button {
+    font-size: 16px;
+    border: 2px solid #7E003F;
+    border-radius: 5px;
+}
+
+table {
+    width: 85%;
+    border-collapse: collapse;
+
+  }
+  
+  table th,
+  table td {
+    padding: 8px;
+    border: 1px solid #ccc;
+  }
+  
+  table th {
+    background-color: #f2f2f2;
+  }
+  
+  table tr:nth-child(even) {
+    background-color: #f9f9f9;
+  }
+  
+  table tr:hover {
+    background-color: #ebebeb;
+  }
+
+  h2 {
+    text-align: center;
+    padding: 10px;
+  }
+
+  .button-supprimer {
+    background-color: #cb3441;
+    color: #fff;
+  }
+
+  
+.modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: rgba(0, 0, 0, 0.5);
+  }
+  
+  .modal-content {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 4px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  }
+  
+  .modal h3 {
+    margin-top: 0;
+  }
+  
+  .modal-buttons {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 20px;
+  }
+  
+  .modal-buttons button {
+    margin-left: 10px;
+    background-color: #5c2231;
+    color: #fff;
+  }
+
+
+  button {
+    padding: 10px;
+    border: none;
+    border-radius: 3px;
+  }
+  
