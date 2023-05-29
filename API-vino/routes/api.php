@@ -1,5 +1,6 @@
 <?php
 
+
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
@@ -90,7 +91,7 @@ Route::get('/usagers', [UsagerController::class, 'getUsagers']);
 Route::get('/usager/{id}', [UsagerController::class, 'getUsager']);
 
 // Modification d'un usager
-Route::put('/usager/{id}', [UsagerController::class, 'modifierUsager']);
+Route::put('/modifierUsager/{id}', [UsagerController::class, 'modifierUsager']);
 
 // Ajout d'un usager
 Route::post('/usager', [UsagerController::class, 'ajouterUsager']);
