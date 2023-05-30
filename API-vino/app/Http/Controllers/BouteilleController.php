@@ -3,8 +3,11 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use App\Models\CellierBouteilles;
 use App\Models\Bouteille;
+use App\Models\Pays;
+use App\Models\Type;
 
 class BouteilleController extends Controller
 {
@@ -118,31 +121,58 @@ class BouteilleController extends Controller
     }
 
     public function ajouterNouvelleBouteille(Request $request)
-    {
-        // Créer une nouvelle bouteille
-        $bouteille = new Bouteille();
-        $bouteille->nom = $request->input('nom');
-        $bouteille->description = $request->input('description');
-        // Définir d'autres propriétés de la bouteille
-    
-        // Enregistrez la bouteille dans la base de données
-        $bouteille->save();
-    
-        // Créer une nouvelle entrée dans la table vino_cellier_bouteilles
-        $cellierBouteille = new CellierBouteilles();
-        $cellierBouteille->cellier_id = $request->input('cellier_id');
-        $cellierBouteille->bouteille_id = $bouteille->id;
-        $cellierBouteille->quantite = $request->input('quantite');
-        $cellierBouteille->date_achat = $request->input('date_achat');
-        $cellierBouteille->garde_jusqua = $request->input('garde_jusqua');
-        $cellierBouteille->notes = $request->input('notes');
-        $cellierBouteille->prix = $request->input('prix');
-        $cellierBouteille->millesime = $request->input('millesime');
-    
-        // Enregistrer la bouteille de cellier dans la base de données
-        $cellierBouteille->save();
-    
-        return response()->json(['success' => true, 'bouteille' => $bouteille, 'cellier_bouteille' => $cellierBouteille]);
+{
+    // Créer une nouvelle bouteille
+    $bouteille = new Bouteille();
+    $bouteille->nom = $request->input('nom');
+    $bouteille->description = $request->input('description');
+    $bouteille->format = $request->input('format');
+    $bouteille->image = '';
+
+    // Retrieve the foreign key ID for the selected type
+    $type = Type::where('type', $request->input('type'))->first();
+    if ($type) {
+        $bouteille->type = $type->id;
     }
+
+    // Retrieve the foreign key ID for the selected pays
+    $pays = Pays::where('pays', $request->input('pays'))->first();
+    if ($pays) {
+        $bouteille->pays = $pays->id;
+    }
+
+    // Set the authenticated user's ID as the usager_id
+    //$bouteille->usager_id = Auth::user()->id;
+    //$bouteille->usager_id = Auth::id();
+    //$usager_id = Auth::id();
+
+    // Set the usager_id
+    //$bouteille->usager_id = $usager_id;
+
+    $bouteille->usager_id = $request->input('usager_id');
+
+    // Définir d'autres propriétés de la bouteille
+
+    // Enregistrez la bouteille dans la base de données
+    $bouteille->save();
+
+    // Créer une nouvelle entrée dans la table vino_cellier_bouteilles
+    $cellierBouteille = new CellierBouteilles();
+    $cellierBouteille->cellier_id = $request->input('cellier_id');
+    $cellierBouteille->bouteille_id = $bouteille->id;
+    $cellierBouteille->quantite = $request->input('quantite');
+    $cellierBouteille->date_achat = $request->input('date_achat');
+    $cellierBouteille->garde_jusqua = $request->input('garde_jusqua');
+    $cellierBouteille->notes = $request->input('notes');
+    $cellierBouteille->prix = $request->input('prix');
+    $cellierBouteille->millesime = $request->input('millesime');
+    // Définir les autres propriétés de la bouteille cellier
+
+    // Enregistrer la bouteille de cellier dans la base de données
+    $cellierBouteille->save();
+
+    return response()->json(['success' => true, 'bouteille' => $bouteille, 'cellier_bouteille' => $cellierBouteille]);
+}
+
 
 }
