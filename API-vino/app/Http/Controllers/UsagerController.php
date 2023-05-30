@@ -40,14 +40,31 @@ class UsagerController extends Controller
      * Ajout d'un usager
      */
     public function ajouterUsager(Request $request) {
-        // $usager = new Usager;
-        // $usager->nom = $request->input('nom');
-        // $usager->prenom = $request->input('prenom');
-        // $usager->courriel = $request->input('courriel');
-        // $usager->mot_de_passe= $request->input('mot_de_passe');
-        // $usager->role = $request->input('role');
-        // $usager->save();
-        // return response()->json($usager);
+        $fields = $request->validate([
+            'nom' => 'required',
+            'prenom'=> 'required',
+            'courriel' => 'required|unique:vino__usager',
+            'mot_de_passe' => 'required|confirmed',
+            'role' => 'required',
+        ]);
+
+        $usager = Usager::create([
+            'nom' => $fields['nom'],
+            'prenom' => $fields['prenom'],
+            'courriel' => $fields['courriel'],
+            'mot_de_passe' => bcrypt($fields['mot_de_passe']),
+            'role' => $fields['role']
+        ]);
+        
+
+        $token = $usager->createToken('SOME_HASH')->plainTextToken;
+
+        $response = [
+            'usager' => $usager,
+            'token' => $token
+        ];
+
+        return response($response, 200);
     }
 
     /**
