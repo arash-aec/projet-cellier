@@ -1,7 +1,8 @@
 /*-------------------------------------- Modales */
 .modal-overlay-inscription, 
 .modal-overlay-connexion,
-.modal-overlay-ajoutBouteille {
+.modal-overlay-ajoutBouteille,
+.modal-overlay-modifieBouteille {
     position: fixed;
     top: 0;
     left: 0;
@@ -15,7 +16,8 @@
 /* Style for modal window */
 .modal-inscription, 
 .modal-connexion,
-.modal-ajoutBouteille {
+.modal-ajoutBouteille,
+.modal-modifieBouteille {
     position: absolute;
     top: 50%;
     left: 50%;
@@ -33,7 +35,8 @@
 /* Style for close button */
 .close-btn-inscription, 
 .close-btn-connexion,
-.close-btn-ajoutBouteille {
+.close-btn-ajoutBouteille,
+.close-btn-modifieBouteille {
     position: absolute;
     top: 2vh;
     right: 2vh;

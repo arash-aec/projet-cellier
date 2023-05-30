@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 
-import ValidationBouteilleSAQ from "../../composants/Validation/ValidationBouteilleSaq";
+import ValidationBouteille from "../../composants/Validation/ValidationBouteille";
 
 const AjoutBouteille = (props) => {
   const formRef = useRef(null);
@@ -81,7 +81,7 @@ const AjoutBouteille = (props) => {
       e.preventDefault();
 
       // Effectuez la validation des valeurs
-      const erreurs = ValidationBouteilleSAQ(values);
+      const erreurs = ValidationBouteille(values);
       setErreur(erreurs);
       
       if (Object.keys(erreurs).length === 0) {

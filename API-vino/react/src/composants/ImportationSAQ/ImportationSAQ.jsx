@@ -57,8 +57,8 @@ const ImportationSAQ = () => {
   return (
     <>
       <section className="admin-saq">
-        <div className="admin-saq-entete">
-          <h2>Mettre à jour les bouteilles de la SAQ</h2>
+        <div className="admin-entete">
+          <h2>Importer les bouteilles de la SAQ</h2>
           <button className="bouton button-primary" onClick={handleImportClick}>Importer les bouteilles</button>
         </div>
         {importStatus && (

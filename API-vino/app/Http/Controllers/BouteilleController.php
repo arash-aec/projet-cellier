@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\CellierBouteilles;
 use App\Models\Bouteille;
+use Illuminate\Support\Facades\Validator;
 
 class BouteilleController extends Controller
 {
@@ -60,9 +61,7 @@ class BouteilleController extends Controller
      */
     public function getBouteille($id) {
         $bouteille = Bouteille::with('relationPays', 'relationType')->find($id);
-        $bouteille = $bouteille->map(function ($bouteille) {
-            return $this->formatBouteille($bouteille);
-        });
+        $bouteille = $this->formatBouteille($bouteille);
         return response()->json($bouteille);
     }
 
@@ -70,13 +69,33 @@ class BouteilleController extends Controller
      * Modification d'une bouteille avec son id 
      */
     public function modifierBouteille($id, Request $request) {
+        $validator = Validator::make($request->all(), [
+            'nom' => 'required',
+            'description' => 'required',
+            'prix_saq' => 'required|numeric',
+            'format' => 'required',
+            'pays' => 'required',
+            'type' => 'required',
+            'url_img' => 'required',
+            'url_saq' => 'required',
+        ]);
+        
+        if ($validator->fails()) {
+            // Les données n'ont pas passé la validation
+            return response()->json(['errors' => $validator->errors()], 400);
+        }
+        
         $bouteille = Bouteille::findOrFail($id);
         $bouteille->nom = $request->input('nom');
         $bouteille->description = $request->input('description');
-        $bouteille->prix = $request->input('prix');
+        $bouteille->prix_saq = $request->input('prix_saq');
         $bouteille->format = $request->input('format');
-        $bouteille->type = $request->input('type');
+        $bouteille->relationPays->pays = $request->input('pays');
+        $bouteille->relationType->type = $request->input('type');
+        $bouteille->url_img = $request->input('url_img');
+        $bouteille->url_saq = $request->input('url_saq');
         $bouteille->save();
+        
         return response()->json($bouteille);
     }
 
@@ -88,7 +107,6 @@ class BouteilleController extends Controller
         $bouteille->delete();
         return response()->json(['message' => 'bouteille supprimé avec succès']);
     }
-
 
     /**
      * Auto Complete Liste Bouteille

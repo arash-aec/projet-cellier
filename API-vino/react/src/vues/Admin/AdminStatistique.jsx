@@ -194,7 +194,7 @@ const AdminStatistique = () => {
     function compterNouveauxUsagers(usagers) {
         const now = new Date(); // Date and time
     
-        // Define time intervals
+        // Intervale de temps 
         const jourMeme = 1;
         const troisJours = 3;
         const semaine = 7;
@@ -235,49 +235,60 @@ const AdminStatistique = () => {
         {estConnecte && role === 2 ? (
             <section className="statistique">
                 <h2>Statistique du site</h2>
-                <p>Nombre d'usager : <strong>{statistiques.nombreUsagers}</strong></p>
-                <p>Nombre de cellier : <strong>{statistiques.nombreCelliers}</strong></p>
-                <p>Nombre de bouteille : <strong>{statistiques.nombreBouteilles}</strong></p>
-                <p>Nombre de cellier par usager :</p>
-                <ul className="statistique-liste">
-                {typeof statistiques.celliersUsager === 'object' && Object.entries(statistiques.celliersUsager).map(([usagerId, nombreCelliers]) => (
-                    <li key={usagerId}>Usager {usagerId} : <strong>{nombreCelliers}</strong> celliers</li>
-                ))}
-                </ul>            
-                <p>Nombre de bouteille par cellier et par usager :</p>
-                <ul className="statistique-liste">
-                    {typeof statistiques.quantitebouteilleCellierUsager === 'object' &&
-                    Object.entries(statistiques.quantitebouteilleCellierUsager).map(([usagerId, celliers]) => (
-                    <li key={usagerId}>
-                        Usager {usagerId} :
-                        <ul className="statistique-liste-2">
-                        {celliers.map(cellier => (
-                            <li key={cellier.cellierId}>Cellier {cellier.cellierId} : <strong>{cellier.quantite}</strong> bouteilles </li>
-                        ))}
-                        </ul>
-                    </li>
+                <div className="statistique-contenu">
+                  <div>
+                    <h3>Général :</h3>
+                    <p>Nombre d'usager : <strong>{statistiques.nombreUsagers}</strong></p>
+                    <p>Nombre de cellier : <strong>{statistiques.nombreCelliers}</strong></p>
+                    <p>Nombre de bouteille : <strong>{statistiques.nombreBouteilles}</strong></p>
+                  </div>
+                  <div>
+                    <h3>Nouveau usager :</h3>
+                    <p>Nouveaux usagers aujourd'hui : <strong>{statistiques.quantitesNouveauxUsagers?.jourMeme ?? 0}</strong></p>
+                    <p>Nouveaux usagers dans les 3 derniers jours : <strong>{statistiques.quantitesNouveauxUsagers?.troisJours ?? 0}</strong></p>
+                    <p>Nouveaux usagers dans la semaine : <strong>{statistiques.quantitesNouveauxUsagers?.semaine ?? 0}</strong></p>
+                  </div>
+                  <div>
+                    <h3>Nombre de cellier par usager :</h3>
+                    <ul className="statistique-liste">
+                    {typeof statistiques.celliersUsager === 'object' && Object.entries(statistiques.celliersUsager).map(([usagerId, nombreCelliers]) => (
+                        <li key={usagerId}>Usager {usagerId} : <strong>{nombreCelliers}</strong> celliers</li>
                     ))}
-                </ul>      
-                <p>La valeur total des bouteilles par usager et par cellier :</p>    
-                <ul className="statistique-liste">
-                    {typeof statistiques.valeurBouteilles === 'object' &&
-                    Object.entries(statistiques.valeurBouteilles).map(([usagerId, celliers]) => (
-                    <li key={usagerId}>
-                        Usager {usagerId} :
-                        <ul className="statistique-liste-2">
-                        {Object.entries(celliers).map(([cellierId, prixTotal]) => (
-                            <li key={cellierId}>Cellier {cellierId} : <strong>{prixTotal} $ </strong> </li>
+                    </ul>   
+                  </div>
+                  <div>
+                    <h3>Nombre de bouteille par cellier et par usager :</h3>
+                    <ul className="statistique-liste">
+                        {typeof statistiques.quantitebouteilleCellierUsager === 'object' &&
+                        Object.entries(statistiques.quantitebouteilleCellierUsager).map(([usagerId, celliers]) => (
+                        <li key={usagerId}>
+                            Usager {usagerId} :
+                            <ul className="statistique-liste-2">
+                            {celliers.map(cellier => (
+                                <li key={cellier.cellierId}>Cellier {cellier.cellierId} : <strong>{cellier.quantite}</strong> bouteilles </li>
+                            ))}
+                            </ul>
+                        </li>
                         ))}
-                        </ul>
-                    </li>
-                    ))}
-                </ul>
-                <p>Le nombre de nouveaux usagers :</p>
-                <ul className="statistique-liste">
-                    <li>Nouveaux usagers aujourd'hui : {statistiques.quantitesNouveauxUsagers?.jourMeme ?? 0}</li>
-                    <li>Nouveaux usagers dans les 3 derniers jours : {statistiques.quantitesNouveauxUsagers?.troisJours ?? 0}</li>
-                    <li>Nouveaux usagers dans la semaine : {statistiques.quantitesNouveauxUsagers?.semaine ?? 0}</li>
-                </ul>
+                    </ul>
+                  </div>   
+                  <div>
+                    <h3>La valeur total des bouteilles par usager et par cellier :</h3>    
+                    <ul className="statistique-liste">
+                        {typeof statistiques.valeurBouteilles === 'object' &&
+                        Object.entries(statistiques.valeurBouteilles).map(([usagerId, celliers]) => (
+                        <li key={usagerId}>
+                            Usager {usagerId} :
+                            <ul className="statistique-liste-2">
+                            {Object.entries(celliers).map(([cellierId, prixTotal]) => (
+                                <li key={cellierId}>Cellier {cellierId} : <strong>{prixTotal} $ </strong> </li>
+                            ))}
+                            </ul>
+                        </li>
+                        ))}
+                    </ul>
+                  </div>  
+                </div>
             </section>
         ) : (
           navigate("/")

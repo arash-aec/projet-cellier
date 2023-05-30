@@ -5,7 +5,7 @@
 .admin h1 {
   text-align: center;
 }
-.admin-saq-entete {
+.admin-entete {
   display: flex;
   flex-direction: column;
   gap: 40px;
@@ -17,24 +17,28 @@
   text-align: center;
   display: none;
 }
-@media (min-width: 768px) {
-	.admin-saq-entete {
-    display: flex;
-    flex-direction: row;
-  }
-}
-
-.statistique {
+.statistique-contenu {
   display: flex;
   flex-direction: column;
-  gap: 1em;
-  align-items: flex-start;
+  gap: 30px;
+}
+.statistique-contenu>div {
+  min-width: 30ch;
+}
+@media (min-width: 768px) {
+	.admin-entete {
+    flex-direction: row;
+  }
+  .statistique-contenu {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+  }
 }
 .statistique-liste {
-  padding-left: 12vh;
+  padding-left: 1vh;
 }
 .statistique-liste-2 {
-  padding-left: 2vh;
+  padding-left: 1vh;
 }
 
 .tableUsagers {
