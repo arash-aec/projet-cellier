@@ -1,0 +1,37 @@
+.formModifier {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+  }
+  
+  .formModifier div {
+    width: 30%;
+    margin-bottom: 10px;
+
+  }
+  
+  .formModifier label {
+    display: block;
+    text-align: left;
+  }
+  
+  .formModifier input,
+  .formModifier select {
+    width: 100%;
+    padding: 8px;
+    margin-top: 5px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+  }
+  
+  .buttonEnregistrer {
+    font-size: 16px;
+    background-color: #7E003F;
+    color: #fff;
+    border-radius: 5px;
+    margin-top: 10px;
+    margin-bottom: 20px;
+  }
+  

@@ -41,8 +41,7 @@ const Admin = () => {
   }
 
   const handleModifierUsager = (id) => {
-    // Handle modify button click here
-    console.log("Modify clicked for user with id:", id);
+    navigate(`/ModifieUsager/${id}`);
   };
   
   const handleDeleteConfirmation = (id) => {
@@ -63,8 +62,7 @@ const Admin = () => {
       })
         .then((response) => response.json())
         .then((data) => {
-          console.log(data.message);
-          // Update the user list after successful deletion
+       
           setUsager(prevUsager => prevUsager.filter(item => item.id !== selectedUserId));
         })
         .catch((error) => {
