@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 import ImportationSAQ from "../../composants/ImportationSAQ/ImportationSAQ";
 
@@ -80,6 +81,7 @@ const Admin = () => {
         {estConnecte && role === 2 ? (
           <div className="admin">
             <h1>Espace Administration</h1>
+            <Link to="/admin/statistique" className="bouton button-black">Voir les statistiques</Link>
             <ImportationSAQ />
             <div className="tableUsagers">
               <h2>Gestion Usagers</h2>

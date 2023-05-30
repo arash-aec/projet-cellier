@@ -11,6 +11,7 @@ import NonTrouve from "./vues/NonTrouve/NonTrouve";
 import Accueil from "./vues/Accueil/Accueil";
 import ListeBouteille from "./vues/ListeBouteille/ListeBouteille";
 import ListeCellier from "./vues/ListeCellier/ListeCellier";
+import AdminStatistique from "./vues/Admin/AdminStatistique";
 import Admin from "./vues/Admin/Admin";
 
 export const UsagerDataContext = createContext(null);
@@ -47,6 +48,7 @@ function App() {
               <Route path="/" element={<Accueil />} />
               <Route path="/celliers" element={<ListeCellier />} />
               <Route path="/admin" element={<Admin />} />
+              <Route path="/admin/statistique" element={<AdminStatistique />} />
               <Route path="/listeBouteille/:id" element={<ListeBouteille />} />
               <Route path="*" element={<NonTrouve />} />
             </Routes>

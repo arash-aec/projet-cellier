@@ -28,7 +28,10 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 // ------------------------------------------ Cellier
 // Récupération de tous les celliers
-Route::get('/celliers/{id}', [CellierController::class, 'getCelliers']);
+Route::get('/celliers', [CellierController::class, 'getCelliers']);
+
+// Récupération de tous les celliers d'un usager
+Route::get('/celliers/{id}', [CellierController::class, 'getCelliersUsager']);
 
 // Récupération d'un cellier avec son id
 Route::get('/cellier/{id}', [CellierController::class, 'getCellier']);
@@ -44,8 +47,11 @@ Route::delete('/cellier/{id}', [CellierController::class, 'effacerCellier']);
 
 
 // ------------------------------------------ Bouteille
+// Récupération de toutes les bouteilles
+Route::get('/bouteilles', [BouteilleController::class, 'getBouteilles']);
+
 // Récupération des bouteilles avec id d'un cellier 
-Route::get('/bouteilles/{id}', [BouteilleController::class, 'getBouteilles']);
+Route::get('/bouteilles/{id_cellier}', [BouteilleController::class, 'getBouteillesCellier']);
 
 // Récupération d'une bouteille avec son id 
 Route::get('/bouteille/{id}', [BouteilleController::class, 'getBouteille']);
@@ -62,8 +68,11 @@ Route::post('/bouteilles/autocompleteBouteille', [BouteilleController::class, 'a
 
 
 // ------------------------------------------ Cellier_bouteilles
-// Récupérer les bouteilles d'un cellierà
-Route::get('/cellier-bouteilles/{id}', [CellierBouteillesController::class, 'getCellierBouteilles']);
+// Récupération de tous les cellier_bouteilles
+Route::get('/cellier-bouteilles', [CellierBouteillesController::class, 'getcellierBouteilles']);
+
+// Récupérer les bouteilles d'un cellier avec son id
+Route::get('/cellier-bouteilles/{id}', [CellierBouteillesController::class, 'getCellierBouteillesId']);
 
 // Ajouter une bouteille à la quantité Cellier_bouteilles
 Route::post('/cellier-bouteilles/{bouteille_id}/{cellier_id}/ajouter', [CellierBouteillesController::class, 'ajouterBouteilleQuantite']);

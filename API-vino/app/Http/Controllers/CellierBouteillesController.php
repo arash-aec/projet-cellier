@@ -10,9 +10,17 @@ use App\Models\CellierBouteilles;
 class CellierBouteillesController extends Controller
 {
     /**
-     * Récupérer les bouteilles d'un cellier
+     * Récupération de tous les cellierbouteilles
      */
-    public function getCellierBouteilles($id) {
+    public function getcellierBouteilles() { 
+        $celliers = CellierBouteilles::get();
+        return response()->json($celliers);
+    }
+
+    /**
+     * Récupérer les bouteilles d'un cellier avec son id
+     */
+    public function getCellierBouteillesId($id) {
         $cellierBouteilles = CellierBouteilles::where('cellier_id', $id)->get();
         return response()->json($cellierBouteilles);
     }

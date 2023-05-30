@@ -8,12 +8,21 @@ use App\Models\Bouteille;
 
 class BouteilleController extends Controller
 {
+
+    /**
+     * Récupération de tous les celliers d'un usager
+     */
+    public function getBouteilles() { 
+        $bouteilles = Bouteille::get();
+        return response()->json($bouteilles);
+    }
+
     /**
      * Récupération des toutes les bouteilles avec l'id du cellier 
      */
-    public function getBouteilles($id){
+    public function getBouteillesCellier($id_cellier){
         // Récupère les bouteilles du cellier par son id
-        $cellierBouteilles = CellierBouteilles::where('cellier_id', $id)->get();
+        $cellierBouteilles = CellierBouteilles::where('cellier_id', $id_cellier)->get();
         // Extraction des bouteilles
         $bouteilleIds = $cellierBouteilles->pluck('bouteille_id');
         // Recuperation de Type et Pays
