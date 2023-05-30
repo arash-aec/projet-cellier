@@ -3,6 +3,9 @@ import { useSelector } from 'react-redux';
 import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
 import ModifieBouteilleSAQ from "../Formulaire/ModifieBouteilleSAQ";
+import './Admin.css'
+import '../../assets/css/modales.css';
+import '../../assets/css/general.css'
 
 import ImportationSAQ from "../../composants/ImportationSAQ/ImportationSAQ";
 
@@ -46,6 +49,9 @@ const Admin = () => {
 
   const handleModifierUsager = (id) => {
     navigate(`/ModifieUsager/${id}`);
+  };
+  const handleAjouterUsager = () => {
+    navigate(`/ajouterUsager`);
   };
   
   const handleDeleteConfirmation = (id) => {
@@ -160,13 +166,14 @@ const Admin = () => {
                 </div>
               </div>
             )}
+            <button onClick={() => handleAjouterUsager()} className="boutonAjouter">Ajouter Usager</button>
           </div>
         </div>
-      ) : (
-        navigate("/")
-      )}
-    </>
-  );
-}
-
-export default Admin;
+        ) : (
+          navigate("/")
+        )}
+      </>
+    );
+  }
+  
+  export default Admin;

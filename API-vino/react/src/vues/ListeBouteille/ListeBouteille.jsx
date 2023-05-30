@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 
 import Bouteille from "../../composants/Bouteille/Bouteille";
 import AjoutBouteille from "../Formulaire/AjoutBouteille";
+import AjoutBouteilleNonListe from "../FormulaireNonListe/AjoutBouteilleNonListe";
 
 const ListeBouteille = () => {
 
@@ -50,6 +51,11 @@ const ListeBouteille = () => {
       const modalOverlayAjoutBouteille = document.querySelector(".modal-overlay-ajoutBouteille");
       const modalAjoutBouteille = document.querySelector(".modal-ajoutBouteille");
       const closeBtnAjoutBouteille = document.querySelector(".close-btn-ajoutBouteille");
+      const btnAjoutBouteilleNonListee = elements.querySelector( "[data-js-ajout-bouteille-non-listee-btn]");
+      const modalAjoutBouteilleNonListe = document.querySelector(".modal-ajoutBouteilleNonListe");
+      const modalOverlayAjoutBouteilleNonListe = elements.querySelector(".modal-overlay-ajoutBouteilleNonListe");
+      const closeBtnAjoutBouteilleNonListe = document.querySelector(".close-btn-ajoutBouteilleNonListe");
+
 
       btnAjoutBouteille.addEventListener("click", function(e) {
         e.preventDefault();
@@ -61,6 +67,18 @@ const ListeBouteille = () => {
         modalOverlayAjoutBouteille.style.display = "none";
         modalAjoutBouteille.style.display = "none";
       });    
+
+      btnAjoutBouteilleNonListee.addEventListener("click", function(e) {
+        e.preventDefault();
+        modalOverlayAjoutBouteilleNonListe.style.display = "block";
+        modalAjoutBouteilleNonListe.style.display = "block";
+      });
+
+      closeBtnAjoutBouteilleNonListe.addEventListener("click", function () {
+        modalOverlayAjoutBouteilleNonListe.style.display = "none";
+        modalAjoutBouteilleNonListe.style.display = "none";
+      });
+
     }
   }
 
@@ -177,7 +195,7 @@ const ListeBouteille = () => {
               <h2 className="cellier-titre">{nomCellier}</h2>
               <div className="cellier-boutons">
                 <button id="open-modal-ajoutBouteille-btn" className="bouton button-rouge" data-js-ajout-bouteille-btn> ajouter bouteille saq</button>
-                <button id="open-modal-ajoutBouteille-btn" className="bouton button-black" data-js-ajout-bouteille-btn> ajouter bouteille</button>
+                <button id="open-modal-ajoutBouteilleNonListee-btn" className="bouton button-black" data-js-ajout-bouteille-non-listee-btn> ajouter bouteille</button>
               </div>
               <div className="filtre">
                 <label htmlFor="RechercheInput" className="recherche-label">Rechercher <a href="" onClick={handleRechercheIconClick}>
@@ -218,6 +236,7 @@ const ListeBouteille = () => {
             </div>
           </div>
           <AjoutBouteille idCellier={id} onBouteilleAjoutCellier={bouteilleAjouterCellier} />
+          <AjoutBouteilleNonListe idCellier={id} onBouteilleAjoutCellier={bouteilleAjouterCellier}/>
         </div>
       ) : ( navigate("/") ) }
     </>

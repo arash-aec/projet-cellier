@@ -103,7 +103,7 @@ Route::get('/usager/{id}', [UsagerController::class, 'getUsager']);
 Route::put('/modifierUsager/{id}', [UsagerController::class, 'modifierUsager']);
 
 // Ajout d'un usager
-Route::post('/usager', [UsagerController::class, 'ajouterUsager']);
+Route::post('/ajouterUsager', [UsagerController::class, 'ajouterUsager']);
 
 // Suppression d'un usager
 Route::delete('/usager/{id}', [UsagerController::class, 'supprimerUsager']);
