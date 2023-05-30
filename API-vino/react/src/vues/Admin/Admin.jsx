@@ -3,6 +3,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
 import './Admin.css'
+import '../../assets/css/modales.css';
+import '../../assets/css/general.css'
 
 import ImportationSAQ from "../../composants/ImportationSAQ/ImportationSAQ";
 
@@ -44,6 +46,9 @@ const Admin = () => {
   const handleModifierUsager = (id) => {
     navigate(`/ModifieUsager/${id}`);
   };
+  const handleAjouterUsager = () => {
+    navigate(`/ajouterUsager`);
+  };
   
   const handleDeleteConfirmation = (id) => {
     setSelectedUserId(id);
@@ -77,7 +82,6 @@ const Admin = () => {
 
     return (
       <>
-        {estConnecte && role === 2 ? (
           <div className="admin">
             <h1>Espace Administration</h1>
             <ImportationSAQ />
@@ -130,10 +134,8 @@ const Admin = () => {
                 </div>
               )}
             </div>
+            <button onClick={() => handleAjouterUsager()} className="boutonAjouter">Ajouter Usager</button>
           </div>
-        ) : (
-          navigate("/")
-        )}
       </>
     );
   }

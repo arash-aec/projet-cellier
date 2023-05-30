@@ -60,7 +60,7 @@ const ModifieUsager = () => {
       })
         .then((response) => response.json())
         .then((data) => {
-          navigate("/admin");
+          navigate("/admin", { replace: true })
         })
         .catch((error) => {
           console.error("Error updating user details:", error);
