@@ -15,7 +15,7 @@ const ValidationBouteilleNonListe = (values) => {
   if (!values.nom) {
     values.nom = "Nom obligatoire!";
   } else if (!nomRegex.test(values.nom)) {
-    erreurs.nom = "le nom au moins  est composé de deux caractères de lettres ou de chiffres";
+    erreurs.nom = "le nom est composé au moins de deux caractères de lettres ou de chiffres";
   }
   if (!values.description) {
     values.description = "Description obligatoire!";
