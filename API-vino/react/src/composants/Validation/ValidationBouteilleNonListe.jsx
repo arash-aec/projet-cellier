@@ -1,183 +1,70 @@
-import React, { useState, useEffect, useRef } from "react";
-import { paysData, typeData } from  "./data"
+const ValidationBouteilleNonListe = (values) => {
+    
+  let erreurs = {};
 
-import ValidationBouteilleNonListe from "../../composants/Validation/ValidationBouteilleNonListe";
-
-const AjoutBouteilleNonListe = (props) => {
-  const { idCellier, onBouteilleAjoutCellier } = props;
-  const [isBouteilleAjoutee, setIsBouteilleAjoutee] = useState(false);
-  const formRef = useRef(null);
-  const [erreur, setErreur] = useState({});
-  const [values, setValues] = useState({
-    nom: '',
-    description: '',
-    format: '',
-    millesime: '',
-    quantite: '',
-    date_achat: '',
-    prix: '',
-    garde_jusqua: '',
-    notes: '',
-  })
-
-  useEffect(() => {
-    const inputNomBouteille = document.querySelector("[name='nom']");
-    const modalOverlayAjoutBouteilleNonListe = document.querySelector(".modal-overlay-ajoutBouteilleNonListe");
-    const modalAjoutBouteilleNonListe = document.querySelector(".modal-ajoutBouteilleNonListe");
+  const nomRegex = /^[A-Za-z0-9]{2,}$/;
+  const descriptionRegex = /^(.*[A-Za-z]){4,}.*$/
+  const formatRegex = /^\d+ ?ml$/
+  const millesimeRegex = /^\d{4}$/;
+  const quantiteRegex = /^\d+$/;
+  const dateRegex = /^\d{4}-\d{2}-\d{2}$/;
+  const prixRegex = /^\d+(\.\d{0,2})?$/;
+  const noteRegex = /^[1-5]$/;
 
 
-    const validateInput = (values) => {
-      const erreurs = ValidationBouteilleNonListe(values);
-      setErreur(erreurs);
+  if (!values.nom) {
+    values.nom = "Nom obligatoire!";
+  } else if (!nomRegex.test(values.nom)) {
+    erreurs.nom = "le nom au moins  est composé de deux caractères de lettres ou de chiffres";
+  }
+  if (!values.description) {
+    values.description = "Description obligatoire!";
+  } else if (!descriptionRegex.test(values.description)) {
+    erreurs.description = "la description est composée de minimum quatre lettres";
+  }
   
-      // Check if the erreurs object is empty
-      return Object.keys(erreurs).length === 0;
-    };
+  if (!values.format) {
+    values.format = "Format obligatoire!";
+  } else if (!formatRegex.test(values.format)) {
+    erreurs.format = "le format est composé de nombres suivis de ml";
+  }
+  if (!values.millesime) {
+    values.millesime = "Millesime obligatoire!";
+  } else if (!millesimeRegex.test(values.millesime)) {
+    erreurs.millesime = "Le millesime est une année à 4 chiffres";
+  }
 
-    const handleAjouterClick = (e) => {
-      e.preventDefault();
+  if (!values.garde_jusqua) {
+    values.garde_jusqua = "La garde obligatoire!";
+  } else if (!quantiteRegex.test(values.garde_jusqua)) {
+    erreurs.garde_jusqua = "La garde est un nombre de 1 ou 2 chiffres";
+  }
 
-       // Perform validation
-    if (!validateInput(values)) {
-      console.log("Invalid input. Please correct the form.");
-      return;
-    }
+  if (!values.quantite) {
+    values.quantite = "Quantite obligatoire!";
+  } else if (!quantiteRegex.test(values.quantite)) {
+    erreurs.quantite = "La quantite est le nombre de bouteille";
+  }
 
-      // Effectuez la validation des valeurs
-      // const erreurs = ValidationBouteilleNonListe(values);
-      // setErreur(erreurs);
+  if (!values.date_achat) {
+    values.date_achat = "Date obligatoire!";
+  } else if (!dateRegex.test(values.date_achat)) {
+    erreurs.date_achat = "Le format de la date doit correspondre à aaaa-mm-jj";
+  }
 
-      if (isBouteilleAjoutee) {
-        console.log("La bouteille a déjà été ajoutée.");
-        return;
-      }
+  if (!values.notes) {
+    values.notes = "Note obligatoire!";
+  } else if (!noteRegex.test(values.notes)) {
+    erreurs.notes = "La note est un chiffre entre 1 et 5";
+  }
 
-      // Retrieve bouteille_id from the DOM
-      const bouteille_id = modalAjoutBouteilleNonListe.querySelector(".nom").dataset.id;
+  if (!values.prix) {
+    values.prix = "Prix obligatoire!";
+  } else if (!prixRegex.test(values.prix)) {
+    erreurs.prix = "Le prix est un chiffre avec ou sans décimal";
+  }
 
-      // Retrieve form data
-      const formData = new FormData(formRef.current);
-      const bouteilleCellier = Object.fromEntries(formData);
-      bouteilleCellier.bouteille_id = bouteille_id;
-      bouteilleCellier.cellier_id = idCellier;
-
-      // Perform fetch request
-      fetch("http://127.0.0.1:8000/api/bouteilles/nouvelle", {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(bouteilleCellier)
-      })
-        .then(response => {
-          if (response.status === 200) {
-            modalOverlayAjoutBouteilleNonListe.style.display = "none";
-            modalAjoutBouteilleNonListe.style.display = "none";
-           onBouteilleAjoutCellier(bouteille_id);
-             formRef.current.reset();
-             setValues({
-              nom: '',
-              description: '',
-              format: '',
-              millesime: '',
-              quantite: '',
-              date_achat: '',
-              prix: '',
-              garde_jusqua: '',
-              notes: '',
-            });
-            
-            console.log("Bouteille ajoutée");
-            setIsBouteilleAjoutee(true);
-            return response.json();
-          } else {
-            throw new Error('Erreur');
-          }
-        })
-        .then(response => {
-          console.log(response);
-
-        })
-        .catch(error => {
-          setErreur({ message: "Erreur lors de la requête." });
-          console.error(error);
-        });
-
-    };
-
-    const formElement = formRef.current;
-    if (formElement) {
-      formElement.addEventListener("submit", handleAjouterClick);
-    }
-
-    return () => {
-      if (formElement) {
-        formElement.removeEventListener("submit", handleAjouterClick);
-      }
-    };
-  }, [values]);
-
-  
-  return (
-    <div className="ajouter">
-      <div className="modal-overlay-ajoutBouteilleNonListe">
-        <div className="modal-ajoutBouteilleNonListe">
-          <span className="close-btn-ajoutBouteilleNonListe">&times;</span>
-          <h2>Ajouter une bouteille non listée</h2>
-          <form ref={formRef} className="nouvelleBouteille">
-            <div>
-              <label htmlFor="nom">Nom : * </label>
-              <input name="nom" id="nom" className="nom" placeholder="Nom de la vigne" onChange={(e) => setValues((prevValues) => ({ ...prevValues, nom: e.target.value }))} required />
-              {erreur.nom && <p className="error-message">{erreur.nom}</p>}
-              <label htmlFor="pays">Pays : * </label>
-              <select name="pays" id="pays" required>
-                {paysData.map((pays) => (
-                  <option key={pays.id} value={pays.pays}>
-                    {pays.pays}
-                  </option>
-                ))}
-              </select>
-              <label htmlFor="description">Description : * </label>
-              <input name="description" id="description" className="description" placeholder="au moins quatre lettres" onChange={(e) =>  setValues((prevValues) => ({ ...prevValues, description: e.target.value }))} required  />
-              {erreur.description && <p className="error-message">{erreur.description}</p>}
-              <label htmlFor="format">Format : * </label>
-              <input name="format" id="format" placeholder="volume de vin en 'ml'" onChange={(e) => setValues((prevValues) => ({ ...prevValues, format: e.target.value }))} required />
-              {erreur.format && <p className="error-message">{erreur.format}</p>}
-              <label htmlFor="type">Type : * </label>
-              <select name="type" id="type" required>
-                {typeData.map((type) => (
-                  <option key={type.id} value={type.type}>
-                    {type.type}
-                  </option>
-                ))}
-              </select>
-              <label htmlFor="millesime">Millesime : * </label>
-              <input name="millesime" id="millesime" placeholder="Une année (ex : 2020)" onChange={(e) => setValues((prevValues) => ({ ...prevValues, millesime: e.target.value }))} required />
-              {erreur.millesime && <p className="error-message">{erreur.millesime}</p>}
-              <label htmlFor="quantite">Quantite : * </label>
-              <input name="quantite" id="quantite" placeholder="Veuillez entrer une quantité" onChange={(e) => setValues((prevValues) => ({ ...prevValues, quantite: e.target.value }))} required />
-              {erreur.quantite && <p className="error-message">{erreur.quantite}</p>}
-              <label htmlFor="date_achat">Date achat : *</label>
-              <input name="date_achat" id="date_achat" placeholder="Format : aaaa-mm-jj" onChange={(e) => setValues((prevValues) => ({ ...prevValues, date_achat: e.target.value }))} required />
-              {erreur.date_achat && <p className="error-message">{erreur.date_achat}</p>}
-              <label htmlFor="prix">Prix : * </label>
-              <input name="prix" id="prix" placeholder="Veuillez entrer le prix d'achat" onChange={(e) => setValues((prevValues) => ({ ...prevValues, prix: e.target.value }))} required />
-              {erreur.prix && <p className="error-message">{erreur.prix}</p>}
-              <label htmlFor="garde_jusqua">Garde : * </label>
-              <input name="garde_jusqua" id="garde_jusqua" placeholder="Nombre d'années (ex : 20)" onChange={(e) => setValues((prevValues) => ({ ...prevValues, garde_jusqua: e.target.value }))} required />
-              {erreur.garde_jusqua && <p className="error-message">{erreur.garde_jusqua}</p>}
-              <label htmlFor="notes">Note : * </label>
-              <input name="notes" id="notes" placeholder="Un chiffre de 1 à 5" onChange={(e) => setValues((prevValues) => ({ ...prevValues, notes: e.target.value }))} required />
-              {erreur.notes && <p className="error-message">{erreur.notes}</p>}
-              <small>* Champs obligatoires</small>
-            </div>
-            <button type="submit" name="ajouterBouteilleCellier" className="btn-ajouter" value="Ajouter" >Ajouter</button>
-          </form>
-        </div>
-      </div>
-    </div>
-  );
-  
+  return erreurs;
 };
 
-export default AjoutBouteilleNonListe;
+export default ValidationBouteilleNonListe;
