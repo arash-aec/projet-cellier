@@ -101,10 +101,6 @@ export default function Bouteille(props) {
 
   function supprimerBouteille(idBouteille, idCellier) {
 
-    
-    // const element = reference.current;
-    // const parent = element.parentNode;
-
     fetch(`http://127.0.0.1:8000/api/cellier-bouteilles/${idBouteille}/${idCellier}/supprimer`, {
       method: 'DELETE',
       headers: {

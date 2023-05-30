@@ -8,10 +8,18 @@ use App\Models\Cellier;
 class CellierController extends Controller
 {
     /**
-     * Récupération de tous les celliers
+     * Récupération de tous les celliers d'un usager
      */
-    public function getCelliers($id) { 
-        $celliers = Cellier::where('usager_id', $id)->get();
+    public function getCelliers() { 
+        $celliers = Cellier::get();
+        return response()->json($celliers);
+    }
+
+    /**
+     * Récupération de tous les celliers d'un usager
+     */
+    public function getCelliersUsager($id_usager) { 
+        $celliers = Cellier::where('usager_id', $id_usager)->get();
         return response()->json($celliers);
     }
 
