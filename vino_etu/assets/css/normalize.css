@@ -85,7 +85,8 @@ body {
  * Remove the gray background color from active links in IE 10.
  */
 
-a {
+a,
+Link {
     background: transparent;
 }
 
@@ -93,7 +94,8 @@ a {
  * Address `outline` inconsistency between Chrome and other browsers.
  */
 
-a:focus {
+a:focus,
+Link:focus {
     outline: thin dotted;
 }
 
@@ -102,7 +104,9 @@ a:focus {
  */
 
 a:active,
-a:hover {
+a:hover,
+Link:active,
+Link:hover {
     outline: 0;
 }
 

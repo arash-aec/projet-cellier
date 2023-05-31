@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from "react";
 import { useParams } from "react-router-dom";
 import { Link } from "react-router-dom";
 
-export default function Bouteille(props) {
+export default function BouteilleListe(props) {
 
   const {pays, nom, image, notes, prix_saq, id: idBouteille, quantite: initialQuantite, prix, millesime, garde_jusqua, format, url_saq, type, onBouteilleAjouter, onBouteilleBoire, onBouteilleModifie, onBouteilleSupprime } = props;
 

@@ -22,12 +22,13 @@ const Entete = () => {
 
   // Condition Admin nav
   let role = null;
+  let id = null;
   const usagerData = localStorage.getItem('usagerData');
   if (usagerData) {
     const parsedData = JSON.parse(usagerData);
     role = parsedData.role_usager;
+    id =  parsedData.id_usager;
   }
-
 
   return (
     <>
@@ -45,6 +46,7 @@ const Entete = () => {
                 <li><Link to="/admin">Espace Admin</Link></li>
               )}
               {/* <li><Link to="/">Accueil</Link></li> */}
+              <li><Link to={`/liste-achat/${id}`}>Ma Liste</Link></li>
               <li><Link to="/celliers">Mes Celliers</Link></li>
               <li><Link to="/" onClick={handleLogout}>Déconnexion</Link></li>
             </ul>

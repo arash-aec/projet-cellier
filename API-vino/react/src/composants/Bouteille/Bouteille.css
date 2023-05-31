@@ -11,7 +11,8 @@
 }
 .options {
 	display: flex;
-	justify-content: center;
+	justify-content: space-around;
+	align-items: baseline;
 	flex-wrap: wrap;
 	gap: 5px;
 }
@@ -31,6 +32,8 @@
 }
 .quantite-chiffre {
 	padding: 0 1vh ;
+	font-size: 30px;
+	color: var(--rouge-saq);
 }
 .bouteille,
 .modifier,
@@ -52,7 +55,6 @@
 .options {
 	display: flex;
     gap: 30px;
-    justify-content:center;
 }
 .bouteille-icone__fa {
     font-size: 30px;
@@ -68,4 +70,15 @@
 }
 .quantite-form .quantite-input {
 	width: 80px;
+}
+.lienSAQ {
+	color: var(--black);
+	border: 1px solid var(--black);
+	padding: 0.5em;
+	border-radius: 5px;
+	margin: 1vh 0;
+}
+.lienSAQ:hover {
+	color: var(--rouge-saq);
+	border: 1px solid var(--rouge-saq);
 }
