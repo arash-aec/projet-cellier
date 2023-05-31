@@ -1,14 +1,14 @@
 import React, { useState, useEffect, useRef } from "react";
-import { useParams, useLocation } from "react-router-dom";
 import { useSelector } from 'react-redux';
 import { useNavigate } from "react-router-dom";
 import './ListeAchat.css';
 
-import Bouteille from "../../composants/Bouteille/Bouteille";
+import BouteilleListe from "../../composants/Bouteille/BouteilleListe";
 
 const ListeAchat = () => {
 
   const [miseAJour, setMiseAJour] = useState(false);
+  const [bouteillesListe, setBouteillesListe] = useState([]);
   const [bouteilles, setBouteilles] = useState([]);
   const [rechercheBouteille, setRechercheBouteille] = useState("");
   const [isRechercheVisible, setEstRechercheVisible] = useState(false);
@@ -16,18 +16,27 @@ const ListeAchat = () => {
   const estConnecte = useSelector(state => state.auth.estConnecte);
   const navigate = useNavigate();
 
-  // Récupération de l'id du cellier
-  const {id} = useParams();
-
   // Bouton ajouter 
   const reference = useRef(null);
+
+  // Récupération de l'id de l'usager
+  let id_usager = null;
+  const usagerData = localStorage.getItem('usagerData');
+  if (usagerData) {
+    const parsedData = JSON.parse(usagerData);
+    id_usager = parsedData.id_usager;
+  }
 
   useEffect(() => {
     getBouteilles();
   }, [miseAJour]);
 
+  useEffect(() => {
+    getDetailsBouteilles(bouteillesListe);
+  }, [bouteillesListe]);
+
   function getBouteilles() {
-    fetch("http://127.0.0.1:8000/api/liste-achat/" + id, {
+    fetch("http://127.0.0.1:8000/api/liste-achat/" + id_usager, {
       mode: 'cors',
       headers: {
         "Access-Control-Allow-Origin": "http://localhost:5173"
@@ -40,58 +49,46 @@ const ListeAchat = () => {
         return response.json();
       })
       .then((data) => {
-        getDetailsBouteilles(data);
+        setBouteillesListe(data)
       })
       .catch((error) => {
         console.error(error);
       });
   }
 
-  function getDetailsBouteilles(data) {
-    // Tableau pour stocker les promesses fetch
-    const nouvellesBouteilles = [];
-  
-    // Parcourir chaque élément dans data
-    data.forEach((item) => {
-      // Effectuer une requête fetch pour chaque bouteille_id
-      const fetchPromise = fetch(`http://127.0.0.1:8000/api/bouteilles/${item.bouteille_id}`)
-      .then((response) => {
-        if (!response.ok) {
-          throw new Error('Erreur de requête: ' + response.status);
-        }
-        return response.json();
-      })
-      .then((bouteilleData) => {
-        console.log(bouteilleData)
-      })
-      .catch((error) => {
-        console.error(error);
-      });
-  
-      // Ajouter la promesse fetch au tableau
-      nouvellesBouteilles.push(fetchPromise);
-    });
+  function getDetailsBouteilles(data) {  
+    // Parcourir chaque élément dans data et effectuer une requête fetch pour chaque bouteille_id
+    const fetchPromises = data.map((item) =>
+      fetch(`http://127.0.0.1:8000/api/bouteille/${item.bouteille_id}`)
+        .then((response) => {
+          if (!response.ok) {
+            throw new Error('Erreur de requête: ' + response.status);
+          }
+          return response.json();
+        })
+        .catch((error) => {
+          console.error(error);
+        })
+    );
   
     // Attendre que toutes les requêtes fetch se terminent
-    Promise.all(nouvellesBouteilles)
-    .then(() => {
-      setBouteilles(nouvellesBouteilles);
-    });
+    Promise.all(fetchPromises)
+      .then((nouvellesBouteilles) => {
+        const bouteillesAvecQuantite = nouvellesBouteilles.map((bouteille, index) => {
+          if (bouteillesListe.length > index && bouteillesListe[index].hasOwnProperty('quantite')) {
+            return {
+              ...bouteille,
+              // Ajouter la quantité correspondante de la liste d'achat
+              quantite: bouteillesListe[index].quantite 
+            };
+          } else {
+            return bouteille;
+          }
+        });
+        setBouteilles(bouteillesAvecQuantite);
+      });
   }
 
-  const ajouteQuantiteBouteille = (index) => {
-    setBouteilles(bouteilles.filter((_, idx) => idx !== index));
-    setMiseAJour(true);
-  };
-  
-  const boireBouteille = (index) => {
-    setBouteilles(bouteilles.filter((_, idx) => idx !== index));
-    setMiseAJour(true);
-  };
-  const modifierQuantiteBouteille = (index) => {
-    setBouteilles(bouteilles.filter((_, idx) => idx !== index));
-    setMiseAJour(true);
-  };
   const supprimeBouteille = (index) => {
     setBouteilles(bouteilles.filter((_, idx) => idx !== index));
     setMiseAJour(true);
@@ -163,16 +160,12 @@ const ListeAchat = () => {
       rechercheInput.focus();
     }
   };
-  
+
   const htmlBouteille = bouteilles.map((uneBouteille) => (
-    <Bouteille
+    <BouteilleListe
      key={uneBouteille.id} 
-     uneBouteille={uneBouteille} 
-     idCellier={id} 
      {...uneBouteille} 
-     onBouteilleAjouter={ajouteQuantiteBouteille} 
-     onBouteilleBoire={boireBouteille}
-     onBouteilleModifie={modifierQuantiteBouteille}
+     id_usager={id_usager}
      onBouteilleSupprime={supprimeBouteille} />
   ));
 

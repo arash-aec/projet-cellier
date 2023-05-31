@@ -28,8 +28,8 @@ export default function Bouteille(props) {
       const btnBoire = target.closest('[data-js-boire]');
       const btnModifier = target.closest('[data-js-modifier]');
       const btnSupprimer = target.closest('[data-js-supprimer]'); 
-      const btnAjouteListe = target.closest('[data-js-ajouterListe]'); 
-      const btnModifierBouteille = target.closest('[data-js-modifierBouteille]'); 
+      const btnAjouteListe = target.closest('[data-js-ajouterliste]'); 
+      const btnModifierBouteille = target.closest('[data-js-modifierbouteille]'); 
 
       const idBouteille = target.getAttribute('data-id');
       if (btnAjouter) {
@@ -146,6 +146,9 @@ export default function Bouteille(props) {
       headers: {
         'Content-Type': 'application/json',
       },
+      body: JSON.stringify({
+        quantite: 1,
+      }),
     })
       .then((response) => response.json())
       .then((data) => {
@@ -194,9 +197,9 @@ export default function Bouteille(props) {
           </div>   
         </div>
         <div className="options">
-          <i className="btnModifier bouteille-icone__fa fa fa-edit" data-js-modifierBouteille data-id={idBouteille}><p><small>Modifier</small></p></i>
+          <i className="btnModifier bouteille-icone__fa fa fa-edit" data-js-modifierbouteille data-id={idBouteille}><p><small>Modifier</small></p></i>
           <i className="btnSupprimer bouteille-icone__fa fa fa-trash" data-js-supprimer data-id={idBouteille}><p><small>Supprimer</small></p></i>
-          <i className="btnAjouterListe bouteille-icone__fa fa fa-shopping-cart" data-js-ajouterListe data-id={idBouteille}><p><small>Liste Achat</small></p></i>
+          <i className="btnAjouterListe bouteille-icone__fa fa fa-shopping-cart" data-js-ajouterliste data-id={idBouteille}><p><small>Liste Achat</small></p></i>
         </div>
       </div>
     </div>

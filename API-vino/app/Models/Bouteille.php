@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 use App\Models\Type;
 use App\Models\Pays;
 use App\Models\CellierBouteilles;
+use App\Models\ListeAchat;
 
 
 class Bouteille extends Model
@@ -43,5 +44,10 @@ class Bouteille extends Model
     public function celliers()
     {
         return $this->hasMany(CellierBouteilles::class, 'bouteille_id')->with('cellier');
+    }
+
+    public function listeAchats()
+    {
+        return $this->hasMany(ListeAchat::class, 'bouteille_id');
     }
 }

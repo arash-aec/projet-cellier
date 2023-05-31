@@ -2,7 +2,7 @@
 .header {
     display: flex;
     justify-content: space-between;
-    align-items: baseline;
+    align-items: center;
     background-color: var(--black);
     box-shadow: 1px 1px 5px 0px var(--gray);
     /* position: sticky; */
@@ -51,6 +51,7 @@
     padding: 20px 10px;
     border: 1px solid var(--white);
     margin: auto 0;
+    order: 3;
 }
 
 .hamb-line {
