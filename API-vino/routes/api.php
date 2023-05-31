@@ -8,6 +8,7 @@ use GuzzleHttp\Middleware;
 use App\Http\Controllers\BouteilleController;
 use App\Http\Controllers\CellierController;
 use App\Http\Controllers\CellierBouteillesController;
+use App\Http\Controllers\ListeAchatController;
 use App\Http\Controllers\UsagerController;
 use App\Http\Controllers\SAQController;
 
@@ -68,6 +69,17 @@ Route::delete('/bouteille/{id}', [BouteilleController::class, 'effacerBouteille'
 Route::post('/bouteilles/autocompleteBouteille', [BouteilleController::class, 'autocompleteBouteille']);
 
 
+// ------------------------------------------ Liste_achat
+// Récupération de la liste d'achat d'un usager
+Route::get('/liste-achat/{id_usager}', [ListeAchatController::class, 'getListeAchatUsager']);
+
+// Ajout d'une bouteille dans liste d'achat
+Route::post('/liste-achat/{id_bouteille}/{id_usager}', [ListeAchatController::class, 'getListeAchatAjout']);
+
+// Supprimer une bouteille de la liste d'achat
+Route::delete('/liste-achat/{id_bouteille}/{id_usager}/supprimer', [ListeAchatController::class, 'supprimerBouteilleListeAchat']);
+
+
 // ------------------------------------------ Cellier_bouteilles
 // Récupération de tous les cellier_bouteilles
 Route::get('/cellier-bouteilles', [CellierBouteillesController::class, 'getcellierBouteilles']);
@@ -111,6 +123,8 @@ Route::delete('/usager/{id}', [UsagerController::class, 'supprimerUsager']);
 // Ajout de bouteille non liste
 Route::post('bouteilles/nouvelle', [BouteilleController::class, 'ajouterNouvelleBouteille']);
 
+
+
 // ------------------------------------------ Authentification
 // Inscription
 Route::post('/registration', [App\Http\Controllers\AuthController::class, 'register']);
@@ -121,6 +135,8 @@ Route::group(['middleware'=> ['auth:sanctum']], function() {
     Route::post('/profile', [App\Http\Controllers\AuthController::class, 'profile']);
     Route::post('/logout', [App\Http\Controllers\AuthController::class, 'logout']);
 });
+
+
 
 // ------------------------------------------ SAQ
 // Importation des bouteilles de la SAQ
