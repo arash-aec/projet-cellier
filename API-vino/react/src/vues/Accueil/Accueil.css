@@ -14,18 +14,21 @@
 	position: absolute;
 	object-fit: cover;
 }
-
 .header-image>div {
 	position: relative;
 	display: flex;
 	flex-direction: column;
 	align-items: center;
 	justify-content: center;
-	gap: 4vh;
+	gap: 2vh;
 	padding: 4vh;
 	background: linear-gradient(to right, var(--black), transparent);
-	height: 60vh;
+	height: 50vh;
 	width: 100%;
+}
+.header-image-accueil,
+.header-image-accueil-content {
+	min-height: 60vh;
 }
 .header-image h1 {
 	font-size: 60px; 
@@ -48,7 +51,7 @@
 .presentation {
 	display: flex;
 	flex-direction: column;
-	margin: 6vh 0; 
+	margin: clamp(2vh, 2vh, 6vh) 0; 
 }
 .presentation img{
 	max-height: 380px;
@@ -96,6 +99,8 @@
 	}
 	.header-image>div {
 		max-width: 50%;
+		height: 60vh;
+		gap: 4vh;
 	}
 	.presentation {
 	  flex-direction: row;

@@ -1,17 +1,29 @@
-.admin,
-.statistique {
-  padding: 4vh;
+.admin {
+  padding: 2vh 0;
 }
 .admin h1 {
   text-align: center;
+  padding: 4vh 0;
 }
-.admin-entete {
+.liste-admin,
+.statistique-contenu {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 30px;
+  padding: 4vh;
+  background-color: var(--gray);
+  margin-bottom: 6vh;
+}
+.admin-entete,
+.statistique-contenu>div {
   display: flex;
   flex-direction: column;
   gap: 40px;
   justify-content: center;
   align-items: center;
   padding: 4vh 0;
+  background-color: var(--white);
+  border-radius: 5px;
 }
 .success {
   text-align: center;
@@ -20,15 +32,12 @@
 .statistique-contenu {
   display: flex;
   flex-direction: column;
-  gap: 30px;
 }
 .statistique-contenu>div {
-  min-width: 30ch;
+  text-align: center;
+  padding: 2vh;
 }
 @media (min-width: 768px) {
-	.admin-entete {
-    flex-direction: row;
-  }
   .statistique-contenu {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));

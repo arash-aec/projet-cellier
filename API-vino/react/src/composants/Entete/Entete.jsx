@@ -46,7 +46,7 @@ const Entete = () => {
                 <li><Link to="/admin">Espace Admin</Link></li>
               )}
               {/* <li><Link to="/">Accueil</Link></li> */}
-              <li><Link to={`/liste-achat/${id}`}>Ma Liste</Link></li>
+              <li><Link to="/liste-achat">Ma Liste</Link></li>
               <li><Link to="/celliers">Mes Celliers</Link></li>
               <li><Link to="/" onClick={handleLogout}>Déconnexion</Link></li>
             </ul>

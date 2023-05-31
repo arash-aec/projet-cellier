@@ -108,16 +108,19 @@ const Admin = () => {
       {estConnecte && role === 2 ? (
         <div className="admin" ref={reference}>
           <h1>Espace Admin</h1>
-          <div className="admin-entete">
-            <h2>Voir les statistiques du site</h2>
-            <Link to="/admin/statistique" className="bouton button-black">Voir les statistiques</Link>
+          <div className="liste-admin">
+            <div className="admin-entete">
+              <h2>Voir les statistiques du site</h2>
+              <Link to="/admin/statistique" className="bouton button-black">Voir les statistiques</Link>
+            </div>
+            <div className="admin-entete">
+              <h2>Modifier une bouteille du catalogue</h2>
+              <button id="open-modal-modifier-bouteille" className="bouton button-rouge" data-js-modifier-bouteille>Modifier une bouteille</button>
+            </div>
+            <div className="admin-entete">
+              <ImportationSAQ />
+            </div>
           </div>
-          <div className="admin-entete">
-            <h2>Modifier une bouteille du catalogue</h2>
-            <button id="open-modal-modifier-bouteille" className="bouton button-rouge" data-js-modifier-bouteille>Modifier une bouteille</button>
-            <ModifieBouteilleSAQ />
-          </div>
-          <ImportationSAQ />
           <div className="tableUsagers">
             <h2>Gestion Usagers</h2>
             <table >
@@ -168,6 +171,7 @@ const Admin = () => {
             )}
             <button onClick={() => handleAjouterUsager()} className="boutonAjouter">Ajouter Usager</button>
           </div>
+          <ModifieBouteilleSAQ />
         </div>
         ) : (
           navigate("/")

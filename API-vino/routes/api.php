@@ -76,6 +76,15 @@ Route::get('/liste-achat/{id_usager}', [ListeAchatController::class, 'getListeAc
 // Ajout d'une bouteille dans liste d'achat
 Route::post('/liste-achat/{id_bouteille}/{id_usager}', [ListeAchatController::class, 'getListeAchatAjout']);
 
+// Ajouter quantite a la bouteille liste
+Route::post('/liste-achat/{id_bouteille}/{id_usager}/ajouter', [ListeAchatController::class, 'ajouterBouteilleListeAchat']);
+
+// Retirer quantite a la bouteille liste
+Route::post('/liste-achat/{id_bouteille}/{id_usager}/boire', [ListeAchatController::class, 'retirerBouteilleListeAchat']);
+
+// Modification quantite a la bouteille liste
+Route::put('/liste-achat/{id_bouteille}/{id_usager}/modifier', [ListeAchatController::class, 'modifierBouteilleListeAchat']);
+
 // Supprimer une bouteille de la liste d'achat
 Route::delete('/liste-achat/{id_bouteille}/{id_usager}/supprimer', [ListeAchatController::class, 'supprimerBouteilleListeAchat']);
 

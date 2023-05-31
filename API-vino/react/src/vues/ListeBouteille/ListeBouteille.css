@@ -6,7 +6,7 @@
 	padding: 4vh;
 	display: flex;
 	flex-direction: column;
-	gap: 40px;
+	gap: clamp(18px, 2.5vh, 40px);
 }
 .cellier-titre {
 	color: #36383F;
@@ -15,6 +15,7 @@
 }
 .cellier-boutons {
 	display: flex;
+	flex-direction: column;
 	justify-content: center;
 	gap: 30px;
 	padding: 2vh;
@@ -27,15 +28,14 @@
 }
 .liste-bouteille {
 	display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
     gap: 30px;
 	background-color: #36383F;
 	padding: 4vh;
 }
 .filtre {
 	display: flex;
-	justify-content: space-between;
-	align-items: baseline;
+	flex-direction: column;
 }
 select {
 	background-color: #f9f9f9;
@@ -61,5 +61,13 @@ select {
 	}
 	.bouteille {
 		max-width: 380px;
+	}
+	.filtre {
+		flex-direction: row;
+		justify-content: space-between;
+		align-items: baseline;
+	}
+	.cellier-boutons {
+		flex-direction: row;
 	}
 }

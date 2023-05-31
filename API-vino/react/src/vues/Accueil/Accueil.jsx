@@ -52,9 +52,9 @@ const Accueil = () => {
 
   return (
     <div ref={reference}>
-      <div className="header-image">
+      <div className="header-image header-image-accueil">
         <img src="../public/images/Beautiful-white-wine-in-wine-glass.jpg" alt="image-vin" />
-        <div>
+        <div className="header-image-accueil-content">
           <h1>Vino</h1>
           <p><strong>La meilleure application de gestion de cellier !</strong></p>
           <div className="header-image-btn">

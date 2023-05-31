@@ -7,6 +7,8 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 
+use App\Models\ListeAchat;
+
 class Usager extends Authenticatable
 {
     use HasApiTokens, HasFactory, Notifiable;
@@ -34,4 +36,9 @@ class Usager extends Authenticatable
         'mot_de_passe',
         'remember_token',
     ];
+
+    public function listeAchats()
+    {
+        return $this->hasMany(ListeAchat::class, 'usager_id');
+    }
 }

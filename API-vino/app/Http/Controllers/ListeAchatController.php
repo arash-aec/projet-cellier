@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\ListeAchat;
 
+use Illuminate\Support\Facades\DB;
+
 class ListeAchatController extends Controller
 {
     /**
@@ -32,15 +34,79 @@ class ListeAchatController extends Controller
     }
 
     /**
+     * Ajouter une bouteille à la quantité Cellier_bouteilles
+     */
+    public function ajouterBouteilleListeAchat($bouteille_id, $id_usager, Request $request) {
+        $listeAchat = DB::table('vino__liste_achat')
+            ->where('bouteille_id', $bouteille_id)
+            ->where('usager_id', $id_usager)
+            ->increment('quantite');
+
+        if ($listeAchat) {
+            return response()->json(['message' => 'Quantité augmentée avec succès']);
+        } else {
+            // Gérer le cas où l'enregistrement n'est pas trouvé
+            return response()->json(['message' => 'Enregistrement non trouvé']);
+        }
+    }
+
+    /**
+     * Retirer une bouteille à la quantité Cellier_bouteilles
+     */
+    public function retirerBouteilleListeAchat($bouteille_id, $id_usager, Request $request) {
+        $listeAchat = DB::table('vino__liste_achat')
+            ->where('bouteille_id', $bouteille_id)
+            ->where('usager_id', $id_usager)
+            ->first();
+    
+        if ($listeAchat) {
+            $quantite = $listeAchat->quantite - 1;
+    
+            if ($quantite <= 0) {
+                DB::table('vino__liste_achat')
+                    ->where('bouteille_id', $bouteille_id)
+                    ->where('usager_id', $id_usager)
+                    ->delete();
+            } else {
+                DB::table('vino__liste_achat')
+                    ->where('bouteille_id', $bouteille_id)
+                    ->where('usager_id', $id_usager)
+                    ->update(['quantite' => $quantite]);
+            }
+    
+            return response()->json(['message' => 'Quantité diminuée avec succès']);
+        } else {
+            return response()->json(['error' => 'Cellier bouteille non trouvé'], 404);
+        }
+    }
+
+    /**
+     * Modification de la Quantite
+     */
+    public function modifierBouteilleListeAchat($bouteille_id, $id_usager, Request $request) {
+        $quantite = $request->input('quantite');
+
+        DB::table('vino__liste_achat')
+            ->where('bouteille_id', $bouteille_id)
+            ->where('usager_id', $id_usager)
+            ->update(['quantite' => $quantite]);
+
+        $listeAchat = DB::table('vino__liste_achat')
+            ->where('bouteille_id', $bouteille_id)
+            ->where('usager_id', $id_usager)
+            ->first();
+
+        return response()->json($listeAchat);
+    }
+
+    /**
      * Ajoute une bouteille à la liste d'achat
      */
-    public function supprimerBouteilleListeAchat($id_bouteille, $id_usager) {
-        $id_bouteille = intval($id_bouteille);
-        $id_usager = intval($id_usager);
-        $bouteille = ListeAchat::where('usager_id', $id_usager)
-                                ->where('bouteille_id', $id_bouteille)
-                                ->firstOrFail();
-        $bouteille->delete();
+    public function supprimerBouteilleListeAchat($bouteille_id, $id_usager) {
+        DB::table('vino__liste_achat')
+            ->where('bouteille_id', $bouteille_id)
+            ->where('usager_id', $id_usager)
+            ->delete();
         return response()->json(['message' => 'Bouteille supprimée avec succès']);
     }
 }
