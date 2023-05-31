@@ -139,7 +139,7 @@ const AjouterUsager = () => {
             <p className="error-message">{erreur.role}</p>
           </div>
 
-            <Input type="submit" value="Enregistrer" />
+            <button className='buttonEnregistrer' type="submit" value="Enregistrer">Enregistrer</button>
           </form>
         </>
     )
