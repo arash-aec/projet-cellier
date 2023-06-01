@@ -1,15 +1,17 @@
 import React, { useEffect, useRef, useState } from "react";
 import { useParams } from "react-router-dom";
 import { Link } from "react-router-dom";
+import ModifieBouteille from "../../vues/Formulaire/ModifieBouteille";
 import SupprimModal from "../SupprimModal/SupprimModal"
 
 export default function Bouteille(props) {
 
-  const {pays, nom, image, notes, prix_saq, id: idBouteille, quantite: initialQuantite, prix, millesime, garde_jusqua, format, url_saq, type, onBouteilleAjouter, onBouteilleBoire, onBouteilleModifie, onBouteilleSupprime } = props;
+  const {pays, nom, image, notes, prix_saq, id: idBouteille, quantite: initialQuantite, prix, millesime, garde_jusqua, format, url_saq, type, onBouteilleAjouter, onBouteilleBoire, onBouteilleModifieQuantite, onBouteilleModifier, onBouteilleSupprime } = props;
 
   const reference = useRef(null);
   const {id : idCellier} = useParams();
   const [bouteilleVisible, setBouteilleVisible] = useState(true);
+  const [values, setValues] = useState({});
   const [showDeleteModal, setShowDeleteModal] = useState(false);
 
   useEffect(() => {
@@ -30,8 +32,8 @@ export default function Bouteille(props) {
       const btnBoire = target.closest('[data-js-boire]');
       const btnModifier = target.closest('[data-js-modifier]');
       const btnSupprimer = target.closest('[data-js-supprimer]'); 
-      const btnAjouteListe = target.closest('[data-js-ajouterliste]'); 
-      const btnModifierBouteille = target.closest('[data-js-modifierbouteille]'); 
+      const btnAjouteListe = target.closest('[data-js-ajouter-liste]'); 
+      const btnModifierBouteille = target.closest('[data-js-modifier-bouteille]'); 
 
       const idBouteille = target.getAttribute('data-id');
       if (btnAjouter) {
@@ -47,6 +49,8 @@ export default function Bouteille(props) {
           setShowDeleteModal(true); 
       } else if (btnAjouteListe) {
         ajouterBouteilleListe(idBouteille)
+      } else if (btnModifierBouteille) {
+        modifierBouteille(idBouteille, idCellier)
       }
   }
 
@@ -82,9 +86,6 @@ export default function Bouteille(props) {
     const quantite = document.querySelector(`.bouteille-item[data-id="${idBouteille}"] .quantite`);
     const formQuantite = document.querySelector(`.bouteille-item[data-id="${idBouteille}"] .quantite-form`);
     const btnValiderQuantite = document.querySelector(`.bouteille-item[data-id="${idBouteille}"] [data-js-valider]`);
-    
-    quantite.style.display = "none";
-    formQuantite.style.display = "flex";
 
     btnValiderQuantite.addEventListener('click', ()=>{ 
       const nouvelleQuantiteInput = reference.current.querySelector('input[name="quantite"]');
@@ -101,12 +102,32 @@ export default function Bouteille(props) {
       })
         .then((response) => response.json())
         .then((data) => {
-          onBouteilleModifie(idBouteille);
-        })
-        quantite.style.display = "block";
-        formQuantite.style.display = "none"; 
+          onBouteilleModifieQuantite(idBouteille);
+        }) 
     });
   }
+
+  function modifierBouteille(idBouteille, idCellier) {
+    fetchData(idBouteille, idCellier);
+  } 
+
+  const fetchData = async (idBouteille, idCellier) => {
+    try {
+      const response = await fetch(`http://127.0.0.1:8000/api/cellier-bouteille/${idBouteille}/${idCellier}`);
+      const data = await response.json();
+      setValues(data);
+      const modalOverlayModifieBouteille = document.querySelector(".modal-overlay-modifieBouteille");
+      const modalModifieBouteille = document.querySelector(".modal-modifieBouteille");
+      const closeBtnModifieBouteille = document.querySelector(".close-btn-modifieBouteille");
+  
+      modalOverlayModifieBouteille.style.display = "block";
+      modalModifieBouteille.style.display = "block";
+
+      onBouteilleModifier(idBouteille);
+    } catch (error) {
+      console.error(error);
+    }
+  }; 
 
   function supprimerBouteille(idBouteille, idCellier) {
     setShowDeleteModal(true);
@@ -121,7 +142,6 @@ export default function Bouteille(props) {
         if (response.ok) {
           //Bouteille supprimée avec succès, supprimez-la de l'interface utilisateur
           setBouteilleVisible(false);
-          onBouteilleSupprime(idBouteille);
           console.log('Bouteille deleted successfully');
         } else {
           // Gérer l'erreur réseau
@@ -160,7 +180,6 @@ export default function Bouteille(props) {
       .then((data) => {
         console.log(data)
       });
-
   }
 
   function handleModalClose() {
@@ -194,30 +213,26 @@ export default function Bouteille(props) {
               <p className="prix">Prix SAQ : {prix_saq} $</p>
             </div>
           </div>
-          <p>
-            <Link className="lienSAQ" to={url_saq}>Voir sur le site de la SAQ</Link>
-          </p>
+          <Link className="lienSAQ" to={url_saq}>Voir sur le site de la SAQ</Link>
           <div className="options">
-            <div>
             <p className="quantite">Quantité : <strong className="quantite-chiffre">{initialQuantite}</strong></p>
+            <div>
               <form action="" className="quantite-form">
                   <input type="number" name="quantite" className="quantite-input" placeholder={initialQuantite} min="0" />
-                  <i className="bouteille-icone__fa fa fa-check" data-js-valider><p><small>Valider</small></p></i>
+                  <i className="bouteille-icone__fa fa fa-check" data-js-modifier data-id={idBouteille} data-js-valider><p><small>Valider</small></p></i>
               </form>
             </div>
-            <div className="options">
-              <i className="btnAjouter bouteille-icone__fa fa fa-plus" data-js-ajouter data-id={idBouteille}><p><small>Ajouter</small></p></i>
-              <i className="btnBoire bouteille-icone__fa fa fa-minus" data-js-boire data-id={idBouteille}><p><small>Boire</small></p></i>
-              <i className="btnModifier bouteille-icone__fa fa fa-edit" data-js-modifier data-id={idBouteille}><p><small>Modifier</small></p></i>
-            </div>   
-          </div>
+            <i className="btnAjouter bouteille-icone__fa fa fa-plus" data-js-ajouter data-id={idBouteille}><p><small>Ajouter</small></p></i>
+            <i className="btnBoire bouteille-icone__fa fa fa-minus" data-js-boire data-id={idBouteille}><p><small>Boire</small></p></i>
+          </div>   
           <div className="options">
-            <i className="btnModifier bouteille-icone__fa fa fa-edit" data-js-modifierbouteille data-id={idBouteille}><p><small>Modifier</small></p></i>
+            <i className="btnModifier bouteille-icone__fa fa fa-edit" data-js-modifier-bouteille data-id={idBouteille}><p><small>Modifier</small></p></i>
             <i className="btnSupprimer bouteille-icone__fa fa fa-trash" data-js-supprimer data-id={idBouteille}><p><small>Supprimer</small></p></i>
-            <i className="btnAjouterListe bouteille-icone__fa fa fa-shopping-cart" data-js-ajouterliste data-id={idBouteille}><p><small>Liste Achat</small></p></i>
+            <i className="btnAjouterListe bouteille-icone__fa fa fa-shopping-cart" data-js-ajouter-liste data-id={idBouteille}><p><small>Liste Achat</small></p></i>
           </div>
+          </div>
+          <ModifieBouteille detailsBouteille={values} onBouteilleModifier={onBouteilleModifier} />
         </div>
-      </div>
         {showDeleteModal && (
       <SupprimModal
       showModal={showDeleteModal}
@@ -228,3 +243,4 @@ export default function Bouteille(props) {
     </div>
   )
 }
+

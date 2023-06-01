@@ -30,7 +30,7 @@
 	display: grid;
     grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
     gap: 30px;
-	background-color: #36383F;
+	background-color: var(--gray);
 	padding: 4vh;
 }
 .filtre {

@@ -93,6 +93,9 @@ Route::delete('/liste-achat/{id_bouteille}/{id_usager}/supprimer', [ListeAchatCo
 // Récupération de tous les cellier_bouteilles
 Route::get('/cellier-bouteilles', [CellierBouteillesController::class, 'getcellierBouteilles']);
 
+// Récupérer une bouteille d'un cellier avec son id
+Route::get('/cellier-bouteille/{bouteille_id}/{cellier_id}', [CellierBouteillesController::class, 'getCellierBouteille']);
+
 // Récupérer les bouteilles d'un cellier avec son id
 Route::get('/cellier-bouteilles/{id}', [CellierBouteillesController::class, 'getCellierBouteillesId']);
 
@@ -104,6 +107,9 @@ Route::post('/cellier-bouteilles/{bouteille_id}/{cellier_id}/boire', [CellierBou
 
 // Modification de la Quantite
 Route::put('/cellier-bouteilles/{bouteille_id}/{cellier_id}/modifier', [CellierBouteillesController::class, 'modifierBouteilleQuantite']);
+
+// Modification d'une bouteille du cellier'
+Route::put('/cellier-bouteilles/{bouteille_id}/{cellier_id}', [CellierBouteillesController::class, 'modifierBouteilleCellier']);
 
 // Ajouter une bouteille dans cellier
 Route::post('/cellier-bouteilles/ajoutBouteilleCellier', [CellierBouteillesController::class, 'ajouterBouteilleCellier']);

@@ -104,6 +104,11 @@ const ListeBouteille = () => {
     // setAjoutBouteille(true);
     setMiseAJour(true);
   };
+  const bouteilleModifierCellier = (index) => {
+    setBouteilles((bouteilles) => [...bouteilles.filter((_, idx) => idx !== index)]);
+    // setAjoutBouteille(true);
+    setMiseAJour(true);
+  };
 
   //trier par nom A à Z
   const sortBouteillesParNomAaZ = (e) => {
@@ -182,8 +187,10 @@ const ListeBouteille = () => {
      {...uneBouteille} 
      onBouteilleAjouter={ajouteQuantiteBouteille} 
      onBouteilleBoire={boireBouteille}
-     onBouteilleModifie={modifierQuantiteBouteille}
-     onBouteilleSupprime={supprimeBouteille} />
+     onBouteilleModifieQuantite={modifierQuantiteBouteille}
+     onBouteilleSupprime={supprimeBouteille}
+     onBouteilleModifier={bouteilleModifierCellier}
+     />
   ));
 
   return (

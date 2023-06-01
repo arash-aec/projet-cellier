@@ -110,7 +110,7 @@ const Admin = () => {
           <h1>Espace Admin</h1>
           <div className="liste-admin">
             <div className="admin-entete">
-              <h2>Voir les statistiques du site</h2>
+              <h2>Voir les statistiques du site et des utilisateurs</h2>
               <Link to="/admin/statistique" className="bouton button-black">Voir les statistiques</Link>
             </div>
             <div className="admin-entete">

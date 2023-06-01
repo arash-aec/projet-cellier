@@ -9,7 +9,6 @@
 .nouvelleBouteille {
 	margin-bottom: 4vh;
 	max-height: calc(100vh - 120px); /* Adjust the value (120px) based on your specific needs */
- 
 }
 .nouvelleBouteille div,
 .listeAutoComplete {

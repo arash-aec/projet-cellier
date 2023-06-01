@@ -1,7 +1,8 @@
 .admin {
   padding: 2vh 0;
 }
-.admin h1 {
+.admin h1,
+.statistique h1 {
   text-align: center;
   padding: 4vh 0;
 }
@@ -19,11 +20,16 @@
   display: flex;
   flex-direction: column;
   gap: 40px;
-  justify-content: center;
+  justify-content: space-around;
   align-items: center;
   padding: 4vh 0;
   background-color: var(--white);
   border-radius: 5px;
+  box-shadow: 0px 0px 3px #fff;
+}
+.statistique-contenu>div {
+  justify-content: flex-start;
+  gap: 20px;
 }
 .success {
   text-align: center;

@@ -9,6 +9,9 @@
 	justify-content: space-between;
 	text-align: left;
 }
+.details-bouteille {
+	margin-bottom: 4vh;
+}
 .options {
 	display: flex;
 	justify-content: space-around;
@@ -41,8 +44,7 @@
 	background-color: #f9f9f9;
 	padding: 2vh;
 	border-radius: 5px;
-	box-shadow: 0px 0px 5px #fff;
-
+	box-shadow: 0px 0px 3px #fff;
 	display: flex;
 	flex-direction: column;
 	justify-content: space-around;
@@ -50,33 +52,29 @@
 }
 .details-bouteille,
 .options {
-	margin: 2vh 0;
+	margin-top: 4vh;
 }
 .options {
 	display: flex;
-    gap: 30px;
+	align-items: center;
 }
 .bouteille-icone__fa {
     font-size: 30px;
     cursor: pointer;
 }
-.quantite {
-    display: block;
-} 
 .quantite-form {
-    display: none;
-    align-items: baseline;
+    display: flex;
+    align-items: center;
     gap : 2vh
 }
 .quantite-form .quantite-input {
-	width: 80px;
+	width: 55px;
 }
 .lienSAQ {
 	color: var(--black);
 	border: 1px solid var(--black);
 	padding: 0.5em;
 	border-radius: 5px;
-	margin: 1vh 0;
 }
 .lienSAQ:hover {
 	color: var(--rouge-saq);
