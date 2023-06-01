@@ -11,6 +11,7 @@ const ModifieUsager = () => {
   const [role, setRole] = useState("");
   const [errors, setErrors] = useState({});
   const { id } = useParams();
+  const [modifieSuccessModal, setModifieSuccessModal] = useState(false);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -60,7 +61,7 @@ const ModifieUsager = () => {
       })
         .then((response) => response.json())
         .then((data) => {
-          navigate("/admin", { replace: true })
+          setModifieSuccessModal(true);
         })
         .catch((error) => {
           console.error("Error updating user details:", error);
@@ -112,6 +113,17 @@ const ModifieUsager = () => {
         </div>
         <button className="buttonEnregistrer" type="submit">Enregistrer</button>
       </form>
+      {modifieSuccessModal && (
+        <div className="modal">
+          <div className="modal-content">
+            <p>Succès!</p>
+            <strong>Compte Modifié avec succès!</strong>
+            <div className="modal-buttons">
+              <button onClick={() => { setModifieSuccessModal(false); navigate("/admin", { replace: true }) }}>OK</button>
+            </div>
+          </div>
+        </div>
+      )}
     </>
   );
 

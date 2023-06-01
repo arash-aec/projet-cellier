@@ -11,6 +11,7 @@ const AjouterUsager = () => {
     const formRef = useRef(null);
     const navigate = useNavigate();
     const [erreur, setErreur] = useState({});
+    const [ajouteSuccessModal, setAjouteSuccessModal] = useState(false);
     const [values, setValues] = useState({
       nom: '',
       prenom: '',
@@ -74,7 +75,7 @@ const AjouterUsager = () => {
                 mot_de_passe_confirmation: '',
                 role: '1',
               });
-              navigate("/admin", { replace: true })
+              setAjouteSuccessModal(true);
 
           } else {
             throw new Error("Une erreur s'est produite lors de la création de l'usager.");
@@ -141,6 +142,17 @@ const AjouterUsager = () => {
 
             <button className='buttonEnregistrer' type="submit" value="Enregistrer">Enregistrer</button>
           </form>
+          {ajouteSuccessModal && (
+        <div className="modal">
+          <div className="modal-content">
+            <p>Succès</p>
+            <strong>Compte ajouté avec succès!</strong>
+            <div className="modal-buttons">
+              <button onClick={() => { setAjouteSuccessModal(false); navigate("/admin"); }}>OK</button>
+            </div>
+          </div>
+        </div>
+      )}
         </>
     )
 }
