@@ -1,0 +1,12 @@
+.modal-actions button {
+    margin: 10px;
+  }
+  
+  .btn-supprimer{
+    color: white;
+    background-color: #7c0c44d3;
+  }
+  
+  .modal{
+    z-index: 10;
+  }

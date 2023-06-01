@@ -4,7 +4,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { deconnexion } from '../../global/authentification/authAction.jsx';
 import { useNavigate } from "react-router-dom";
 
-const Entete = () => { 
+const Entete = (props) => { 
   
   const estConnecte = useSelector(state => state.auth.estConnecte);
 
@@ -48,6 +48,7 @@ const Entete = () => {
               {/* <li><Link to="/">Accueil</Link></li> */}
               <li><Link to="/liste-achat">Ma Liste</Link></li>
               <li><Link to="/celliers">Mes Celliers</Link></li>
+              <li><Link to={"/votreCompte/" + id  }>Mon compte</Link></li>
               <li><Link to="/" onClick={handleLogout}>Déconnexion</Link></li>
             </ul>
           </nav>

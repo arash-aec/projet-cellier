@@ -31,6 +31,7 @@ class UsagerController extends Controller
         $usager->nom = $request->input('nom');
         $usager->prenom = $request->input('prenom');
         $usager->courriel = $request->input('courriel');
+        $usager->mot_de_passe = bcrypt($request->input('mot_de_passe'));
         $usager->role = $request->input('role');
         $usager->save();
         return response()->json($usager);

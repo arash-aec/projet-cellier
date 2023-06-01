@@ -126,13 +126,9 @@ const Admin = () => {
             <table >
               <thead>
                 <tr>
-                  <th>id</th>
                   <th>Nom</th>
                   <th>Prénom</th>
                   <th>Courriel</th>
-                  <th>Created At</th>
-                  <th>Updated At</th>
-                  <th>Rôle</th>
                   <th>Modifier</th>
                   <th>Supprimer</th>
                 </tr>
@@ -140,18 +136,15 @@ const Admin = () => {
               <tbody>
                 {usager.map((item) => (
                   <tr key={item.id}>
-                    <td>{item.id}</td>
+                   
                     <td>{item.nom}</td>
                     <td>{item.prenom}</td>
                     <td>{item.courriel}</td>
-                    <td>{item.created_at}</td>
-                    <td>{item.updated_at}</td>
-                    <td>{item.role}</td>
                     <td>
-                      <button onClick={() => handleModifierUsager(item.id)}>Modifier</button>
+                        <i className="btnModifier bouteille-icone__fa fa fa-edit"onClick={() => handleModifierUsager(item.id)}></i>
                     </td>
                     <td>
-                      <button onClick={() => handleDeleteConfirmation(item.id)}  className="button-supprimer">Supprimer</button>
+                        <i className="btnSupprimer bouteille-icone__fa fa fa-trash" onClick={() => handleDeleteConfirmation(item.id)} ></i>
                     </td>
                   </tr>
                 ))}
