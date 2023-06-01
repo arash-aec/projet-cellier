@@ -23,37 +23,38 @@ class CellierTest extends TestCase
     }
 
     public function testAjoutCellier()
-    {
-        $data = [
-            'nom' => 'Nouveau Cellier',
-            'description' => 'Description du nouveau cellier',
-            // Include other required fields as per your implementation
-        ];
+{
+    $data = [
+        'nom' => 'Nouveau Cellier',
+        'usager_id' => 1, // Replace 1 with the appropriate usager_id value
+    ];
 
-        $response = $this->post('/api/cellier', $data);
+    $response = $this->post('/api/cellier', $data);
 
-        $response->assertStatus(201);
-    }
+    $response->assertStatus(201);
+}
 
-    public function testModifierCellier()
-    {
-        $cellierId = 1;
-        $data = [
-            'nom' => 'Cellier modifié',
-            // Include other fields you want to modify
-        ];
+public function testModifierCellier()
+{
+    $cellierId = 1; // Replace 1 with the appropriate cellier ID
 
-        $response = $this->put('/api/cellier/' . $cellierId, $data);
+    $data = [
+        'nom' => 'Nouveau Nom du Cellier',
+        'usager_id' => 1, // Replace 1 with the appropriate usager_id value
+    ];
 
-        $response->assertStatus(200);
-    }
+    $response = $this->put('/api/cellier/' . $cellierId, $data);
 
-    public function testEffacerCellier()
-    {
-        $cellierId = 1;
+    $response->assertStatus(200);
+}
 
-        $response = $this->delete('/api/cellier/' . $cellierId);
+public function testEffacerCellier()
+{
+    $cellierId = 1; // Replace 1 with the appropriate cellier ID
 
-        $response->assertStatus(200);
-    }
+    $response = $this->delete('/api/cellier/' . $cellierId);
+
+    $response->assertStatus(200);
+}
+
 }
