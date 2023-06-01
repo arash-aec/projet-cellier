@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import { useParams } from "react-router-dom";
 import { Link } from "react-router-dom";
+import SupprimModal from "../SupprimModal/SupprimModal"
 
 export default function Bouteille(props) {
 
@@ -9,6 +10,7 @@ export default function Bouteille(props) {
   const reference = useRef(null);
   const {id : idCellier} = useParams();
   const [bouteilleVisible, setBouteilleVisible] = useState(true);
+  const [showDeleteModal, setShowDeleteModal] = useState(false);
 
   useEffect(() => {
     const element = reference.current;
@@ -39,7 +41,10 @@ export default function Bouteille(props) {
       } else if (btnModifier) {
         modifieQuantiteBouteille(idBouteille, idCellier);
       } else if (btnSupprimer) { 
-        supprimerBouteille(idBouteille, idCellier); 
+          // Arrêter la propagation de l'événement pour empêcher le déclenchement de l'événement de clic du conteneur
+          e.stopPropagation();
+          // Afficher le modal de confirmation de suppression
+          setShowDeleteModal(true); 
       } else if (btnAjouteListe) {
         ajouterBouteilleListe(idBouteille)
       }
@@ -104,6 +109,7 @@ export default function Bouteille(props) {
   }
 
   function supprimerBouteille(idBouteille, idCellier) {
+    setShowDeleteModal(true);
 
     fetch(`http://127.0.0.1:8000/api/cellier-bouteilles/${idBouteille}/${idCellier}/supprimer`, {
       method: 'DELETE',
@@ -157,51 +163,68 @@ export default function Bouteille(props) {
 
   }
 
-  
+  function handleModalClose() {
+    setShowDeleteModal(false);
+  }
+
+  function handleModalConfirm() {
+    supprimerBouteille(idBouteille, idCellier);
+    setShowDeleteModal(false);
+  }
+
   return(
-    <div className="bouteille bouteille-item" key={idBouteille} ref={reference} data-id={idBouteille} >
-      <div className="img">
-        <img src={image} alt="Bouteille" />
-      </div>
-      <div className="description">
-        <h3 className="nom">{nom}</h3>
-        <div className="details-bouteille">
-          <div>
-            <p className="millesime">Millesime : {millesime}</p>
-            <p className="pays">Pays : {pays}</p>
-            <p className="type">Type : {type}</p>
-            <p className="garde">Garde : {garde_jusqua}</p>
-          </div>
-          <div>
-            <p className="note">Note : {notes}</p>
-            <p className="format">Format : {format}</p>
-            <p className="prix">Prix achat : {prix} $</p>
-            <p className="prix">Prix SAQ : {prix_saq} $</p>
-          </div>
+    <div>
+      <div className="bouteille bouteille-item" key={idBouteille} ref={reference} data-id={idBouteille} >
+        <div className="img">
+          <img src={image} alt="Bouteille" />
         </div>
-        <p>
-          <Link className="lienSAQ" to={url_saq}>Voir sur le site de la SAQ</Link>
-        </p>
-        <div className="options">
-          <div>
-          <p className="quantite">Quantité : <strong className="quantite-chiffre">{initialQuantite}</strong></p>
-            <form action="" className="quantite-form">
-                <input type="number" name="quantite" className="quantite-input" placeholder={initialQuantite} min="0" />
-                <i className="bouteille-icone__fa fa fa-check" data-js-valider><p><small>Valider</small></p></i>
-            </form>
+        <div className="description">
+          <h3 className="nom">{nom}</h3>
+          <div className="details-bouteille">
+            <div>
+              <p className="millesime">Millesime : {millesime}</p>
+              <p className="pays">Pays : {pays}</p>
+              <p className="type">Type : {type}</p>
+              <p className="garde">Garde : {garde_jusqua}</p>
+            </div>
+            <div>
+              <p className="note">Note : {notes}</p>
+              <p className="format">Format : {format}</p>
+              <p className="prix">Prix achat : {prix} $</p>
+              <p className="prix">Prix SAQ : {prix_saq} $</p>
+            </div>
+          </div>
+          <p>
+            <Link className="lienSAQ" to={url_saq}>Voir sur le site de la SAQ</Link>
+          </p>
+          <div className="options">
+            <div>
+            <p className="quantite">Quantité : <strong className="quantite-chiffre">{initialQuantite}</strong></p>
+              <form action="" className="quantite-form">
+                  <input type="number" name="quantite" className="quantite-input" placeholder={initialQuantite} min="0" />
+                  <i className="bouteille-icone__fa fa fa-check" data-js-valider><p><small>Valider</small></p></i>
+              </form>
+            </div>
+            <div className="options">
+              <i className="btnAjouter bouteille-icone__fa fa fa-plus" data-js-ajouter data-id={idBouteille}><p><small>Ajouter</small></p></i>
+              <i className="btnBoire bouteille-icone__fa fa fa-minus" data-js-boire data-id={idBouteille}><p><small>Boire</small></p></i>
+              <i className="btnModifier bouteille-icone__fa fa fa-edit" data-js-modifier data-id={idBouteille}><p><small>Modifier</small></p></i>
+            </div>   
           </div>
           <div className="options">
-            <i className="btnAjouter bouteille-icone__fa fa fa-plus" data-js-ajouter data-id={idBouteille}><p><small>Ajouter</small></p></i>
-            <i className="btnBoire bouteille-icone__fa fa fa-minus" data-js-boire data-id={idBouteille}><p><small>Boire</small></p></i>
-            <i className="btnModifier bouteille-icone__fa fa fa-edit" data-js-modifier data-id={idBouteille}><p><small>Modifier</small></p></i>
-          </div>   
-        </div>
-        <div className="options">
-          <i className="btnModifier bouteille-icone__fa fa fa-edit" data-js-modifierbouteille data-id={idBouteille}><p><small>Modifier</small></p></i>
-          <i className="btnSupprimer bouteille-icone__fa fa fa-trash" data-js-supprimer data-id={idBouteille}><p><small>Supprimer</small></p></i>
-          <i className="btnAjouterListe bouteille-icone__fa fa fa-shopping-cart" data-js-ajouterliste data-id={idBouteille}><p><small>Liste Achat</small></p></i>
+            <i className="btnModifier bouteille-icone__fa fa fa-edit" data-js-modifierbouteille data-id={idBouteille}><p><small>Modifier</small></p></i>
+            <i className="btnSupprimer bouteille-icone__fa fa fa-trash" data-js-supprimer data-id={idBouteille}><p><small>Supprimer</small></p></i>
+            <i className="btnAjouterListe bouteille-icone__fa fa fa-shopping-cart" data-js-ajouterliste data-id={idBouteille}><p><small>Liste Achat</small></p></i>
+          </div>
         </div>
       </div>
+        {showDeleteModal && (
+      <SupprimModal
+      showModal={showDeleteModal}
+      onClose={handleModalClose}
+      onConfirm={handleModalConfirm}
+      />
+      )}
     </div>
   )
 }
