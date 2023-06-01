@@ -18,12 +18,13 @@ const CompteUsager = (props) => {
     const [prenom, setPrenom] = useState("");
     const [courriel, setCourriel] = useState("");
     const [mot_de_passe, setmotDePasse] = useState("");
+    const [deleteSuccessModal, setDeleteSuccessModal] = useState(false);
 
 
     const [usager, setUsager] = useState([]);
     const [miseAJour, setMiseAJour] = useState(false);
     const [showModal, setShowModal] = useState(false);
-    const [selectedUserId, setSelectedUserId] = useState(null);
+    const [selectedUserId, setSelectedUserId] = useState(false);
 
      const { id } = useParams();
 
@@ -73,7 +74,8 @@ const CompteUsager = (props) => {
         .then((data) => {
        
           setUsager(prevUsager => prevUsager.filter(item => item.id !== selectedUserId));
-          navigate("/")
+     
+       
         })
         .catch((error) => {
           console.error("Error deleting user:", error);
@@ -91,7 +93,7 @@ const CompteUsager = (props) => {
     dispatch(deconnexion());
     localStorage.removeItem('usagerData');
     // Redirection vers la page Accueil
-    navigate("/");
+    setDeleteSuccessModal(true);
     // Mettre deconnexion Laravel 
   };
 
@@ -99,50 +101,61 @@ const CompteUsager = (props) => {
 
   return (
     <>
-   
-        <div className="admin" ref={reference}>
-          <h1>Salut, {prenom}!</h1>
-          <div className="tableUsagers">
-            <table >
-              <thead>
-                <tr>
-                  <th>Nom</th>
-                  <th>Prénoms</th>
-                  <th>Courriel</th>
-                  <th>Modifier</th>
-                  <th>Supprimer</th>
-                </tr>
-              </thead>
-              <tbody>
-                  <tr>
-                    <td>{nom}</td>
-                    <td>{prenom}</td>
-                    <td>{courriel}</td>
-                    <td>
-                        <i className="btnModifier bouteille-icone__fa fa fa-edit"onClick={() => handleModifierUsager(id)}></i>
-                    </td>
-                    <td>
-                        <i className="btnSupprimer bouteille-icone__fa fa fa-trash" onClick={() => handleDeleteConfirmation(id)} ></i>
-                    </td>
-                  </tr>
-              </tbody>
-            </table>
-            {showModal && (
-              <div className="modal">
-                <div className="modal-content">
-                  <p>Confirmation</p>
-                  <strong >Es-tu sûr de vouloir supprimer ton compte ?</strong>
-                  <div className="modal-buttons">
-                    <button onClick={handleLogout}>Yes</button>
-                    <button onClick={handleModalClose}>No</button>
-                  </div>
+      <div className="admin" ref={reference}>
+        <h1>Salut, {prenom}!</h1>
+        <div className="tableUsagers">
+          <table>
+            <thead>
+              <tr>
+                <th>Nom</th>
+                <th>Prénoms</th>
+                <th>Courriel</th>
+                <th>Modifier</th>
+                <th>Supprimer</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>{nom}</td>
+                <td>{prenom}</td>
+                <td>{courriel}</td>
+                <td>
+                  <i className="btnModifier bouteille-icone__fa fa fa-edit" onClick={() => handleModifierUsager(id)}></i>
+                </td>
+                <td>
+                  <i className="btnSupprimer bouteille-icone__fa fa fa-trash" onClick={() => handleDeleteConfirmation(id)}></i>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+          {showModal && (
+            <div className="modal">
+              <div className="modal-content">
+                <p>Confirmation</p>
+                <strong>Es-tu sûr de vouloir supprimer ton compte ?</strong>
+                <div className="modal-buttons">
+                  <button onClick={handleLogout}>Yes</button>
+                  <button onClick={handleModalClose}>No</button>
                 </div>
               </div>
-            )}
+            </div>
+          )}
+        </div>
+      </div>
+      {deleteSuccessModal && (
+        <div className="modal">
+          <div className="modal-content">
+            <p>Succès</p>
+            <strong>Votre compte a été supprimé avec succès !</strong>
+            <div className="modal-buttons">
+              <button onClick={() => { setDeleteSuccessModal(false); navigate("/"); }}>OK</button>
+            </div>
           </div>
         </div>
-      </>
-    );
+      )}
+    </>
+  );
+  
   }
   
   export default CompteUsager;
