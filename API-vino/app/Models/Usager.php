@@ -33,8 +33,8 @@ class Usager extends Authenticatable
      * @var array
      */
     protected $hidden = [
-        'mot_de_passe',
-        'remember_token',
+      //  'mot_de_passe',
+        'remember_token'
     ];
 
     public function listeAchats()
