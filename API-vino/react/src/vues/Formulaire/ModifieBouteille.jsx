@@ -3,6 +3,7 @@ import ValidationBouteille from "../../composants/Validation/ValidationBouteille
 
 const ModifieBouteille = (props) => {
   const formRef = useRef(null);
+  const detailsBouteilleRef = useRef([]);
   const { detailsBouteille, onBouteilleModifier } = props;
   const [erreur, setErreur] = useState({});
   const [values, setValues] = useState({
@@ -23,10 +24,7 @@ const ModifieBouteille = (props) => {
           modalModifieBouteille.querySelector("[name='cellier_id']").value = detailsBouteille[0].cellier_id || "";
           modalModifieBouteille.querySelector("[name='millesime']").value = detailsBouteille[0].millesime || "";
           modalModifieBouteille.querySelector("[name='quantite']").value = detailsBouteille[0].quantite || "";
-          
-          const dateAchatInput = modalModifieBouteille.querySelector("[name='date_achat']");
-          dateAchatInput.value = detailsBouteille[0].date_achat ? detailsBouteille[0].date_achat.substring(0, 10) : "";
-
+          modalModifieBouteille.querySelector("[name='date_achat']").value = detailsBouteille[0].date_achat || "";
           modalModifieBouteille.querySelector("[name='prix']").value = detailsBouteille[0].prix || "";
           modalModifieBouteille.querySelector("[name='garde_jusqua']").value = detailsBouteille[0].garde_jusqua || "";
           modalModifieBouteille.querySelector("[name='notes']").value = detailsBouteille[0].notes || "";
@@ -49,28 +47,23 @@ const ModifieBouteille = (props) => {
           });
         });
     
-  }, [detailsBouteille]);
+      }, [detailsBouteille]);
 
-useEffect(() => {
-  if (detailsBouteille.length > 0) {
-    const selectedBouteille = detailsBouteille.find(
-      (bouteille) => bouteille.bouteille_id === values.bouteille_id
-    );
-    if (selectedBouteille) {
-      setValues((prevValues) => ({
-        ...prevValues,
-        bouteille_id: selectedBouteille.bouteille_id,
-        cellier_id: selectedBouteille.cellier_id,
-        millesime: selectedBouteille.millesime,
-        quantite: selectedBouteille.quantite,
-        date_achat: selectedBouteille.date_achat,
-        prix: selectedBouteille.prix,
-        garde_jusqua: selectedBouteille.garde_jusqua,
-        notes: selectedBouteille.notes,
-      }));
-    }
-  }
-}, [detailsBouteille, values.bouteille_id]);
+    useEffect(() => {
+      if (detailsBouteille.length > 0) {
+        const firstDetailsBouteille = detailsBouteille[0];
+        setValues({
+          bouteille_id: firstDetailsBouteille.bouteille_id,
+          cellier_id: firstDetailsBouteille.cellier_id,
+          millesime: firstDetailsBouteille.millesime,
+          quantite: firstDetailsBouteille.quantite,
+          date_achat: firstDetailsBouteille.date_achat,
+          prix: firstDetailsBouteille.prix,
+          garde_jusqua: firstDetailsBouteille.garde_jusqua,
+          notes: firstDetailsBouteille.notes,
+        });
+      }
+    }, [detailsBouteille]);
 
 
   const handleAjouterClick = (e) => {
@@ -114,16 +107,16 @@ useEffect(() => {
           setErreur(erreurs);
         });
       
-      setValues({
-        bouteille_id: "",
-        cellier_id: "",
-        millesime: "", 
-        quantite: "",
-        date_achat: "",
-        prix: "",
-        garde_jusqua: "",
-        notes: "",
-      });
+      // setValues({
+      //   bouteille_id: "",
+      //   cellier_id: "",
+      //   millesime: "", 
+      //   quantite: "",
+      //   date_achat: "",
+      //   prix: "",
+      //   garde_jusqua: "",
+      //   notes: "",
+      // });
     }
   };
     
@@ -139,7 +132,6 @@ useEffect(() => {
       }
     };
   }, [values]);
-  
 
   return (
     <div className="modifier">
