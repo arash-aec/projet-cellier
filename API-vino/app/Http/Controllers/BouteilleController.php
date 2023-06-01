@@ -154,7 +154,7 @@ class BouteilleController extends Controller
     $bouteille->nom = $request->input('nom');
     $bouteille->description = $request->input('description');
     $bouteille->format = $request->input('format');
-    $bouteille->image = '';
+    $bouteille->image = 'https://www.saq.com/media/catalog/product/1/2/12375942-1_1580663712.png?quality=80&fit=bounds&height=&width=';
 
     // Retrieve the foreign key ID for the selected type
     $type = Type::where('type', $request->input('type'))->first();
