@@ -234,19 +234,23 @@ const AdminStatistique = () => {
       <>
         {estConnecte && role === 2 ? (
             <section className="statistique">
-                <h2>Statistique du site</h2>
+                <h1>Statistique du site</h1>
                 <div className="statistique-contenu">
                   <div>
                     <h3>Général :</h3>
-                    <p>Nombre d'usager : <strong>{statistiques.nombreUsagers}</strong></p>
-                    <p>Nombre de cellier : <strong>{statistiques.nombreCelliers}</strong></p>
-                    <p>Nombre de bouteille : <strong>{statistiques.nombreBouteilles}</strong></p>
+                    <div>
+                      <p>Nombre d'usager : <strong>{statistiques.nombreUsagers}</strong></p>
+                      <p>Nombre de cellier : <strong>{statistiques.nombreCelliers}</strong></p>
+                      <p>Nombre de bouteille : <strong>{statistiques.nombreBouteilles}</strong></p>
+                    </div>
                   </div>
                   <div>
                     <h3>Nouveau usager :</h3>
-                    <p>Nouveaux usagers aujourd'hui : <strong>{statistiques.quantitesNouveauxUsagers?.jourMeme ?? 0}</strong></p>
-                    <p>Nouveaux usagers dans les 3 derniers jours : <strong>{statistiques.quantitesNouveauxUsagers?.troisJours ?? 0}</strong></p>
-                    <p>Nouveaux usagers dans la semaine : <strong>{statistiques.quantitesNouveauxUsagers?.semaine ?? 0}</strong></p>
+                    <div>
+                      <p>Nouveaux usagers aujourd'hui : <strong>{statistiques.quantitesNouveauxUsagers?.jourMeme ?? 0}</strong></p>
+                      <p>Nouveaux usagers dans les 3 derniers jours : <strong>{statistiques.quantitesNouveauxUsagers?.troisJours ?? 0}</strong></p>
+                      <p>Nouveaux usagers dans la semaine : <strong>{statistiques.quantitesNouveauxUsagers?.semaine ?? 0}</strong></p>
+                    </div>
                   </div>
                   <div>
                     <h3>Nombre de cellier par usager :</h3>
@@ -262,7 +266,7 @@ const AdminStatistique = () => {
                         {typeof statistiques.quantitebouteilleCellierUsager === 'object' &&
                         Object.entries(statistiques.quantitebouteilleCellierUsager).map(([usagerId, celliers]) => (
                         <li key={usagerId}>
-                            Usager {usagerId} :
+                             <strong> Usager {usagerId}</strong> :
                             <ul className="statistique-liste-2">
                             {celliers.map(cellier => (
                                 <li key={cellier.cellierId}>Cellier {cellier.cellierId} : <strong>{cellier.quantite}</strong> bouteilles </li>
@@ -278,7 +282,7 @@ const AdminStatistique = () => {
                         {typeof statistiques.valeurBouteilles === 'object' &&
                         Object.entries(statistiques.valeurBouteilles).map(([usagerId, celliers]) => (
                         <li key={usagerId}>
-                            Usager {usagerId} :
+                            <strong>Usager {usagerId}</strong> :
                             <ul className="statistique-liste-2">
                             {Object.entries(celliers).map(([cellierId, prixTotal]) => (
                                 <li key={cellierId}>Cellier {cellierId} : <strong>{prixTotal} $ </strong> </li>

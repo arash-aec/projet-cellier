@@ -6,7 +6,6 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use App\Models\CellierBouteilles;
 
-
 class CellierBouteillesController extends Controller
 {
     /**
@@ -15,6 +14,17 @@ class CellierBouteillesController extends Controller
     public function getcellierBouteilles() { 
         $celliers = CellierBouteilles::get();
         return response()->json($celliers);
+    }
+
+    /**
+     * Récupérer une bouteille d'un cellier avec son id_bouteille et son id_cellier
+     */
+    public function getCellierBouteille($bouteille_id, $cellier_id) {
+        $cellierBouteilles = CellierBouteilles::where('bouteille_id', $bouteille_id)
+        ->where('cellier_id', $cellier_id)
+        ->get();
+
+        return response()->json($cellierBouteilles);
     }
 
     /**
@@ -74,6 +84,51 @@ class CellierBouteillesController extends Controller
         $cellierBouteille->save();
 
         return response()->json($cellierBouteille);
+    }
+
+    /**
+     * Modification de la Quantite
+     */
+    public function modifierBouteilleCellier($bouteille_id, $cellier_id, Request $request) {
+
+        $validator = Validator::make($request->all(), [
+            'bouteille_id' => 'required|integer',
+            'cellier_id' => 'required|integer',
+            'quantite' => 'required|integer|min:1',
+            'date_achat' => 'required',
+            'millesime' => 'required|integer|min:1900|max:'.date('Y'),
+            'prix' => 'required|numeric|min:0',
+            'garde_jusqua' => 'integer',
+            'notes' => 'nullable|integer',
+        ]);
+    
+        if ($validator->fails()) {
+            // Les données n'ont pas passé la validation
+            return response()->json(['errors' => $validator->errors()], 400);
+        }
+    
+        // Rechercher l'entrée existante dans la table vino__cellier_bouteilles
+        $cellierBouteille = CellierBouteilles::where('bouteille_id', $bouteille_id)
+                                            ->where('cellier_id', $cellier_id)
+                                            ->first();
+    
+        if (!$cellierBouteille) {
+            // L'entrée n'existe pas, retourner une réponse appropriée
+            return response()->json(['error' => 'Entrée non trouvée'], 404);
+        }
+    
+        // Mettre à jour les valeurs des champs de l'entrée existante
+        $cellierBouteille->quantite = $request->input('quantite');
+        $cellierBouteille->date_achat = $request->input('date_achat');
+        $cellierBouteille->millesime = $request->input('millesime');
+        $cellierBouteille->prix = $request->input('prix');
+        $cellierBouteille->garde_jusqua = $request->input('garde_jusqua');
+        $cellierBouteille->notes = $request->input('notes');
+    
+        // Enregistrer les modifications
+        $res = $cellierBouteille->save();
+    
+        return response()->json(['success' => $res]);
     }
 
     /**

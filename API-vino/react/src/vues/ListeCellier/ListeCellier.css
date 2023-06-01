@@ -1,7 +1,13 @@
 .liste-cellier {
-    display: flex;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
     justify-content: start;
     gap: 30px;
 	background-color: #36383F;
 	padding: 4vh;
+}
+@media (min-width: 768px) {
+	.liste-cellier {
+        display: flex;
+    }
 }

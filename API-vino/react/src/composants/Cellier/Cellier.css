@@ -8,6 +8,8 @@
     text-align: center;
     text-transform: capitalize;
     gap: 4vh;
+    border-radius: 5px;
+    box-shadow: 0px 0px 3px #fff;
 }
 .cellier-icone {
     display: flex;
@@ -17,6 +19,10 @@
 .cellier-item .cellier-icone__fa {
     font-size: 30px;
     cursor: pointer;
+}
+.fa-eye:before,
+.fa-eye>p {
+    color: var(--black);
 }
 .cellier-nom {
     display: block;

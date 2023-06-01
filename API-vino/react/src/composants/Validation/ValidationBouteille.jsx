@@ -9,37 +9,37 @@ const ValidationBouteille = (values) => {
     const noteRegex = /^[1-5]$/;
   
     if (!values.millesime) {
-      values.millesime = "Millesime obligatoire!";
+      erreurs.millesime = "Millesime obligatoire!";
     } else if (!millesimeRegex.test(values.millesime)) {
       erreurs.millesime = "Le millesime est une année à 4 chiffres";
     }
 
     if (!values.garde_jusqua) {
-      values.garde_jusqua = "La garde obligatoire!";
+      erreurs.garde_jusqua = "La garde obligatoire!";
     } else if (!quantiteRegex.test(values.garde_jusqua)) {
       erreurs.garde_jusqua = "La garde est un nombre de 1 ou 2 chiffres";
     }
 
     if (!values.quantite) {
-      values.quantite = "Quantite obligatoire!";
+      erreurs.quantite = "Quantite obligatoire!";
     } else if (!quantiteRegex.test(values.quantite)) {
       erreurs.quantite = "La quantite est le nombre de bouteille";
     }
 
     if (!values.date_achat) {
-      values.date_achat = "Date obligatoire!";
+      erreurs.date_achat = "Date obligatoire!";
     } else if (!dateRegex.test(values.date_achat)) {
       erreurs.date_achat = "Le format de la date doit correspondre à aaaa-mm-jj";
     }
 
     if (!values.notes) {
-      values.notes = "Note obligatoire!";
+      erreurs.notes = "Note obligatoire!";
     } else if (!noteRegex.test(values.notes)) {
       erreurs.notes = "La note est un chiffre entre 1 et 5";
     }
 
     if (!values.prix) {
-      values.prix = "Prix obligatoire!";
+      erreurs.prix = "Prix obligatoire!";
     } else if (!prixRegex.test(values.prix)) {
       erreurs.prix = "Le prix est un chiffre avec ou sans décimal";
     }

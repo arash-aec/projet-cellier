@@ -10,6 +10,8 @@ use App\Models\Bouteille;
 use App\Models\Pays;
 use App\Models\Type;
 
+
+
 class BouteilleController extends Controller
 {
 

@@ -48,9 +48,7 @@ const ListeCellier = () => {
           if (Array.isArray(data)) {
             setCelliers(data);
             setMiseAJour(false);
-          } else {
-            // Gérer le cas où data n'est pas un tableau
-          }
+          } 
         });
     }
   }
