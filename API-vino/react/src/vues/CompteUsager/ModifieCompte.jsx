@@ -11,6 +11,7 @@ const ModifieCompte = () => {
   const [mot_de_passe_confirmation, setMot_de_passe_confirmation] = useState("");
   const [role, setRole] = useState("");
   const [errors, setErrors] = useState({});
+  const [modifieSuccessModal, setModifieSuccessModal] = useState(false);
   const { id } = useParams();
   const navigate = useNavigate();
 
@@ -76,7 +77,7 @@ const ModifieCompte = () => {
     })
       .then((response) => response.json())
       .then((data) => {
-        navigate("/votreCompte/" + id , { replace: true });
+        setModifieSuccessModal(true);
       })
       .catch((error) => {
         console.error("Error updating user details:", error);
@@ -134,10 +135,19 @@ const ModifieCompte = () => {
           />
           {errors.mot_de_passe_confirmation && <p className="error-message">{errors.mot_de_passe_confirmation}</p>}
         </div>
-
-
         <button className="buttonEnregistrer" type="submit">Enregistrer</button>
       </form>
+      {modifieSuccessModal && (
+        <div className="modal">
+          <div className="modal-content">
+            <p>Succès!</p>
+            <strong>Compte Modifié avec succès!</strong>
+            <div className="modal-buttons">
+              <button onClick={() => { setModifieSuccessModal(false);  navigate("/votreCompte/" + id , { replace: true }); }}>OK</button>
+            </div>
+          </div>
+        </div>
+      )}
     </>
   );
 
