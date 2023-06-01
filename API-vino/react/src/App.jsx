@@ -13,9 +13,12 @@ import ListeBouteille from "./vues/ListeBouteille/ListeBouteille";
 import ListeCellier from "./vues/ListeCellier/ListeCellier";
 import AdminStatistique from "./vues/Admin/AdminStatistique";
 import Admin from "./vues/Admin/Admin";
-import ModifieUsager from "./vues/ModifieUsager/ModifieUsager";
+import ModifieUsager from "./vues/ModifieUsager/ModifierUsager";
 import AjouterUsager from "./vues/AjouteUsager/AjouteUsager";
 import ListeAchat from "./vues/ListeAchat/ListeAchat";
+import CompteUsager from "./vues/CompteUsager/CompteUsager";
+import ModifieCompte from "./vues/CompteUsager/ModifieCompte";
+
 
 export const UsagerDataContext = createContext(null);
 
@@ -55,7 +58,9 @@ function App() {
               <Route path="/listeBouteille/:id" element={<ListeBouteille />} />
               <Route path="/liste-achat" element={<ListeAchat />} />
               <Route path="/modifieUsager/:id" element={<ModifieUsager />} />
+              <Route path="/modifierProfil/:id" element={<ModifieCompte />} />
               <Route path="/ajouterUsager" element={<AjouterUsager />} />
+              <Route path="/votreCompte/:id" element={<CompteUsager />} />
               <Route path="*" element={<NonTrouve />} />
             </Routes>
             <Footer />
