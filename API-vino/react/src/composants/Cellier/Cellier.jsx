@@ -1,9 +1,11 @@
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { Link } from "react-router-dom";
+import SupprimModalCellier from '../SupprimModal/SupprimModalCellier'
 
 export default function Cellier(props) {
     const { id, nom, onCellierSupprime, onCellierModifie } = props;
     const reference = useRef(null);
+    const [showDeleteModal, setShowDeleteModal] = useState(false);
 
     useEffect(() => {
         const elements = reference.current;
@@ -16,7 +18,10 @@ export default function Cellier(props) {
             const btnSupprimer = elements.querySelector('[data-js-supprimer]');
 
             // Supprimer un Cellier
-            btnSupprimer.addEventListener("click", () => supprimerCellier(id));
+            btnSupprimer.addEventListener("click", (event) => {
+                event.preventDefault(); // Empêcher le comportement par défaut
+                setShowDeleteModal(true); // Afficher le modal de suppression
+              });
             // Modifier un Cellier
             btnModifier.addEventListener("click", () => modifierCellier(id));
             return () => {
@@ -34,6 +39,7 @@ export default function Cellier(props) {
             if (response.ok) {
             // Fonction de rappel pour informer le parent de la suppression
             onCellierSupprime(id);
+            setShowDeleteModal(false); // Fermer le modal après avoir supprimé le Cellier
             } else {
             console.error('Erreur lors de la suppression du cellier');
             }
@@ -75,6 +81,18 @@ export default function Cellier(props) {
             formCellier.style.display = "none"; 
         });
     };
+        
+      function handleModalClose() {
+            setShowDeleteModal(false);
+        }
+    
+      function handleModalConfirm() {
+
+        // Effectuez l'opération de suppression
+        supprimerCellier();
+        // Fermer le modal après avoir supprimé le Cellier
+        setShowDeleteModal(false);
+      }
    
     return(
         <div key={id} className="cellier-item" ref={reference} data-id={id}>
@@ -88,6 +106,13 @@ export default function Cellier(props) {
             <i className="cellier-icone__fa fa fa-trash" data-js-supprimer><p><small>Supprimer</small></p></i>
             <Link to={"/ListeBouteille/" + id + `?nom=${nom}`}><i className="cellier-icone__fa fa fa-eye"><p><small>Voir</small></p></i></Link>
             </div>
+            {showDeleteModal && (
+                <SupprimModalCellier
+                showModal={showDeleteModal}
+                onClose={handleModalClose}
+                onConfirm={handleModalConfirm}
+              />
+                )}
         </div>
     )
 }
