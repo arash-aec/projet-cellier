@@ -302,8 +302,3 @@ const AdminStatistique = () => {
 }
 
 export default AdminStatistique;
-
-
-// le nombre de bouteille par cellier et par usager.
-// Le nombre de bouteille bu et partager dans un temps donné.
-// Le nombre de bouteille ajouté dans un temps donné.

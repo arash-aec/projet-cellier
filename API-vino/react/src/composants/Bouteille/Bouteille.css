@@ -4,6 +4,9 @@
 	max-width: 120px;
 	object-fit: cover;
 }
+.bouteille {
+	max-height: 625px ;
+}
 .bouteille .description .details-bouteille {
 	display: flex;
 	justify-content: space-between;
