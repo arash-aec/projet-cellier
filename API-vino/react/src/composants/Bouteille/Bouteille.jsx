@@ -115,7 +115,11 @@ export default function Bouteille(props) {
     try {
       const response = await fetch(`http://127.0.0.1:8000/api/cellier-bouteille/${idBouteille}/${idCellier}`);
       const data = await response.json();
-      setValues(data);
+      setValues((data) => ({
+        ...data,
+        bouteille_id: idBouteille,
+        cellier_id: idCellier,
+      }));
       const modalOverlayModifieBouteille = document.querySelector(".modal-overlay-modifieBouteille");
       const modalModifieBouteille = document.querySelector(".modal-modifieBouteille");
       const closeBtnModifieBouteille = document.querySelector(".close-btn-modifieBouteille");
@@ -231,7 +235,7 @@ export default function Bouteille(props) {
             <i className="btnAjouterListe bouteille-icone__fa fa fa-shopping-cart" data-js-ajouter-liste data-id={idBouteille}><p><small>Liste Achat</small></p></i>
           </div>
           </div>
-          <ModifieBouteille detailsBouteille={values} onBouteilleModifier={onBouteilleModifier} />
+          <ModifieBouteille detailsBouteille={values} onBouteilleModifier={onBouteilleModifier} idCellier={idCellier} idBouteille={idBouteille} />
         </div>
         {showDeleteModal && (
       <SupprimModal
