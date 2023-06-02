@@ -3,12 +3,11 @@ import ValidationBouteille from "../../composants/Validation/ValidationBouteille
 
 const ModifieBouteille = (props) => {
   const formRef = useRef(null);
-  const detailsBouteilleRef = useRef([]);
-  const { detailsBouteille, onBouteilleModifier } = props;
+  const { detailsBouteille, onBouteilleModifier, idCellier, idBouteille } = props;
   const [erreur, setErreur] = useState({});
   const [values, setValues] = useState({
-    bouteille_id: detailsBouteille.length > 0 ? detailsBouteille[0].bouteille_id : "",
-    cellier_id: detailsBouteille.length > 0 ? detailsBouteille[0].cellier_id : "",
+    bouteille_id: idBouteille,
+    cellier_id: idCellier,
     millesime: "",
     quantite: "",
     date_achat: "",
@@ -18,64 +17,68 @@ const ModifieBouteille = (props) => {
   });
 
   useEffect(() => {
-        const modalModifieBouteille = document.querySelector(".modal-modifieBouteille");
-        if (detailsBouteille.length > 0) {
-          modalModifieBouteille.querySelector("[name='bouteille_id']").value = detailsBouteille[0].bouteille_id || "";
-          modalModifieBouteille.querySelector("[name='cellier_id']").value = detailsBouteille[0].cellier_id || "";
-          modalModifieBouteille.querySelector("[name='millesime']").value = detailsBouteille[0].millesime || "";
-          modalModifieBouteille.querySelector("[name='quantite']").value = detailsBouteille[0].quantite || "";
-          modalModifieBouteille.querySelector("[name='date_achat']").value = detailsBouteille[0].date_achat || "";
-          modalModifieBouteille.querySelector("[name='prix']").value = detailsBouteille[0].prix || "";
-          modalModifieBouteille.querySelector("[name='garde_jusqua']").value = detailsBouteille[0].garde_jusqua || "";
-          modalModifieBouteille.querySelector("[name='notes']").value = detailsBouteille[0].notes || "";
-        }
-        const closeBtnModifieBouteille = document.querySelector(".close-btn-modifieBouteille");
-        const modalOverlayModifieBouteille = document.querySelector(".modal-overlay-modifieBouteille");
-        closeBtnModifieBouteille.addEventListener("click", function() {
-          modalOverlayModifieBouteille.style.display = "none";
-          modalModifieBouteille.style.display = "none";
-          setErreur({});
-          setValues({
-            bouteille_id: "",
-            cellier_id: "",
-            millesime: "", 
-            quantite: "",
-            date_achat: "",
-            prix: "",
-            garde_jusqua: "",
-            notes: "",
-          });
-        });
-    
-      }, [detailsBouteille]);
+    const modalModifieBouteille = document.querySelector(".modal-modifieBouteille");
+    if (detailsBouteille.length > 0) {
+      modalModifieBouteille.querySelector("[name='bouteille_id']").value = idBouteille || "";
+      modalModifieBouteille.querySelector("[name='cellier_id']").value = idCellier || "";
+      modalModifieBouteille.querySelector("[name='millesime']").value = detailsBouteille[0].millesime || "";
+      modalModifieBouteille.querySelector("[name='quantite']").value = detailsBouteille[0].quantite || "";
+      modalModifieBouteille.querySelector("[name='date_achat']").value = detailsBouteille[0].date_achat.substring(0, 10) || "";
+      modalModifieBouteille.querySelector("[name='prix']").value = detailsBouteille[0].prix || "";
+      modalModifieBouteille.querySelector("[name='garde_jusqua']").value = detailsBouteille[0].garde_jusqua || "";
+      modalModifieBouteille.querySelector("[name='notes']").value = detailsBouteille[0].notes || "";
+    }
+    const closeBtnModifieBouteille = document.querySelector(".close-btn-modifieBouteille");
+    const modalOverlayModifieBouteille = document.querySelector(".modal-overlay-modifieBouteille");
+    closeBtnModifieBouteille.addEventListener("click", function() {
+      modalOverlayModifieBouteille.style.display = "none";
+      modalModifieBouteille.style.display = "none";
+      setErreur({});
+      setValues({
+        bouteille_id: "",
+        cellier_id: "",
+        millesime: "", 
+        quantite: "",
+        date_achat: "",
+        prix: "",
+        garde_jusqua: "",
+        notes: "",
+      });
+    });
 
-    useEffect(() => {
-      if (detailsBouteille.length > 0) {
-        const firstDetailsBouteille = detailsBouteille[0];
-        setValues({
-          bouteille_id: firstDetailsBouteille.bouteille_id,
-          cellier_id: firstDetailsBouteille.cellier_id,
-          millesime: firstDetailsBouteille.millesime,
-          quantite: firstDetailsBouteille.quantite,
-          date_achat: firstDetailsBouteille.date_achat,
-          prix: firstDetailsBouteille.prix,
-          garde_jusqua: firstDetailsBouteille.garde_jusqua,
-          notes: firstDetailsBouteille.notes,
-        });
+  }, [detailsBouteille]);
+
+  useEffect(() => {
+    if (detailsBouteille.length > 0) {
+      const selectedBouteille = detailsBouteille.find(
+        (bouteille) => bouteille.bouteille_id === idBouteille
+      );
+      if (selectedBouteille) {
+        setValues((prevValues) => ({
+          ...prevValues,
+          bouteille_id: idBouteille,
+          cellier_id: idCellier,
+          millesime: selectedBouteille.millesime,
+          quantite: selectedBouteille.quantite,
+          date_achat: selectedBouteille.date_achat.substring(0, 10),
+          prix: selectedBouteille.prix,
+          garde_jusqua: selectedBouteille.garde_jusqua,
+          notes: selectedBouteille.notes,
+        }));
       }
-    }, [detailsBouteille]);
+    }
+  }, [detailsBouteille]);
 
 
   const handleAjouterClick = (e) => {
     e.preventDefault();
-
     const erreurs = ValidationBouteille(values);
     setErreur(erreurs);
 
     if (Object.keys(erreurs).length === 0) {
       const bouteilleCellier = {
-          bouteille_id: values.bouteille_id,
-          cellier_id: values.cellier_id,
+          bouteille_id: idBouteille,
+          cellier_id: idCellier,
           quantite: values.quantite,
           date_achat: values.date_achat,
           millesime: values.millesime,
@@ -84,7 +87,7 @@ const ModifieBouteille = (props) => {
           notes: values.notes,
       };
       
-      fetch(`http://127.0.0.1:8000/api/cellier-bouteilles/${values.bouteille_id}/${values.cellier_id}`, {
+      fetch(`http://127.0.0.1:8000/api/cellier-bouteilles/${idBouteille}/${idCellier}`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
@@ -107,16 +110,16 @@ const ModifieBouteille = (props) => {
           setErreur(erreurs);
         });
       
-      // setValues({
-      //   bouteille_id: "",
-      //   cellier_id: "",
-      //   millesime: "", 
-      //   quantite: "",
-      //   date_achat: "",
-      //   prix: "",
-      //   garde_jusqua: "",
-      //   notes: "",
-      // });
+      setValues({
+        bouteille_id: "",
+        cellier_id: "",
+        millesime: "", 
+        quantite: "",
+        date_achat: "",
+        prix: "",
+        garde_jusqua: "",
+        notes: "",
+      });
     }
   };
     
@@ -132,6 +135,7 @@ const ModifieBouteille = (props) => {
       }
     };
   }, [values]);
+  
 
   return (
     <div className="modifier">
@@ -141,8 +145,8 @@ const ModifieBouteille = (props) => {
           <h2>Modifier une bouteille</h2>
           <form ref={formRef} className="nouvelleBouteille">
             <div>
-              <input type="hidden" name="bouteille_id" value={values.bouteille_id} />
-              <input type="hidden" name="cellier_id" value={values.cellier_id} />
+              <input type="hidden" name="bouteille_id" defaultValue={idBouteille} />
+              <input type="hidden" name="cellier_id" defaultValue={idCellier} />
               <label htmlFor="millesime">Millesime : * </label>
               <input name="millesime" id="millesime" placeholder="Une année (ex : 2020)" onChange={(e) => setValues((prevState) => ({ ...prevState, millesime: e.target.value })) } required />
               {erreur.millesime && <p className="error-message">{erreur.millesime}</p>}

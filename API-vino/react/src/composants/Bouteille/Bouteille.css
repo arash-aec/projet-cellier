@@ -4,9 +4,6 @@
 	max-width: 120px;
 	object-fit: cover;
 }
-.bouteille {
-	max-height: 625px ;
-}
 .bouteille .description .details-bouteille {
 	display: flex;
 	justify-content: space-between;
@@ -52,6 +49,9 @@
 	flex-direction: column;
 	justify-content: space-around;
 	text-align: center;
+}
+.bouteille {
+	min-height: 625px ;
 }
 .details-bouteille,
 .options {
