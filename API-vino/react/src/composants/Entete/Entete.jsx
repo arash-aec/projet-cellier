@@ -34,24 +34,26 @@ const Entete = (props) => {
     <>
       <header className="header">
         <Link to="/" className="logo"><img src="../public/images/logo-1.png" alt="logo de Vino"/></Link>
-        <input className="side-menu" type="checkbox" id="side-menu" />
-        <label className="hamb" htmlFor="side-menu">
-          <span className="hamb-line"></span>
-        </label>
 
         {estConnecte && (
+        <>
+          <input className="side-menu" type="checkbox" id="side-menu" />
+          <label className="hamb" htmlFor="side-menu">
+            <span className="hamb-line"></span>
+          </label>
           <nav className="nav">
             <ul className="menu">
               { role === 2 && (
                 <li><Link to="/admin">Espace Admin</Link></li>
               )}
               {/* <li><Link to="/">Accueil</Link></li> */}
-              <li><Link to="/liste-achat">Ma Liste</Link></li>
               <li><Link to="/celliers">Mes Celliers</Link></li>
+              <li><Link to="/liste-achat">Ma Liste</Link></li>
               <li><Link to={"/votreCompte/" + id  }>Mon compte</Link></li>
               <li><Link to="/" onClick={handleLogout}>Déconnexion</Link></li>
             </ul>
           </nav>
+          </>
         )}
       </header>
     </>

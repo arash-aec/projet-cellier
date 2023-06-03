@@ -6,8 +6,8 @@ const ModifieBouteille = (props) => {
   const { detailsBouteille, onBouteilleModifier, idCellier, idBouteille } = props;
   const [erreur, setErreur] = useState({});
   const [values, setValues] = useState({
-    bouteille_id: idBouteille,
-    cellier_id: idCellier,
+    bouteille_id: "",
+    cellier_id: "",
     millesime: "",
     quantite: "",
     date_achat: "",
@@ -145,25 +145,25 @@ const ModifieBouteille = (props) => {
           <h2>Modifier une bouteille</h2>
           <form ref={formRef} className="nouvelleBouteille">
             <div>
-              <input type="hidden" name="bouteille_id" defaultValue={idBouteille} />
-              <input type="hidden" name="cellier_id" defaultValue={idCellier} />
+              <input type="hidden" name="bouteille_id" value={idBouteille} />
+              <input type="hidden" name="cellier_id" value={idCellier} />
               <label htmlFor="millesime">Millesime : * </label>
-              <input name="millesime" id="millesime" placeholder="Une année (ex : 2020)" onChange={(e) => setValues((prevState) => ({ ...prevState, millesime: e.target.value })) } required />
+              <input name="millesime" id="millesime" placeholder="Une année (ex : 2020)" onChange={(e) => setValues((prevState) => ({ ...prevState, millesime: e.target.value })) }  value={values.millesime}  />
               {erreur.millesime && <p className="error-message">{erreur.millesime}</p>}
               <label htmlFor="quantite">Quantite : * </label>
-              <input name="quantite" id="quantite" placeholder="Veuillez entrer une quantité" onChange={(e) => setValues((prevState) => ({ ...prevState, quantite: e.target.value })) } required />
+              <input name="quantite" id="quantite" placeholder="Veuillez entrer une quantité" onChange={(e) => setValues((prevState) => ({ ...prevState, quantite: e.target.value })) }  value={values.quantite} />
               {erreur.quantite && <p className="error-message">{erreur.quantite}</p>}
               <label htmlFor="date_achat">Date achat : *</label>
-              <input name="date_achat" id="date_achat" placeholder="Format : aaaa-mm-jj" onChange={(e) => setValues((prevState) => ({ ...prevState, date_achat: e.target.value })) } required />
+              <input name="date_achat" id="date_achat" placeholder="Format : aaaa-mm-jj" onChange={(e) => setValues((prevState) => ({ ...prevState, date_achat: e.target.value })) } value={values.date_achat}  />
               {erreur.date_achat && <p className="error-message">{erreur.date_achat}</p>}
               <label htmlFor="prix">Prix : * </label>
-              <input name="prix" id="prix" placeholder="Veuillez entrer le prix d'achat" onChange={(e) => setValues((prevState) => ({ ...prevState, prix: e.target.value })) } required />
+              <input name="prix" id="prix" placeholder="Veuillez entrer le prix d'achat" onChange={(e) => setValues((prevState) => ({ ...prevState, prix: e.target.value })) }  value={values.prix} />
               {erreur.prix && <p className="error-message">{erreur.prix}</p>}
               <label htmlFor="garde_jusqua">Garde : * </label>
-              <input name="garde_jusqua" id="garde_jusqua" placeholder="Nombre d'années (ex : 20)" onChange={(e) => setValues((prevState) => ({ ...prevState, garde_jusqua: e.target.value })) } required />
+              <input name="garde_jusqua" id="garde_jusqua" placeholder="Nombre d'années (ex : 20)" onChange={(e) => setValues((prevState) => ({ ...prevState, garde_jusqua: e.target.value })) } value={values.garde_jusqua}  />
               {erreur.garde_jusqua && <p className="error-message">{erreur.garde_jusqua}</p>}
               <label htmlFor="notes">Note : * </label>
-              <input name="notes" id="notes" placeholder="Un chiffre de 1 à 5" onChange={(e) => setValues((prevState) => ({ ...prevState, notes: e.target.value })) } required />
+              <input name="notes" id="notes" placeholder="Un chiffre de 1 à 5" onChange={(e) => setValues((prevState) => ({ ...prevState, notes: e.target.value })) } value={values.notes}  />
               {erreur.notes && <p className="error-message">{erreur.notes}</p>}
               <small>* Champs obligatoires</small>
             </div>
