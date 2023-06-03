@@ -230,7 +230,7 @@ export default function Bouteille(props) {
             <i className="btnBoire bouteille-icone__fa fa fa-minus" data-js-boire data-id={idBouteille}><p><small>Boire</small></p></i>
           </div>   
           <div className="options">
-            <i className="btnModifier bouteille-icone__fa fa fa-edit" data-js-modifier-bouteille data-id={idBouteille}><p><small>Modifier</small></p></i>
+            {/* <i className="btnModifier bouteille-icone__fa fa fa-edit" data-js-modifier-bouteille data-id={idBouteille}><p><small>Modifier</small></p></i> */}
             <i className="btnSupprimer bouteille-icone__fa fa fa-trash" data-js-supprimer data-id={idBouteille}><p><small>Supprimer</small></p></i>
             <i className="btnAjouterListe bouteille-icone__fa fa fa-shopping-cart" data-js-ajouter-liste data-id={idBouteille}><p><small>Liste Achat</small></p></i>
           </div>

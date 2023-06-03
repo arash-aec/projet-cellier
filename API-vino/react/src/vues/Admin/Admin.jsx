@@ -141,7 +141,7 @@ const Admin = () => {
                     <td>{item.prenom}</td>
                     <td>{item.courriel}</td>
                     <td>
-                        <i className="btnModifier bouteille-icone__fa fa fa-edit"onClick={() => handleModifierUsager(item.id)}></i>
+                        <i className="btnModifier bouteille-icone__fa fa fa-edit" onClick={() => handleModifierUsager(item.id)}></i>
                     </td>
                     <td>
                         <i className="btnSupprimer bouteille-icone__fa fa fa-trash" onClick={() => handleDeleteConfirmation(item.id)} ></i>
