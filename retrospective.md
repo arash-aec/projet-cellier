@@ -47,3 +47,29 @@ Site : https://jerome-fosse.ca/public/projet/vino/
 - Nous avons établi des horaires de contact (8h-20h) et des jours de travail fixe.
 - Passer plus de temps a l'école pour profiter de l'aide de nos professeurs.
 - Demander de l'aide et communiquer quand il y a un long bug.
+
+
+--- 
+
+# Rétrospective du sprint 3
+
+## Ce qui a bien été :
+- Nous avons réussi à finir les tâches non réalisées du sprint 2.
+- La motivation et l'implication sur le projet pour le dernier sprint.
+- L'apprentissage et la maitrise des frameworks React et Laravel.
+- La communication sur les bugs et les blocages des tâches difficiles.
+- La redistribution des tâches importantes avant la fin du sprint.
+- La gestion générale de github et github project.
+
+## Ce qui a moins bien été :
+- La mise en ligne du site avant la présentation.
+- Le manque de temps face aux nombreuses tâches a réalisé pour le dernier sprint. 
+- La pression pour la recherche de stage en parallèle du projet.
+- Le manque de temps pour préparer notre présentation final.
+- Le partage de la présentation en vue de nos difficultés à communiquer en public.
+
+## Comment on peut s'améliorer :
+- On peut encore beaucoup s'améliorer sur la communication en général en osant plus prendre la parole.
+- Choisir une équipe qui parle la même langue.
+- Avoir la même motivation tout le long du projet.
+- Oser dire nos problèmes pour que ce soit régler plus rapidement 
